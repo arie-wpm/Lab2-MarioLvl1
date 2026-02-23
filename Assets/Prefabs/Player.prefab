@@ -382,7 +382,7 @@ MonoBehaviour:
   midAirBackwardsSlowFastJumpDeceleration: 11.425781
   midAirBackwardsSlowSlowJumpDeceleration: 8.346094
   grounded: 0
-  animator: {fileID: 4092837538124265621}
+  isLarge: 1
 --- !u!50 &7785003992496370886
 Rigidbody2D:
   serializedVersion: 5

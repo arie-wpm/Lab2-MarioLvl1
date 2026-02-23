@@ -45,7 +45,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentDirection;
     private string jumpType = "";
     private float initialJumpXVelocity;
+
+    // testing Animator
     private Animator animator;
+    [SerializeField] private bool isLarge;
 
     private void Start()
     {
@@ -58,12 +61,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update()
-    {
-        if (jumpAction.WasReleasedThisFrame())
-        {
-            Debug.Log("Released Jump");
-        }
-        
+    {    
         moveValue = moveAction.ReadValue<Vector2>();
 
         RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, groundCheckDistance, groundLayer);
@@ -190,6 +188,7 @@ public class PlayerController : MonoBehaviour
         }
         
         rb.linearVelocityX = rb.linearVelocity.x + a * Time.fixedDeltaTime;
+        animator.speed = Mathf.Abs(rb.linearVelocityX);
         
         if (rb.linearVelocityX > 0)
         {
