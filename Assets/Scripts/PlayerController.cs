@@ -28,16 +28,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheckPos;
     [SerializeField] private float groundCheckDistance= 0.2f;
     [SerializeField] private LayerMask groundLayer;
+
+    [Header("Mid air accelerations")] 
+    [SerializeField] private float midAirForwardSlowAcceleration;
+    [SerializeField] private float midAirForwardFastAcceleration;
+    [SerializeField] private float midAirBackwardsFastDeceleration;
+    [SerializeField] private float midAirBackwardsSlowFastJumpDeceleration;
+    [SerializeField] private float midAirBackwardsSlowSlowJumpDeceleration;
     
-    
+    public bool grounded;
     private Rigidbody2D rb;
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction jumpAction;
     private Vector2 moveValue;
     private Vector2 currentDirection;
-    public bool grounded;
     private string jumpType = "";
+    private float initialJumpXVelocity;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -88,7 +95,7 @@ public class PlayerController : MonoBehaviour
         // V = U + at
 
         float a = 0;
-        if (grounded)
+        if (grounded) // Ground Movement
         {
             
             if (moveValue.x != 0 && !runAction.IsPressed())
@@ -128,6 +135,38 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        else //Mid AIR Movement
+        {
+            if (moveValue.x > 0 && currentDirection.x > 0 || moveValue.x < 0 && currentDirection.x < 0)
+            {
+                if (Mathf.Abs(rb.linearVelocityX) < 5.859375)
+                {
+                    a = midAirForwardSlowAcceleration * currentDirection.x;
+                }
+                else
+                {
+                    a = midAirForwardFastAcceleration * currentDirection.x;
+                }
+            }
+            else if(moveValue.x < 0 && currentDirection.x > 0 || moveValue.x > 0 && currentDirection.x < 0)
+            {
+                if (Mathf.Abs(rb.linearVelocityX) >= 5.859375)
+                {
+                    a = midAirBackwardsFastDeceleration * -currentDirection.x;
+                }
+                else
+                {
+                    if (initialJumpXVelocity >= 6.796875)
+                    {
+                        a = midAirBackwardsSlowFastJumpDeceleration * -currentDirection.x;
+                    }
+                    else
+                    {
+                        a = midAirBackwardsSlowSlowJumpDeceleration * -currentDirection.x;
+                    }
+                }
+            }
+        }
         
         rb.linearVelocityX = rb.linearVelocity.x + a * Time.fixedDeltaTime;
         
@@ -164,5 +203,7 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = runJumpHoldGravity;
             rb.linearVelocityY = runJumpVelocity;
         }
+
+        initialJumpXVelocity = Mathf.Abs(rb.linearVelocityX);
     }
 }

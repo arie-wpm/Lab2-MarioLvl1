@@ -320,6 +320,11 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  midAirForwardSlowAcceleration: 8.349609
+  midAirForwardFastAcceleration: 12.524414
+  midAirBackwardsFastDeceleration: 12.524414
+  midAirBackwardsSlowFastJumpDeceleration: 11.425781
+  midAirBackwardsSlowSlowJumpDeceleration: 8.346094
   grounded: 0
 --- !u!1 &519420028
 GameObject:
@@ -733,7 +738,7 @@ Transform:
   m_GameObject: {fileID: 1872099835}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: -1.5, z: 0}
+  m_LocalPosition: {x: -8.27, y: -1.5, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -899,7 +904,7 @@ Transform:
   m_GameObject: {fileID: 1890762047}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: -2, z: 0}
+  m_LocalPosition: {x: 8.18, y: -2, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
