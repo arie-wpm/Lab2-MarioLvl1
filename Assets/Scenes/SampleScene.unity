@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 304442825}
   - component: {fileID: 304442824}
+  - component: {fileID: 304442826}
   - component: {fileID: 304442823}
   - component: {fileID: 304442822}
   m_Layer: 0
@@ -285,6 +286,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &304442826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304442821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3eec1ece1dea5c4cb96dcb8a6229e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  minWalkVelocity: 0.2783203
+  maxWalkVelocity: 5.859375
+  maxRunningVelocity: 9.609375
+  walkAcceleration: 8.349609
+  runAcceleration: 12.524414
+  deceleration: 11.425781
+  skidDeceleration: 22.851562
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
