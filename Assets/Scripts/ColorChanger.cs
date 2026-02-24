@@ -1,0 +1,79 @@
+using System.Collections;
+using UnityEngine;
+
+public class ColorChanger : MonoBehaviour
+{
+    private Color _default1 = new Color32(181, 49, 32, 255);
+    private Color _default2 = new Color32(234, 158, 34, 255);
+    private Color _default3 = new Color32(107, 109, 0, 255);
+
+    private Color _flower1 = new Color32(247, 216, 165, 255);
+    private Color _flower2 = new Color32(234, 158, 34, 255);
+    private Color _flower3 = new Color32(181, 49, 32, 255);
+
+    private Color _star1_1 = new Color32(12, 147, 0, 255);
+    private Color _star2_1 = new Color32(255, 254, 255, 255);
+    private Color _star3_1 = new Color32(234, 158, 34, 255);
+
+    private Color _star1_2 = new Color32(181, 216, 165, 255);
+    private Color _star2_2 = new Color32(255, 254, 255, 255);
+    private Color _star3_2 = new Color32(234, 158, 34, 255);
+
+    private Color _star1_3 = new Color32(0, 0, 0, 255);
+    private Color _star2_3 = new Color32(254, 204, 197, 255);
+    private Color _star3_3 = new Color32(153, 78, 0, 255);
+
+    private Color[] _currentColors;
+
+    public void ChangeToDefault(SpriteRenderer[] sprites)
+    {
+        Color[] colors = { _default1, _default2, _default3 };
+        for (int i = 0; i < sprites.Length; i++) {
+            sprites[i].color = colors[i];
+        }
+        _currentColors = colors;
+    }
+
+    public void ChangeToFlower(SpriteRenderer[] sprites)
+    {
+        Color[] colors = { _flower1, _flower2, _flower3 };
+        for (int i = 0; i < sprites.Length; i++) {
+            sprites[i].color = colors[i];
+        }
+        _currentColors = colors;
+    }
+
+    public void ChangeToStar(SpriteRenderer[] sprites, float duration) {
+        StartCoroutine(StarAnim(sprites, duration));
+    }
+
+    public IEnumerator StarAnim(SpriteRenderer[] sprites, float totalDuration)
+    {
+        float flashInterval = 0.1f;
+
+        Color[][] flashSets = new Color[][] {
+            new Color[] { _star1_1, _star2_1, _star3_1 },
+            new Color[] { _star1_2, _star2_2, _star3_2 },
+            new Color[] { _star1_3, _star2_3, _star3_3 }
+        };
+
+        float elapsed = 0f;
+        int setIndex = 0;
+        int setCount = flashSets.Length;
+
+        while (elapsed < totalDuration) {
+            Color[] currentSet = flashSets[setIndex];
+
+            for (int i = 0; i < sprites.Length && i < currentSet.Length; i++) {
+                sprites[i].color = currentSet[i];
+            }
+            setIndex = (setIndex + 1) % setCount;
+            yield return new WaitForSeconds(flashInterval);
+            elapsed += flashInterval;
+        }
+
+        for (int i = 0; i < sprites.Length; i++) {
+            sprites[i].color = _currentColors[i];
+        }
+    }
+}
