@@ -64,9 +64,21 @@ public class PlayerController : MonoBehaviour
     {    
         moveValue = moveAction.ReadValue<Vector2>();
 
-        RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, groundCheckDistance, groundLayer);
+        // RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, groundCheckDistance, groundLayer);
+        // grounded = hit.collider != null;
+        // Debug.DrawRay(groundCheckPos.position, Vector2.down, Color.green, groundCheckDistance);
+        // if (jumpAction.WasPressedThisFrame() && grounded)
+        // {
+        //     Debug.Log("Im Jumping");
+        //     Jump();
+        // }
+
+        // Sorry James for you to review
+
+        Vector2 boxSize = new Vector2(0.65f, 0.5f);
+        RaycastHit2D hit = Physics2D.BoxCast(groundCheckPos.position, boxSize, 0f, Vector2.down, groundCheckDistance, groundLayer);
         grounded = hit.collider != null;
-        Debug.DrawRay(groundCheckPos.position, Vector2.down, Color.green, groundCheckDistance);
+        
         if (jumpAction.WasPressedThisFrame() && grounded)
         {
             Debug.Log("Im Jumping");
@@ -232,5 +244,14 @@ public class PlayerController : MonoBehaviour
         }
 
         initialJumpXVelocity = Mathf.Abs(rb.linearVelocityX);
+    }
+
+    void OnDrawGizmos()
+    {
+        if (groundCheckPos == null) return;
+        Vector2 boxSize = new Vector2(0.65f, 0.5f);
+        Vector2 boxCenter = groundCheckPos.position + Vector3.down * groundCheckDistance;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(boxCenter, boxSize);
     }
 }

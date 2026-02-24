@@ -375,7 +375,7 @@ MonoBehaviour:
   groundCheckDistance: 0.1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   midAirForwardSlowAcceleration: 8.349609
   midAirForwardFastAcceleration: 12.524414
   midAirBackwardsFastDeceleration: 12.524414
@@ -408,7 +408,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &3983164134561673421
 BoxCollider2D:
@@ -444,7 +444,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.003359288, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -454,7 +454,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.74469286, y: 1}
   m_EdgeRadius: 0
 --- !u!95 &4092837538124265621
 Animator:
