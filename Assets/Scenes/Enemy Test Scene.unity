@@ -1371,6 +1371,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd034b46841ad74d9c1d57dc6c8600e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  movespeed: 2
+  wallCheckDist: 0.1
+  deathDelay: 2
+  knockbackForceX: 8
+  knockbackForceY: 3
   enemy: 0
 --- !u!61 &1070102388
 BoxCollider2D:

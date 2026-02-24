@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private float movespeed = 2f;
+    [SerializeField] private float movespeed = 2f;
     private Vector2 moveDir;
     private Rigidbody2D rb;
     private Collider2D collider;
-    private float wallCheckDist = 0.1f;
+    [SerializeField] private float wallCheckDist = 0.1f;
+    [SerializeField] private float deathDelay = 2f;
+    [SerializeField] private float knockbackForceX;
+    [SerializeField] private float knockbackForceY;
     
     private enum EnemyType
     {
@@ -54,8 +57,8 @@ public class EnemyController : MonoBehaviour
         if (idle) return;
         Vector2 origin = collider.bounds.center;
         origin.x += moveDir.x * (collider.bounds.extents.x + 0.01f);
-        bool wallCheck = Physics2D.Raycast(origin, moveDir, wallCheckDist);
-        if (wallCheck) moveDir *= -1f;
+        RaycastHit2D hit = Physics2D.Raycast(origin, moveDir, wallCheckDist);
+        if(hit.collider && !hit.collider.CompareTag("Player") && !hit.collider.CompareTag("Projectile")) moveDir *= -1f;
         rb.linearVelocity = new Vector2(moveDir.x * movespeed, rb.linearVelocityY);
     }
 
@@ -63,31 +66,57 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            //if game state = invincible -> die()
-            
             ContactPoint2D contact = other.contacts[0];
+            /*if(game state = invincible)
+            {
+                Vector2 knockbackDir = new Vector2(contact.normal.x, 0);
+                dieKnockback(knockbackDir);
+            } else
+            */
             if (contact.normal.y > 0.5)
             {
                 //above -> stomp
-                //stomp animation/sprite
-                die();
+                dieStomp();
+
             } else
             {
                 // left, right or below -> damage player
                 
             }
-        } //else if(other.gameObject.CompareTag("fireball")) -> die()
+        } else if (other.gameObject.CompareTag("Projectile")) //projectile being a fireball or shell
+        {
+            ContactPoint2D contact = other.contacts[0];
+            Vector2 knockbackDir = new Vector2(contact.normal.x, 0);
+            //if fireball -> destroy(fireball)
+            dieKnockback(knockbackDir);
+        }
     }
 
-    public void die()
+    private void dieStomp()
     {
-        //death animation
-        //return score?
-        //destroy after delay
+        rb.linearVelocity = Vector2.zero;
+        collider.enabled = false;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        switch (enemy)
+        {
+            case EnemyType.Goomba:
+                //stomp anim
+                break;
+            case EnemyType.KoopaTroopa:
+                //change to shell anim?
+                //create shell object
+                break;
+        }
+        //give score
+        Destroy(gameObject, deathDelay);
     }
 
-    private void stomp()
+    private void dieKnockback(Vector2 dir)
     {
-        
+        rb.linearVelocity = Vector2.zero;
+        collider.enabled = false;
+        rb.AddForce(dir * knockbackForceX + Vector2.up * knockbackForceY, ForceMode2D.Impulse);
+        //give score
+        Destroy(gameObject, deathDelay);
     }
 }
