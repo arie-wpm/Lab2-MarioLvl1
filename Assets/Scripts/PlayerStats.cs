@@ -34,8 +34,6 @@ public class PlayerStats : MonoBehaviour
     {
         powerState = newState;
         Debug.Log("Power State: " + powerState);
-
-        // TODO later:
         // change animator
         // change collider size
         // enable fireball ability
@@ -50,12 +48,12 @@ public class PlayerStats : MonoBehaviour
     private IEnumerator StarRoutine(float duration)
     {
         isInvincible = true;
-        Debug.Log("Star: invicible ON");
+        Debug.Log("Star: invincible ON");
 
         yield return new WaitForSeconds(duration);
 
         isInvincible = false;
-        Debug.Log("Star: invisible OFF");
+        Debug.Log("Star: invincible OFF");
         starCoroutine = null;
     }
 }

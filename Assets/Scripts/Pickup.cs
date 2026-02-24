@@ -13,9 +13,7 @@ public class Pickup : MonoBehaviour
 {
     public PickupType type;
     public int amount = 1;
-
-    [Header("Star Settings")]
-    public float starDuration = 6.0f;
+    public float starDuration = 6f;
 
     private bool pickedUp;
 
@@ -27,7 +25,7 @@ public class Pickup : MonoBehaviour
         PlayerStats stats = other.GetComponent<PlayerStats>();
         if (stats == null)
         {
-            Debug.LogWarning("PlayerStats script missing.");
+            Debug.LogWarning("PlayerStats script missing");
             return;
         }
 
@@ -37,7 +35,7 @@ public class Pickup : MonoBehaviour
 
         ApplyPickup(stats);
 
-        Debug.Log($"[[Stats]] Coins: {stats.coins} | Lives: {stats.lives} | PowerState: {stats.powerState}");
+        Debug.Log($"Stats -> Coins: {stats.coins} | Lives: {stats.lives} | PowerState: {stats.powerState}");
 
         Destroy(gameObject);
     }
@@ -67,7 +65,6 @@ public class Pickup : MonoBehaviour
                 {
                     stats.SetPowerState(MarioPowerState.Fire);
                 }
-                // else already Fire, nothing happens
                 break;
 
             case PickupType.Star:
