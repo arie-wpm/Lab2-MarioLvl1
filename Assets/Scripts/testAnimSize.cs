@@ -10,7 +10,13 @@ public class testAnimSize : MonoBehaviour
         {
             float weight = animator.GetLayerWeight(1);
             if (weight == 1f) animator.SetLayerWeight(1, 0f);
-            else animator.SetLayerWeight(1, 1f);   
+            else animator.SetLayerWeight(1, 1f);
+            AudioManager.instance.Play("bump");
         }
     }
+
+    void Start()
+    {
+        AudioManager.instance.PlayBGM();
+    } 
 }
