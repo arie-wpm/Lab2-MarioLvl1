@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         // Debug.DrawRay(groundCheckPos.position, Vector2.down, Color.green, groundCheckDistance);
         // if (jumpAction.WasPressedThisFrame() && grounded)
         // {
-        //     Debug.Log("Im Jumping");
+        //     EditorDebug.Log("Im Jumping");
         //     Jump();
         // }
 
@@ -81,13 +81,13 @@ public class PlayerController : MonoBehaviour
         
         if (jumpAction.WasPressedThisFrame() && grounded)
         {
-            Debug.Log("Im Jumping");
+            EditorDebug.Log("Im Jumping");
             Jump();
         }
 
         if (!grounded && (jumpAction.WasReleasedThisFrame()|| rb.linearVelocityY < 0))
         {
-            Debug.Log("Gravity switched to fall mode");
+            EditorDebug.Log("Gravity switched to fall mode");
             switch (jumpType)
             {
                 case "Slow":
