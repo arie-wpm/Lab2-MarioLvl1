@@ -45,9 +45,15 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentDirection;
     private string jumpType = "";
     private float initialJumpXVelocity;
+
+    // testing Animator
+    private Animator animator;
+    [SerializeField] private bool isLarge;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         moveAction = InputSystem.actions.FindAction("Move");
         runAction = InputSystem.actions.FindAction("Sprint");
         jumpAction = InputSystem.actions.FindAction("Jump");
@@ -55,12 +61,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update()
-    {
-        if (jumpAction.WasReleasedThisFrame())
-        {
-            Debug.Log("Released Jump");
-        }
-        
+    {    
         moveValue = moveAction.ReadValue<Vector2>();
 
         RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, groundCheckDistance, groundLayer);
@@ -90,6 +91,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void FreezeJumpAnim()
+    {
+        animator.SetBool("isJumping", true);
+        animator.SetBool("isMoving", false);
+    }
+
+    void UnFreezeJumpAnim()
+    {
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isMoving", true);
+    }
+
     private void FixedUpdate()
     {
         // V = U + at
@@ -97,7 +110,7 @@ public class PlayerController : MonoBehaviour
         float a = 0;
         if (grounded) // Ground Movement
         {
-            
+            UnFreezeJumpAnim();
             if (moveValue.x != 0 && !runAction.IsPressed())
             {
                 a = moveValue.x * walkAcceleration;
@@ -132,11 +145,17 @@ public class PlayerController : MonoBehaviour
                                      || moveValue.x < 0 && currentDirection.x < 0))
             {
                 a = moveValue.x * skidDeceleration;
+                //sliding
+                animator.SetBool("isSliding", true);
+            } else
+            {
+                animator.SetBool("isSliding", false);
             }
 
         }
         else //Mid AIR Movement
         {
+            FreezeJumpAnim();
             if (moveValue.x > 0 && currentDirection.x > 0 || moveValue.x < 0 && currentDirection.x < 0)
             {
                 if (Mathf.Abs(rb.linearVelocityX) < 5.859375)
@@ -169,14 +188,22 @@ public class PlayerController : MonoBehaviour
         }
         
         rb.linearVelocityX = rb.linearVelocity.x + a * Time.fixedDeltaTime;
+        animator.speed = Mathf.Abs(rb.linearVelocityX);
         
         if (rb.linearVelocityX > 0)
         {
+            animator.SetBool("isMoving", true);
+            transform.localScale = new Vector3(1, 1, 1);
             currentDirection = Vector2.right;
         }
         else if (rb.linearVelocityX < 0)
         {
+            transform.localScale = new Vector3(-1, 1, 1);
+            animator.SetBool("isMoving", true);
             currentDirection = Vector2.left;
+        } else
+        {
+            animator.SetBool("isMoving", false);
         }
         
     }
