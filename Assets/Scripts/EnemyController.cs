@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -7,6 +8,7 @@ public class EnemyController : MonoBehaviour
     private Vector2 moveDir;
     private Rigidbody2D rb;
     private Collider2D collider;
+    private Animator anim;
     [SerializeField] private float wallCheckDist = 0.1f;
     [SerializeField] private float deathDelay = 2f;
     [SerializeField] private float knockbackForceX;
@@ -20,14 +22,16 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] private EnemyType enemy;
     private int score;
-
     private bool idle;
+    private bool isShell;
     
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
+        anim = GetComponent<Animator>();
         idle = true;
+        isShell = false;
         moveDir = Vector2.left;
         
         switch (enemy)
@@ -44,6 +48,7 @@ public class EnemyController : MonoBehaviour
     private void OnBecameVisible()
     {
         idle = false;
+        anim.SetBool("isMoving", true);
     }
 
     // Update is called once per frame
@@ -73,10 +78,17 @@ public class EnemyController : MonoBehaviour
                 dieKnockback(knockbackDir);
             } else
             */
-            if (contact.normal.y > 0.5)
+            if (contact.normal.y > 0.5) //above -> stomp
             {
-                //above -> stomp
-                DieStomp();
+                switch (enemy)
+                {
+                    case EnemyType.Goomba:
+                        DieStomp();
+                        break;
+                    case EnemyType.KoopaTroopa:
+                        ShellTransform();
+                        break;
+                }
 
             } else
             {
@@ -92,36 +104,64 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void DieStomp()
+    private void DieStomp() //only used for Goomba
     {
+        
         rb.linearVelocity = Vector2.zero;
         collider.enabled = false;
         rb.bodyType = RigidbodyType2D.Kinematic;
-        switch (enemy)
-        {
-            case EnemyType.Goomba:
-                //stomp anim
-                break;
-            case EnemyType.KoopaTroopa:
-                //change to shell anim?
-                //create shell object
-                break;
-        }
-        //give score
+        anim.SetBool("isMoving", false);
+        anim.SetBool("isDead", true);
+        GiveScore();
         Despawn();
     }
+
+    private void ShellTransform()
+    {
+        rb.linearVelocity = Vector2.zero;
+        if (isShell)
+        {
+            
+            
+        }
+        else
+        {
+            anim.SetBool("isMoving", false);
+            anim.SetBool("isShell", true);
+            isShell = true;
+        }
+    }
+    
+    /*private IEnumerator ShellReform(float reformTime){
+        anim.SetBool("isShell", false);
+        anim.SetBool("isReforming", true);
+
+        yield return new WaitForSeconds(reformTime);
+        if (rb.linearVelocity == Vector2.zero)
+        {
+            anim.SetBool("isReforming", false);
+        }
+    }*/
 
     private void DieKnockback(Vector2 dir)
     {
         rb.linearVelocity = Vector2.zero;
         collider.enabled = false;
         rb.AddForce(dir * knockbackForceX + Vector2.up * knockbackForceY, ForceMode2D.Impulse);
-        //give score
+        anim.SetBool("isMoving", false);
+        anim.SetBool("isDead", true);
+        GiveScore();
         Despawn();
     }
 
     private void Despawn() //use when enemy falls out of level to not give score
     {
         Destroy(gameObject, deathDelay);
+    }
+
+    private void GiveScore()
+    {
+        //score popup
+        //+score to score manager
     }
 }
