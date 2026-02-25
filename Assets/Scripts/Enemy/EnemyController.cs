@@ -76,7 +76,7 @@ public class EnemyController : MonoBehaviour
             if (contact.normal.y > 0.5)
             {
                 //above -> stomp
-                dieStomp();
+                DieStomp();
 
             } else
             {
@@ -88,11 +88,11 @@ public class EnemyController : MonoBehaviour
             ContactPoint2D contact = other.contacts[0];
             Vector2 knockbackDir = new Vector2(contact.normal.x, 0);
             //if fireball -> destroy(fireball)
-            dieKnockback(knockbackDir);
+            DieKnockback(knockbackDir);
         }
     }
 
-    private void dieStomp()
+    private void DieStomp()
     {
         rb.linearVelocity = Vector2.zero;
         collider.enabled = false;
@@ -108,15 +108,20 @@ public class EnemyController : MonoBehaviour
                 break;
         }
         //give score
-        Destroy(gameObject, deathDelay);
+        Despawn();
     }
 
-    private void dieKnockback(Vector2 dir)
+    private void DieKnockback(Vector2 dir)
     {
         rb.linearVelocity = Vector2.zero;
         collider.enabled = false;
         rb.AddForce(dir * knockbackForceX + Vector2.up * knockbackForceY, ForceMode2D.Impulse);
         //give score
+        Despawn();
+    }
+
+    private void Despawn() //use when enemy falls out of level to not give score
+    {
         Destroy(gameObject, deathDelay);
     }
 }
