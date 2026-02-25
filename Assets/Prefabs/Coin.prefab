@@ -13,11 +13,7 @@ GameObject:
   - component: {fileID: 1346431967021354489}
   - component: {fileID: 2869693973818052421}
   - component: {fileID: 2555594451224042611}
-<<<<<<< HEAD
-  m_Layer: 0
-=======
   m_Layer: 7
->>>>>>> Collectables
   m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,11 +29,7 @@ Transform:
   m_GameObject: {fileID: 5311525800943770055}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-<<<<<<< HEAD
   m_LocalPosition: {x: 1.10084, y: 0.32417, z: 0}
-=======
-  m_LocalPosition: {x: 0, y: 0, z: 0}
->>>>>>> Collectables
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -90,21 +82,17 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-<<<<<<< HEAD
-  m_SortingOrder: 0
-=======
   m_SortingOrder: 1
->>>>>>> Collectables
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -506717764972755686, guid: c1275891c353deb4498aefa68ab45c2b, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.09, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!61 &1346431967021354489
 BoxCollider2D:
@@ -143,9 +131,9 @@ BoxCollider2D:
   m_Offset: {x: -0.51997644, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 1, y: 0}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.09, y: 0.16}
+    newSize: {x: 0.09, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

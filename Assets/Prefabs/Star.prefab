@@ -1,10 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
-<<<<<<< HEAD
---- !u!1 &2755667996087470107
-=======
---- !u!1 &2931486617218688949
->>>>>>> Collectables
+--- !u!1 &9068852077722777026
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,68 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< HEAD
-  - component: {fileID: 3351306357571359294}
-  - component: {fileID: 445852856692774913}
-  - component: {fileID: 2783903458326680314}
-  - component: {fileID: 7726872805861934230}
-  - component: {fileID: 7483520632568417438}
-  - component: {fileID: 6289884288494766393}
-  m_Layer: 0
-=======
-  - component: {fileID: 6490870884839779549}
-  - component: {fileID: 2369845634183292330}
-  - component: {fileID: 2687386305464842731}
-  - component: {fileID: 302813245331916307}
-  - component: {fileID: 2946709831835582572}
-  - component: {fileID: 6118084221947540478}
-  - component: {fileID: 6735021535527716037}
+  - component: {fileID: 9176429507274852404}
+  - component: {fileID: 4232855294034192710}
+  - component: {fileID: 3185638167777776339}
+  - component: {fileID: 5178569612351387652}
+  - component: {fileID: 984781397190503066}
+  - component: {fileID: 4092384327371851992}
+  - component: {fileID: 6753600740193798656}
   m_Layer: 7
->>>>>>> Collectables
   m_Name: Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD
---- !u!4 &3351306357571359294
-=======
---- !u!4 &6490870884839779549
->>>>>>> Collectables
+--- !u!4 &9176429507274852404
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 2755667996087470107}
+  m_GameObject: {fileID: 9068852077722777026}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-=======
-  m_GameObject: {fileID: 2931486617218688949}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -6.60063, y: -4.4674, z: 0}
   m_LocalScale: {x: 0.925, y: 0.925, z: 0.925}
->>>>>>> Collectables
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
---- !u!212 &445852856692774913
-=======
---- !u!95 &2369845634183292330
+--- !u!95 &4232855294034192710
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2931486617218688949}
+  m_GameObject: {fileID: 9068852077722777026}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 43a8b4c3a33557e49a356d21827f56c2, type: 2}
@@ -88,13 +59,13 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &2687386305464842731
+--- !u!61 &3185638167777776339
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2931486617218688949}
+  m_GameObject: {fileID: 9068852077722777026}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -134,14 +105,14 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.9749881, y: 0.96998566}
   m_EdgeRadius: 0
---- !u!50 &302813245331916307
+--- !u!50 &5178569612351387652
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2931486617218688949}
+  m_GameObject: {fileID: 9068852077722777026}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -161,34 +132,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &2946709831835582572
+--- !u!114 &984781397190503066
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2931486617218688949}
+  m_GameObject: {fileID: 9068852077722777026}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eca105c5266114123aee690db9048a28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pickup
-  type: 3
+  type: 4
   amount: 1
   starDuration: 6
---- !u!212 &6118084221947540478
->>>>>>> Collectables
+--- !u!212 &4092384327371851992
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 2755667996087470107}
-=======
-  m_GameObject: {fileID: 2931486617218688949}
->>>>>>> Collectables
+  m_GameObject: {fileID: 9068852077722777026}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -230,11 +196,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-<<<<<<< HEAD
   m_Sprite: {fileID: 612620484901056731, guid: 22da00af7076d434c8109e228eee5175, type: 3}
-=======
-  m_Sprite: {fileID: -7978211336232270038, guid: 22da00af7076d434c8109e228eee5175, type: 3}
->>>>>>> Collectables
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -244,30 +206,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
-<<<<<<< HEAD
---- !u!61 &2783903458326680314
-BoxCollider2D:
-=======
---- !u!58 &6735021535527716037
+--- !u!58 &6753600740193798656
 CircleCollider2D:
->>>>>>> Collectables
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 2755667996087470107}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-=======
-  m_GameObject: {fileID: 2931486617218688949}
+  m_GameObject: {fileID: 9068852077722777026}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 2b19c097612557a44b4d384e40a41c7b, type: 2}
->>>>>>> Collectables
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -291,84 +240,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-<<<<<<< HEAD
-  m_Offset: {x: 0.5, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!50 &7726872805861934230
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2755667996087470107}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 2b19c097612557a44b4d384e40a41c7b, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
---- !u!95 &7483520632568417438
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2755667996087470107}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 43a8b4c3a33557e49a356d21827f56c2, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6289884288494766393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2755667996087470107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eca105c5266114123aee690db9048a28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pickup
-  type: 3
-  amount: 1
-  starDuration: 6
-=======
   m_Offset: {x: 0.5, y: 0.4}
   m_Radius: 0.38
->>>>>>> Collectables
