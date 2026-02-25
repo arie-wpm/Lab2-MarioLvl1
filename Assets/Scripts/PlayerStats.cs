@@ -18,6 +18,12 @@ public class PlayerStats : MonoBehaviour
     public bool isInvincible;
     private Coroutine starCoroutine;
 
+    private SpriteRenderer[] sprites;
+
+    void Start() {
+        sprites = GetComponentsInChildren<SpriteRenderer>();
+    }
+
     public void AddCoins(int amount)
     {
         coins += amount;
@@ -37,10 +43,15 @@ public class PlayerStats : MonoBehaviour
         // change animator
         // change collider size
         // enable fireball ability
+
+        if (newState == MarioPowerState.Fire) GameManager.Instance.colorChanger.ChangeToFlower(sprites);
+        else GameManager.Instance.colorChanger.ChangeToDefault(sprites);
+        ChangeAnimator(newState);
     }
 
     public void ActivateStar(float duration)
     {
+        GameManager.Instance.colorChanger.ChangeToStar(sprites, duration);
         if (starCoroutine != null) StopCoroutine(starCoroutine);
         starCoroutine = StartCoroutine(StarRoutine(duration));
     }
@@ -56,4 +67,11 @@ public class PlayerStats : MonoBehaviour
         Debug.Log("Star: invincible OFF");
         starCoroutine = null;
     }
+
+    void ChangeAnimator(MarioPowerState newState)
+    {
+        Animator animator = GetComponent<Animator>();
+        if (newState == MarioPowerState.Small) animator.SetLayerWeight(1, 0f);            
+        else animator.SetLayerWeight(1, 1f);
+    }   
 }
