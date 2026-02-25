@@ -240,24 +240,21 @@ public class PlayerController : MonoBehaviour
 
     void AnimCheckVelocity()
     {
-        animator.speed = Mathf.Abs(rb.linearVelocityX);
+        animator.SetFloat("MoveSpeed", Mathf.Abs(rb.linearVelocityX));
         hasVerticalVelocity = Mathf.Abs(rb.linearVelocity.y) > 0.1f;
         
-        if (hasVerticalVelocity && !isJumping)
-        {
+        if (hasVerticalVelocity && !isJumping) {
             animator.SetBool("isJumping", false);
             animator.SetBool("isMoving", false);
             animator.speed = 0f;
         }
-        else if (hasVerticalVelocity && isJumping)
-        {
+        else if (hasVerticalVelocity && isJumping) {
             animator.SetBool("isJumping", true);
             animator.SetBool("isMoving", false);
-        } else if (!hasVerticalVelocity && isJumping)
-        {
+        } else if (!hasVerticalVelocity && isJumping) {
             isJumping = false;
             animator.speed = 1f;
-        }
+        } else animator.speed = 1f;
 
         if (grounded) animator.SetBool("isJumping", false);
 
