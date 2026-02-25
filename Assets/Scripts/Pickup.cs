@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum PickupType
@@ -16,14 +18,26 @@ public class Pickup : MonoBehaviour
     public float starDuration = 6f;
 
     private bool pickedUp;
+    private List<GameObject> _mushroomToFlower = new List<GameObject>();
+    private PlayerStats _playerStats;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void Start()
+    {
+        _playerStats = GameManager.Instance.player.GetComponent<PlayerStats>();
+        if (type == PickupType.SuperMushroom || type == PickupType.FireFlower) GetChildObjects();
+    }
+
+    void Update()
+    {
+        CheckMushroomToFlower();
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (pickedUp) return;
-        if (!other.CompareTag("Player")) return;
+        if (!other.gameObject.CompareTag("Player")) return;
 
-        PlayerStats stats = other.GetComponent<PlayerStats>();
-        if (stats == null)
+        if (_playerStats == null)
         {
             Debug.LogWarning("PlayerStats script missing");
             return;
@@ -33,9 +47,31 @@ public class Pickup : MonoBehaviour
 
         Debug.Log($"Picked up: {type} | Object: {gameObject.name}");
 
-        ApplyPickup(stats);
+        ApplyPickup(_playerStats);
 
-        Debug.Log($"Stats -> Coins: {stats.coins} | Lives: {stats.lives} | PowerState: {stats.powerState}");
+        Debug.Log($"Stats -> Coins: {_playerStats.coins} | Lives: {_playerStats.lives} | PowerState: {_playerStats.powerState}");
+
+        Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (pickedUp) return;
+        if (!other.gameObject.CompareTag("Player")) return;
+
+        if (_playerStats == null)
+        {
+            Debug.LogWarning("PlayerStats script missing");
+            return;
+        }
+
+        pickedUp = true;
+
+        Debug.Log($"Picked up: {type} | Object: {gameObject.name}");
+
+        ApplyPickup(_playerStats);
+
+        Debug.Log($"Stats -> Coins: {_playerStats.coins} | Lives: {_playerStats.lives} | PowerState: {_playerStats.powerState}");
 
         Destroy(gameObject);
     }
@@ -70,6 +106,24 @@ public class Pickup : MonoBehaviour
             case PickupType.Star:
                 stats.ActivateStar(starDuration);
                 break;
+        }
+    }
+
+    void GetChildObjects()
+    {
+        foreach(Transform child in transform)
+        {
+            _mushroomToFlower.Add(child.gameObject);
+        }
+    }
+
+    void CheckMushroomToFlower()
+    {
+        if (type == PickupType.SuperMushroom && (_playerStats.powerState == MarioPowerState.Super || _playerStats.powerState == MarioPowerState.Fire))
+        {
+            type = PickupType.FireFlower;
+            _mushroomToFlower[0].SetActive(false);
+            _mushroomToFlower[1].SetActive(true);
         }
     }
 }

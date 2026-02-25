@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: a491f3db01c5e584aa6e4fe5b33178db
+guid: c1275891c353deb4498aefa68ab45c2b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3745163931830953359
-    second: Turtle_0
+      213: -506717764972755686
+    second: Coin_Underground_0
   - first:
-      213: 5728409991773732885
-    second: Turtle_1
+      213: -7077760299051657714
+    second: Coin_Underground_1
   - first:
-      213: 8820914459504927705
-    second: Turtle_2
+      213: 8777241930426200182
+    second: Coin_Underground_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -132,89 +132,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Turtle_0
+      name: Coin_Underground_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 16
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 16
+      alignment: 8
+      pivot: {x: 1, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 17a5c992f31860cc0800000000000000
-      internalID: -3745163931830953359
+      spriteID: a154b61a0e6c7f8f0800000000000000
+      internalID: -506717764972755686
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Turtle_1
+      name: Coin_Underground_1
       rect:
         serializedVersion: 2
         x: 16
         y: 0
         width: 16
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 16
+      alignment: 8
+      pivot: {x: 1, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 510c87f79866f7f40800000000000000
-      internalID: 5728409991773732885
+      spriteID: e06d9a1f18eb6cd90800000000000000
+      internalID: -7077760299051657714
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Turtle_2
+      name: Coin_Underground_2
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 16
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 16
+      alignment: 8
+      pivot: {x: 1, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9d3e5e837fe2a6a70800000000000000
-      internalID: 8820914459504927705
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Turtle_3
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 48a90a4a0f784b042ad09c4d3266aa4a
-      internalID: -1586432771
+      spriteID: 670b7ba28070fc970800000000000000
+      internalID: 8777241930426200182
       vertices: []
       indices: 
       edges: []
@@ -223,7 +201,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c53dd4834d37fc94c9e4a21a691f0597
+    spriteID: 17c678e0b2366ab479fbcb3db58cd9bb
     internalID: 0
     vertices: []
     indices: 
@@ -233,12 +211,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":1.0,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":8,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Turtle_0: -3745163931830953359
-      Turtle_1: 5728409991773732885
-      Turtle_2: 8820914459504927705
-      Turtle_3: -1586432771
+      Coin_Underground_0: -506717764972755686
+      Coin_Underground_1: -7077760299051657714
+      Coin_Underground_2: 8777241930426200182
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
