@@ -9773,6 +9773,7 @@ GameObject:
   - component: {fileID: 485716631}
   - component: {fileID: 485716634}
   - component: {fileID: 485716635}
+  - component: {fileID: 485716636}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -9817,8 +9818,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 256
-    height: 240
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -9914,6 +9915,30 @@ MonoBehaviour:
   _smoothSpeed: 50
   _followX: -2.5
   _limitX: 197
+--- !u!114 &485716636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485716630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.PixelPerfectCamera
+  m_ComponentVersion: 1
+  m_AssetsPPU: 16
+  m_RefResolutionX: 256
+  m_RefResolutionY: 240
+  m_CropFrame: 3
+  m_GridSnapping: 1
+  m_FilterMode: 0
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
 --- !u!1 &488562259
 GameObject:
   m_ObjectHideFlags: 0
@@ -17935,7 +17960,7 @@ Canvas:
   m_GameObject: {fileID: 902110388}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 485716632}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
