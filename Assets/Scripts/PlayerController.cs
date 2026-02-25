@@ -46,9 +46,10 @@ public class PlayerController : MonoBehaviour
     private string jumpType = "";
     private float initialJumpXVelocity;
 
-    // testing Animator
     private Animator animator;
-    [SerializeField] private bool isLarge;
+    private bool isJumping = false;
+    private bool hasVerticalVelocity = false;
+    private int facingDirection = 1;
 
     private void Start()
     {
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {    
+        AnimCheckVelocity();
         moveValue = moveAction.ReadValue<Vector2>();
 
         // RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, groundCheckDistance, groundLayer);
@@ -103,18 +105,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void FreezeJumpAnim()
-    {
-        animator.SetBool("isJumping", true);
-        animator.SetBool("isMoving", false);
-    }
-
-    void UnFreezeJumpAnim()
-    {
-        animator.SetBool("isJumping", false);
-        animator.SetBool("isMoving", true);
-    }
-
     private void FixedUpdate()
     {
         // V = U + at
@@ -122,7 +112,6 @@ public class PlayerController : MonoBehaviour
         float a = 0;
         if (grounded) // Ground Movement
         {
-            UnFreezeJumpAnim();
             if (moveValue.x != 0 && !runAction.IsPressed())
             {
                 a = moveValue.x * walkAcceleration;
@@ -167,7 +156,6 @@ public class PlayerController : MonoBehaviour
         }
         else //Mid AIR Movement
         {
-            FreezeJumpAnim();
             if (moveValue.x > 0 && currentDirection.x > 0 || moveValue.x < 0 && currentDirection.x < 0)
             {
                 if (Mathf.Abs(rb.linearVelocityX) < 5.859375)
@@ -200,28 +188,23 @@ public class PlayerController : MonoBehaviour
         }
         
         rb.linearVelocityX = rb.linearVelocity.x + a * Time.fixedDeltaTime;
-        animator.speed = Mathf.Abs(rb.linearVelocityX);
         
         if (rb.linearVelocityX > 0)
         {
-            animator.SetBool("isMoving", true);
             transform.localScale = new Vector3(1, 1, 1);
             currentDirection = Vector2.right;
         }
         else if (rb.linearVelocityX < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
-            animator.SetBool("isMoving", true);
             currentDirection = Vector2.left;
-        } else
-        {
-            animator.SetBool("isMoving", false);
         }
         
     }
 
     private void Jump()
     {
+        isJumping = true;
         grounded = false;
         
         if (Mathf.Abs(rb.linearVelocityX) < 3.75)
@@ -253,5 +236,36 @@ public class PlayerController : MonoBehaviour
         Vector2 boxCenter = groundCheckPos.position + Vector3.down * groundCheckDistance;
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(boxCenter, boxSize);
+    }
+
+    void AnimCheckVelocity()
+    {
+        animator.speed = Mathf.Abs(rb.linearVelocityX);
+        hasVerticalVelocity = Mathf.Abs(rb.linearVelocity.y) > 0.1f;
+        
+        if (hasVerticalVelocity && !isJumping)
+        {
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isMoving", false);
+            animator.speed = 0f;
+        }
+        else if (hasVerticalVelocity && isJumping)
+        {
+            animator.SetBool("isJumping", true);
+            animator.SetBool("isMoving", false);
+        } else if (!hasVerticalVelocity && isJumping)
+        {
+            isJumping = false;
+            animator.speed = 1f;
+        }
+
+        if (grounded) animator.SetBool("isJumping", false);
+
+        if (Mathf.Abs(rb.linearVelocityX) > 0.1f) animator.SetBool("isMoving", true);
+        else animator.SetBool("isMoving", false);
+
+        if (moveValue.x > 0) facingDirection = 1;
+        else if (moveValue.x < 0) facingDirection = -1;
+        transform.localScale = new Vector3(facingDirection, 1, 1);        
     }
 }

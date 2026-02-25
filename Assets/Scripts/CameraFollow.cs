@@ -21,8 +21,16 @@ public class CameraFollow : MonoBehaviour {
         _leftEdge = transform.position.x - 7.5f;
         if (_target == null) return;
 
-        if (_target.position.x < _leftEdge) {
-            _target.position = new Vector3(_leftEdge, _target.position.y, _target.position.z);
+        Rigidbody2D rb = _target.GetComponent<Rigidbody2D>();
+
+        if (_target.position.x < _leftEdge)
+        {
+            Vector2 pos = rb.position;
+            pos.x = _leftEdge;
+            rb.position = pos;
+
+            if (rb.linearVelocity.x < 0)
+                rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
         }
 
         float thresholdWorldX = _camX + _followX;
