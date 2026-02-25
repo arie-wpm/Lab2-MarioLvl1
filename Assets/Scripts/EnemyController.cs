@@ -6,8 +6,9 @@ public class EnemyController : MonoBehaviour
 {
     private Vector2 moveDir;
     private Rigidbody2D rb;
-    private Collider2D collider;
+    private Collider2D col;
     private Animator anim;
+    private SpriteRenderer spriteRenderer;
     
     [SerializeField] private EnemyType enemy;
     [SerializeField] private int score;
@@ -41,8 +42,9 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        collider = GetComponent<Collider2D>();
+        col = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         idle = true;
         isDead = false;
         moveDir = Vector2.left;
@@ -88,29 +90,42 @@ public class EnemyController : MonoBehaviour
 
     private void Move(float ms)
     {
-        Vector2 origin = collider.bounds.center;
-        origin.x += moveDir.x * (collider.bounds.extents.x + 0.01f);
+        Vector2 origin = col.bounds.center;
+        origin.x += moveDir.x * (col.bounds.extents.x + 0.01f);
         RaycastHit2D hit = Physics2D.Raycast(origin, moveDir, wallCheckDist);
-        
-        if (hit.collider && !hit.collider.CompareTag("Player") && !hit.collider.CompareTag("Projectile"))
+        if (koopaState == KoopaState.ShellMoving)
         {
-            moveDir *= -1f;
+            if (hit.collider && !hit.collider.CompareTag("Player") && !hit.collider.CompareTag("Fireball") && !hit.collider.CompareTag("Shell") && !hit.collider.CompareTag("Enemy"))
+            {
+                moveDir *= -1f;
+            }
+            rb.linearVelocity = new Vector2(moveDir.x * ms, rb.linearVelocityY);
         }
-        rb.linearVelocity = new Vector2(moveDir.x * ms, rb.linearVelocityY);
+        else
+        {
+            if (hit.collider && !hit.collider.CompareTag("Player") && !hit.collider.CompareTag("Fireball") && !hit.collider.CompareTag("Shell"))
+            {
+                moveDir *= -1f;
+                spriteRenderer.flipX = !spriteRenderer.flipX;
+            }
+            rb.linearVelocity = new Vector2(moveDir.x * ms, rb.linearVelocityY);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        Debug.Log("collision with: " + other.gameObject.name +" with tag "+ other.gameObject.tag);
         if (other.gameObject.CompareTag("Player"))
         {
-            ContactPoint2D contact = other.contacts[0];
             /*if(game state = invincible)
             {
                 Vector2 knockbackDir = new Vector2(contact.normal.x, 0);
                 dieKnockback(knockbackDir);
             } else
             */
-            if (contact.normal.y > 0.5) //above -> stomp
+            float enemyTopY = col.bounds.max.y;
+            float playerBotY = other.collider.bounds.min.y;
+            if (playerBotY > enemyTopY) //above -> stomp
             {
                 switch (enemy)
                 {
@@ -130,20 +145,19 @@ public class EnemyController : MonoBehaviour
                 }
                 //damage player -> player gets i-frames
             }
-        } else if (other.gameObject.CompareTag("Projectile")) //projectile being a fireball or shell
+        } else if (other.gameObject.CompareTag("Fireball") || other.gameObject.CompareTag("Shell")) //projectile being a fireball or shell
         {
             ContactPoint2D contact = other.contacts[0];
             Vector2 knockbackDir = new Vector2(contact.normal.x, 0);
-            //if fireball -> destroy(fireball)
             DieKnockback(knockbackDir);
         }
     }
 
     private void GoombaStomp() //only used for Goomba
     {
-        
+        isDead = true;
+        col.enabled = false;
         rb.linearVelocity = Vector2.zero;
-        collider.enabled = false;
         rb.bodyType = RigidbodyType2D.Kinematic;
         anim.SetBool("isMoving", false);
         anim.SetBool("isDead", true);
@@ -180,13 +194,14 @@ public class EnemyController : MonoBehaviour
     {
         rb.linearVelocityX = 0f;
         koopaState = KoopaState.ShellIdle;
+        gameObject.tag = "Enemy";
         koopaReformCoroutine = StartCoroutine(ShellReform());
     }
 
     private void StartMoveShell(Transform player)
     {
         koopaState = KoopaState.ShellMoving;
-        //change tag to projectile -> change back to enemy if stop moving
+        gameObject.tag = "Shell";
         if (koopaReformCoroutine != null) StopCoroutine(koopaReformCoroutine);
         anim.SetBool("isShell", true);
         anim.SetBool("isReforming", false);
@@ -220,8 +235,9 @@ public class EnemyController : MonoBehaviour
 
     private void DieKnockback(Vector2 dir)
     {
+        isDead = true;
         rb.linearVelocity = Vector2.zero;
-        collider.enabled = false;
+        col.enabled = false;
         rb.AddForce(dir * knockbackForceX + Vector2.up * knockbackForceY, ForceMode2D.Impulse);
         anim.SetBool("isMoving", false);
         anim.SetBool("isDead", true);
