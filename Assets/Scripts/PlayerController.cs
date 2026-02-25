@@ -264,8 +264,8 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(rb.linearVelocityX) > 0.1f) animator.SetBool("isMoving", true);
         else animator.SetBool("isMoving", false);
 
-        if (moveValue.x > 0) facingDirection = 1;
-        else if (moveValue.x < 0) facingDirection = -1;
+        if (moveValue.x > 0 && !isJumping) facingDirection = 1;
+        else if (moveValue.x < 0 && !isJumping) facingDirection = -1;
         transform.localScale = new Vector3(facingDirection, 1, 1);        
     }
 }
