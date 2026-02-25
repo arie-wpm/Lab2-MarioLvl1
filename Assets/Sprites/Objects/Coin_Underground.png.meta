@@ -128,8 +128,6 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-<<<<<<< HEAD
-=======
   - serializedVersion: 4
     buildTarget: Android
     maxTextureSize: 2048
@@ -169,7 +167,6 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
->>>>>>> Collectables
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -177,20 +174,20 @@ TextureImporter:
       name: Coin_Underground_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 16
-      alignment: 8
-      pivot: {x: 1, y: 0}
+        x: 3
+        y: 1
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a154b61a0e6c7f8f0800000000000000
-      internalID: -506717764972755686
+      spriteID: f186965952a624b74944284d70705469
+      internalID: 1414586661
       vertices: []
       indices: 
       edges: []
@@ -199,20 +196,20 @@ TextureImporter:
       name: Coin_Underground_1
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 8
-      pivot: {x: 1, y: 0}
+        x: 19
+        y: 1
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: e06d9a1f18eb6cd90800000000000000
-      internalID: -7077760299051657714
+      spriteID: 96676ec7cb5374f6386a85a0510cb8c0
+      internalID: -1278355893
       vertices: []
       indices: 
       edges: []
@@ -221,20 +218,20 @@ TextureImporter:
       name: Coin_Underground_2
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 8
-      pivot: {x: 1, y: 0}
+        x: 35
+        y: 1
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 670b7ba28070fc970800000000000000
-      internalID: 8777241930426200182
+      spriteID: 61373d4cd688346c3b5ed83153cbf0f3
+      internalID: 468180897
       vertices: []
       indices: 
       edges: []
@@ -243,7 +240,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 17c678e0b2366ab479fbcb3db58cd9bb
+    spriteID: 154246f4024d648e291813369cb294f5
     internalID: 0
     vertices: []
     indices: 
@@ -253,11 +250,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":1.0,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":8,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Coin_Underground_0: -506717764972755686
-      Coin_Underground_1: -7077760299051657714
-      Coin_Underground_2: 8777241930426200182
+      Coin_Underground_0: 1414586661
+      Coin_Underground_1: -1278355893
+      Coin_Underground_2: 468180897
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
