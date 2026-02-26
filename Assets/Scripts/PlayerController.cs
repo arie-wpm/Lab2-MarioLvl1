@@ -4,38 +4,82 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Ground Velocities")] 
-    [SerializeField] private float minWalkVelocity;
-    [SerializeField] private float maxWalkVelocity;
-    [SerializeField] private float maxRunningVelocity;
-    
+    [Header("Ground Velocities")]
+    [SerializeField]
+    private float minWalkVelocity;
+
+    [SerializeField]
+    private float maxWalkVelocity;
+
+    [SerializeField]
+    private float maxRunningVelocity;
+
     [Header("Ground Accelerations")]
-    [SerializeField] private float walkAcceleration;
-    [SerializeField] private float runAcceleration;
-    [SerializeField] private float deceleration;
-    [SerializeField] private float skidDeceleration;
+    [SerializeField]
+    private float walkAcceleration;
 
-    [Header("Jump Values")] 
-    [SerializeField] private float slowJumpVelocity;
-    [SerializeField] private float slowJumpHoldGravity;
-    [SerializeField] private float slowJumpFallGravity;
-    [SerializeField] private float walkJumpVelocity;
-    [SerializeField] private float walkJumpHoldGravity;
-    [SerializeField] private float walkJumpFallGravity;
-    [SerializeField] private float runJumpVelocity;
-    [SerializeField] private float runJumpHoldGravity;
-    [SerializeField] private float runJumpFallGravity;
-    [SerializeField] private Transform groundCheckPos;
-    [SerializeField] private float groundCheckDistance= 0.2f;
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField]
+    private float runAcceleration;
 
-    [Header("Mid air accelerations")] 
-    [SerializeField] private float midAirForwardSlowAcceleration;
-    [SerializeField] private float midAirForwardFastAcceleration;
-    [SerializeField] private float midAirBackwardsFastDeceleration;
-    [SerializeField] private float midAirBackwardsSlowFastJumpDeceleration;
-    [SerializeField] private float midAirBackwardsSlowSlowJumpDeceleration;
-    
+    [SerializeField]
+    private float deceleration;
+
+    [SerializeField]
+    private float skidDeceleration;
+
+    [Header("Jump Values")]
+    [SerializeField]
+    private float slowJumpVelocity;
+
+    [SerializeField]
+    private float slowJumpHoldGravity;
+
+    [SerializeField]
+    private float slowJumpFallGravity;
+
+    [SerializeField]
+    private float walkJumpVelocity;
+
+    [SerializeField]
+    private float walkJumpHoldGravity;
+
+    [SerializeField]
+    private float walkJumpFallGravity;
+
+    [SerializeField]
+    private float runJumpVelocity;
+
+    [SerializeField]
+    private float runJumpHoldGravity;
+
+    [SerializeField]
+    private float runJumpFallGravity;
+
+    [SerializeField]
+    private Transform groundCheckPos;
+
+    [SerializeField]
+    private float groundCheckDistance = 0.2f;
+
+    [SerializeField]
+    private LayerMask groundLayer;
+
+    [Header("Mid air accelerations")]
+    [SerializeField]
+    private float midAirForwardSlowAcceleration;
+
+    [SerializeField]
+    private float midAirForwardFastAcceleration;
+
+    [SerializeField]
+    private float midAirBackwardsFastDeceleration;
+
+    [SerializeField]
+    private float midAirBackwardsSlowFastJumpDeceleration;
+
+    [SerializeField]
+    private float midAirBackwardsSlowSlowJumpDeceleration;
+
     public bool grounded;
     [HideInInspector] public Rigidbody2D rb;
     private InputAction moveAction;
@@ -46,9 +90,10 @@ public class PlayerController : MonoBehaviour
     private string jumpType = "";
     private float initialJumpXVelocity;
 
-    // testing Animator
     private Animator animator;
-    [SerializeField] private bool isLarge;
+    private bool isJumping = false;
+    private bool hasVerticalVelocity = false;
+    private int facingDirection = 1;
 
     private void Start()
     {
@@ -61,7 +106,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update()
-    {    
+    {
+        if (StateManager.CurrentGameState() != StateManager.GameState.Won)
+        {
+            AnimCheckVelocity();
+        }
         moveValue = moveAction.ReadValue<Vector2>();
 
         // RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, groundCheckDistance, groundLayer);
@@ -76,18 +125,25 @@ public class PlayerController : MonoBehaviour
         // Sorry James for you to review
 
         Vector2 boxSize = new Vector2(0.65f, 0.5f);
-        RaycastHit2D hit = Physics2D.BoxCast(groundCheckPos.position, boxSize, 0f, Vector2.down, groundCheckDistance, groundLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(
+            groundCheckPos.position,
+            boxSize,
+            0f,
+            Vector2.down,
+            groundCheckDistance,
+            groundLayer
+        );
         grounded = hit.collider != null;
-        
+
         if (jumpAction.WasPressedThisFrame() && grounded)
         {
-            Debug.Log("Im Jumping");
+            //Debug.Log("Im Jumping");
             Jump();
         }
 
-        if (!grounded && (jumpAction.WasReleasedThisFrame()|| rb.linearVelocityY < 0))
+        if (!grounded && (jumpAction.WasReleasedThisFrame() || rb.linearVelocityY < 0))
         {
-            Debug.Log("Gravity switched to fall mode");
+            //Debug.Log("Gravity switched to fall mode");
             switch (jumpType)
             {
                 case "Slow":
@@ -103,18 +159,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void FreezeJumpAnim()
-    {
-        animator.SetBool("isJumping", true);
-        animator.SetBool("isMoving", false);
-    }
-
-    void UnFreezeJumpAnim()
-    {
-        animator.SetBool("isJumping", false);
-        animator.SetBool("isMoving", true);
-    }
-
     private void FixedUpdate()
     {
         // V = U + at
@@ -122,7 +166,6 @@ public class PlayerController : MonoBehaviour
         float a = 0;
         if (grounded) // Ground Movement
         {
-            UnFreezeJumpAnim();
             if (moveValue.x != 0 && !runAction.IsPressed())
             {
                 a = moveValue.x * walkAcceleration;
@@ -152,23 +195,30 @@ public class PlayerController : MonoBehaviour
                     a = -currentDirection.x * deceleration;
                 }
             }
-            
-            if(moveValue.x != 0 && !(moveValue.x > 0 && currentDirection.x > 0 
-                                     || moveValue.x < 0 && currentDirection.x < 0))
+
+            if (
+                moveValue.x != 0
+                && !(
+                    moveValue.x > 0 && currentDirection.x > 0
+                    || moveValue.x < 0 && currentDirection.x < 0
+                )
+            )
             {
                 a = moveValue.x * skidDeceleration;
                 //sliding
                 animator.SetBool("isSliding", true);
-            } else
+            }
+            else
             {
                 animator.SetBool("isSliding", false);
             }
-
         }
         else //Mid AIR Movement
         {
-            FreezeJumpAnim();
-            if (moveValue.x > 0 && currentDirection.x > 0 || moveValue.x < 0 && currentDirection.x < 0)
+            if (
+                moveValue.x > 0 && currentDirection.x > 0
+                || moveValue.x < 0 && currentDirection.x < 0
+            )
             {
                 if (Mathf.Abs(rb.linearVelocityX) < 5.859375)
                 {
@@ -179,7 +229,10 @@ public class PlayerController : MonoBehaviour
                     a = midAirForwardFastAcceleration * currentDirection.x;
                 }
             }
-            else if(moveValue.x < 0 && currentDirection.x > 0 || moveValue.x > 0 && currentDirection.x < 0)
+            else if (
+                moveValue.x < 0 && currentDirection.x > 0
+                || moveValue.x > 0 && currentDirection.x < 0
+            )
             {
                 if (Mathf.Abs(rb.linearVelocityX) >= 5.859375)
                 {
@@ -198,32 +251,26 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        
+
         rb.linearVelocityX = rb.linearVelocity.x + a * Time.fixedDeltaTime;
-        animator.speed = Mathf.Abs(rb.linearVelocityX);
-        
+
         if (rb.linearVelocityX > 0)
         {
-            animator.SetBool("isMoving", true);
             transform.localScale = new Vector3(1, 1, 1);
             currentDirection = Vector2.right;
         }
         else if (rb.linearVelocityX < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
-            animator.SetBool("isMoving", true);
             currentDirection = Vector2.left;
-        } else
-        {
-            animator.SetBool("isMoving", false);
         }
-        
     }
 
     private void Jump()
     {
+        isJumping = true;
         grounded = false;
-        
+
         if (Mathf.Abs(rb.linearVelocityX) < 3.75)
         {
             jumpType = "Slow";
@@ -280,10 +327,50 @@ public class PlayerController : MonoBehaviour
     
     void OnDrawGizmos()
     {
-        if (groundCheckPos == null) return;
+        if (groundCheckPos == null)
+            return;
         Vector2 boxSize = new Vector2(0.65f, 0.5f);
         Vector2 boxCenter = groundCheckPos.position + Vector3.down * groundCheckDistance;
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(boxCenter, boxSize);
+    }
+
+    void AnimCheckVelocity()
+    {
+        animator.SetFloat("MoveSpeed", Mathf.Abs(rb.linearVelocityX));
+        hasVerticalVelocity = Mathf.Abs(rb.linearVelocity.y) > 0.1f;
+
+        if (hasVerticalVelocity && !isJumping)
+        {
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isMoving", false);
+            animator.speed = 0f;
+        }
+        else if (hasVerticalVelocity && isJumping)
+        {
+            animator.SetBool("isJumping", true);
+            animator.SetBool("isMoving", false);
+        }
+        else if (!hasVerticalVelocity && isJumping)
+        {
+            isJumping = false;
+            animator.speed = 1f;
+        }
+        else
+            animator.speed = 1f;
+
+        if (grounded)
+            animator.SetBool("isJumping", false);
+
+        if (Mathf.Abs(rb.linearVelocityX) > 0.1f)
+            animator.SetBool("isMoving", true);
+        else
+            animator.SetBool("isMoving", false);
+
+        if (moveValue.x > 0 && !isJumping)
+            facingDirection = 1;
+        else if (moveValue.x < 0 && !isJumping)
+            facingDirection = -1;
+        transform.localScale = new Vector3(facingDirection, 1, 1);
     }
 }
