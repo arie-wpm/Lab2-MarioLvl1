@@ -1,5 +1,4 @@
-using System;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class InteractableBlock : MonoBehaviour
@@ -18,6 +17,7 @@ public class InteractableBlock : MonoBehaviour
     
     [SerializeField] private GameObject heldPickup;
     [SerializeField] private GameObject upgradedPickup;
+    [SerializeField] private GameObject brickDebrisPrefab;
     
     private SpriteRenderer rend;
     private BoxCollider2D col;
@@ -38,62 +38,46 @@ public class InteractableBlock : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            float blockBotY = col.bounds.min.y;
-            float playerTopY = other.collider.bounds.max.y;
-            bool playerIsBelow = blockBotY > playerTopY;
-            
-            if (playerIsBelow)
-            {
-                PlayerStats playerStats = other.gameObject.GetComponent<PlayerStats>();
-                Debug.Log("player form: "+playerStats.powerState);
-                switch (playerStats.powerState)
-                {
-                    case MarioPowerState.Small:
-                        if (blockState == BlockState.QBlock || blockState == BlockState.QBlockInvis)
-                        {
-                            HitBlock();
-                        }
-                        else
-                        {
-                            //bump hit anim, no hit function
-                            Bump();
-                        }
-                        break;
-                    case MarioPowerState.Super:
-                        HitBlock();
-                        break;
-                    case MarioPowerState.Fire:
-                        HitBlock();
-                        break;
-                }
-                
-            }
+            PlayerStats playerStats = other.gameObject.GetComponent<PlayerStats>();
+            MarioPowerState powerState = playerStats.powerState;
+
+            Bounds playerBounds = other.collider.bounds;
+            Bounds blockBounds = col.bounds;
+            Bounds checkBounds = blockBounds;
+            checkBounds.Expand(new Vector3(0.1f, 0f, 0f));
+
+            float playerCenterX = playerBounds.center.x;
+            bool hAligned = playerCenterX > checkBounds.min.x && playerCenterX < checkBounds.max.x;
+
+            float playerTopY = playerBounds.max.y;
+            float blockBotY = checkBounds.min.y;
+
+            float tolerance = 0.05f;
+            bool bAligned = Mathf.Abs(blockBotY - playerTopY) <= tolerance;
+
+            if (hAligned && bAligned) HitBlock(powerState);
         }
     }
 
-    private void HitBlock()
+    private void HitBlock(MarioPowerState powerState)
     {
-        if (blockState == BlockState.QBlockInvis)
-        {
-            rend.enabled = true;
-            blockState = BlockState.QBlock;
-        }
-        
-        //bump hit anim
         Bump();
         hp -= 1;
-        if (heldPickup)
-        {
-            SpawnPickup();
-        }
+        if (heldPickup) SpawnPickup();
 
         switch (blockState)
         {
+            case BlockState.QBlockInvis:
+                SetInactive();
+                rend.enabled = true;
+                blockState = BlockState.QBlock;
+                break;
             case BlockState.QBlock:
                 SetInactive();
                 break;
             case BlockState.BrickBreakable:
-                BreakableBlock();
+                if (powerState == MarioPowerState.Small) StartCoroutine(MoveBlockAnimation());
+                else BreakableBlock();
                 break;
             case BlockState.BrickUnbreakable:
                 SetInactive();
@@ -103,16 +87,19 @@ public class InteractableBlock : MonoBehaviour
 
     private void BreakableBlock()
     {
+        Debug.LogWarning("Breakable");
         if (hp != 0) return;
-        //anim -> break
+        Instantiate(brickDebrisPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject, destroyDelay);
     }
 
     private void SetInactive()
     {
         if (hp != 0) return;
-        anim.SetBool("isDepleted", true); //fix animation
-        this.enabled = false;
+        StartCoroutine(MoveBlockAnimation());
+        anim.SetBool("isDepleted", true);
+        // this.enabled = false; // Script looks disabled in editor but still works
+        Destroy(this, 0.3f);
     }
 
     private void Bump()
@@ -134,5 +121,26 @@ public class InteractableBlock : MonoBehaviour
     private void SpawnPickup()
     {
         
+    }
+
+    IEnumerator MoveBlockAnimation()
+    {
+        Vector2 currentTransform = transform.position;
+        Vector2 targetTransform = new Vector2(transform.position.x, transform.position.y + 0.5f);
+        float timer = 0f;
+        while (timer < 0.1f)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector2.Lerp(currentTransform, targetTransform, timer / 0.1f);
+            yield return null;
+        }
+
+        timer = 0f;
+        while (timer < 0.1f)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector2.Lerp(targetTransform, currentTransform, timer / 0.1f);
+            yield return null;
+        }
     }
 }
