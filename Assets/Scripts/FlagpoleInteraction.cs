@@ -32,11 +32,11 @@ public class FlagpoleInteraction : MonoBehaviour
             marioA.SetBool("isMoving", false);
             marioA.SetLayerWeight(0, 1);
             marioA.SetBool("isPoleSliding", true);
-            StartCoroutine(MoveToCastle(t));
+            StartCoroutine(MoveToCastle(t, marioA));
         }
     }
 
-    IEnumerator MoveToCastle(Transform t)
+    IEnumerator MoveToCastle(Transform t, Animator a)
     {
         Debug.Log("Moving Mario");
         float newY = 0;
@@ -51,5 +51,7 @@ public class FlagpoleInteraction : MonoBehaviour
             t.position = new Vector3(t.position.x, newY, 0);
             yield return null;
         }
+        Debug.Log("Stopping Animation");
+        a.speed = 0;
     }
 }
