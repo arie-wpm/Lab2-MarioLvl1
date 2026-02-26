@@ -18,24 +18,24 @@ public class StateManager : MonoBehaviour
     // State Related Events Invoked whenever a state is entered.
     public static GameState CurrentState;
 
-    public static UnityEvent EnteredStartScreen;
-    public static UnityEvent EnteredPlay;
-    public static UnityEvent EnteredPauseScreen;
-    public static UnityEvent EnteredInvincible;
-    public static UnityEvent EnteredFireFlower;
-    public static UnityEvent EnteredDead;
-    public static UnityEvent EnteredWon;
+    public static UnityEvent EnteredStartScreen = new UnityEvent();
+    public static UnityEvent EnteredPlay = new UnityEvent();
+    public static UnityEvent EnteredPauseScreen = new UnityEvent();
+    public static UnityEvent EnteredInvincible = new UnityEvent();
+    public static UnityEvent EnteredFireFlower = new UnityEvent();
+    public static UnityEvent EnteredDead = new UnityEvent();
+    public static UnityEvent EnteredWon = new UnityEvent();
 
-    void OnEnable()
-    {
-        EnteredStartScreen ??= new UnityEvent();
-        EnteredPlay ??= new UnityEvent();
-        EnteredPauseScreen ??= new UnityEvent();
-        EnteredInvincible ??= new UnityEvent();
-        EnteredFireFlower ??= new UnityEvent();
-        EnteredDead ??= new UnityEvent();
-        EnteredWon ??= new UnityEvent();
-    }
+    // void OnEnable()
+    // {
+    //     EnteredStartScreen ??= new UnityEvent();
+    //     EnteredPlay ??= new UnityEvent();
+    //     EnteredPauseScreen ??= new UnityEvent();
+    //     EnteredInvincible ??= new UnityEvent();
+    //     EnteredFireFlower ??= new UnityEvent();
+    //     EnteredDead ??= new UnityEvent();
+    //     EnteredWon ??= new UnityEvent();
+    // }
 
     void Start()
     {
