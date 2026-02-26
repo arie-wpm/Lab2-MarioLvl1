@@ -107,10 +107,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (StateManager.CurrentGameState() != StateManager.GameState.Won)
-        {
-            AnimCheckVelocity();
-        }
+        if (StateManager.CurrentGameState() != StateManager.GameState.Play)
+            return;
+        AnimCheckVelocity();
         moveValue = moveAction.ReadValue<Vector2>();
 
         // RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, groundCheckDistance, groundLayer);
@@ -161,6 +160,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (StateManager.CurrentGameState() != StateManager.GameState.Play)
+            return;
         // V = U + at
 
         float a = 0;

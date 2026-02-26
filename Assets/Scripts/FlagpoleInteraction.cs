@@ -31,6 +31,9 @@ public class FlagpoleInteraction : MonoBehaviour
     [SerializeField]
     private Vector3 cFlagEndPos = new Vector3();
 
+    [SerializeField]
+    private AudioManager am;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,8 +48,14 @@ public class FlagpoleInteraction : MonoBehaviour
         if (collision.tag == "Player")
         {
             Debug.Log("Hit Pole");
+            am.StopBGM();
+            am.Play("flagslide");
+
             StateManager.SetWinState();
-            collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
+            {
+                collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            }
             Transform t = collision.gameObject.GetComponent<Transform>();
             t.position = new Vector3(flagX, t.position.y, 0);
             Animator marioA = collision.GetComponent<Animator>();
@@ -67,7 +76,7 @@ public class FlagpoleInteraction : MonoBehaviour
 
         while (Mathf.Abs(t.position.y - ClimbPoint.position.y) > 0.01f)
         {
-            newY = Mathf.MoveTowards(t.position.y, ClimbPoint.position.y, 3.5f * Time.deltaTime);
+            newY = Mathf.MoveTowards(t.position.y, ClimbPoint.position.y, 6.2f * Time.deltaTime);
             t.position = new Vector3(t.position.x, newY, 0);
             yield return null;
         }
@@ -77,6 +86,7 @@ public class FlagpoleInteraction : MonoBehaviour
         a.gameObject.transform.Rotate(new Vector3(0, 180, 0));
         a.gameObject.transform.position += new Vector3(0.38f, 0, 0);
         yield return new WaitForSeconds(0.5f);
+        am.Play("stageclear");
         a.ResetControllerState();
         a.speed = 1;
         a.SetBool("isJumping", true);
@@ -116,7 +126,7 @@ public class FlagpoleInteraction : MonoBehaviour
         float newY = 0;
         while (Mathf.Abs(flag.position.y - flagBasePos.y) > 0.01f)
         {
-            newY = Mathf.MoveTowards(flag.position.y, flagBasePos.y, 2f * Time.deltaTime);
+            newY = Mathf.MoveTowards(flag.position.y, flagBasePos.y, 6f * Time.deltaTime);
             flag.position = new Vector3(flag.position.x, newY, 0);
             yield return null;
         }

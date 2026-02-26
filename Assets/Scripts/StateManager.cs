@@ -39,7 +39,7 @@ public class StateManager : MonoBehaviour
 
     void Start()
     {
-        CurrentState = GameState.StartScreen;
+        CurrentState = GameState.Play;
         EnteredWon.AddListener(PrintWin);
     }
 
