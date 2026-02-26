@@ -116,10 +116,11 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            PlayerStats playerStats = other.gameObject.GetComponent<PlayerStats>();
             float enemyTopY = col.bounds.max.y;
             float playerBotY = other.collider.bounds.min.y;
             
-            if (StateManager.CurrentGameState() == StateManager.GameState.Invincible)
+            if (playerStats.isInvincible)
             {
                 Vector2 knockbackDir = other.transform.position.x < transform.position.x ? Vector2.right : Vector2.left;
                 DieKnockback(knockbackDir);
