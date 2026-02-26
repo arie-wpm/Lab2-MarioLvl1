@@ -40,6 +40,7 @@ public class StateManager : MonoBehaviour
     void Start()
     {
         CurrentState = GameState.StartScreen;
+        EnteredWon.AddListener(PrintWin);
     }
 
     public static GameState CurrentGameState()
@@ -99,7 +100,13 @@ public class StateManager : MonoBehaviour
     {
         if (CurrentState == GameState.Won)
             return;
+
         CurrentState = GameState.Won;
         EnteredWon.Invoke();
+    }
+
+    private void PrintWin()
+    {
+        Debug.Log("You Win");
     }
 }
