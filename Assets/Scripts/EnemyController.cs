@@ -93,6 +93,9 @@ public class EnemyController : MonoBehaviour, IBumpable
         Vector2 origin = col.bounds.center;
         origin.x += moveDir.x * (col.bounds.extents.x + 0.01f);
         RaycastHit2D hit = Physics2D.Raycast(origin, moveDir, wallCheckDist);
+
+        if (hit.collider && hit.collider.CompareTag("Respawn")) return;
+
         if (koopaState == KoopaState.ShellMoving)
         {
             if (hit.collider && !hit.collider.CompareTag("Player") && !hit.collider.CompareTag("Fireball") && !hit.collider.CompareTag("Shell") && !hit.collider.CompareTag("Enemy"))

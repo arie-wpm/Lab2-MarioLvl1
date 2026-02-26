@@ -104,7 +104,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2b19c097612557a44b4d384e40a41c7b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -174,9 +174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0587c9102e494346a31d43d909712ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableBlock
-  isInvisible: 0
-  isBreakable: 0
-  breakDelay: 0
+  blockState: 0
+  destroyDelay: 0
   hp: 1
   heldPickup: {fileID: 0}
   upgradedPickup: {fileID: 0}
+  brickDebrisPrefab: {fileID: 0}
