@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class InteractableBlock : MonoBehaviour
@@ -40,13 +38,24 @@ public class InteractableBlock : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            float blockBotY = col.bounds.min.y;
-            float playerTopY = other.collider.bounds.max.y;
-            bool playerIsBelow = blockBotY > playerTopY;
-            
             PlayerStats playerStats = other.gameObject.GetComponent<PlayerStats>();
             MarioPowerState powerState = playerStats.powerState;
-            if (playerIsBelow) HitBlock(powerState);
+
+            Bounds playerBounds = other.collider.bounds;
+            Bounds blockBounds = col.bounds;
+            Bounds checkBounds = blockBounds;
+            checkBounds.Expand(new Vector3(0.1f, 0f, 0f));
+
+            float playerCenterX = playerBounds.center.x;
+            bool hAligned = playerCenterX > checkBounds.min.x && playerCenterX < checkBounds.max.x;
+
+            float playerTopY = playerBounds.max.y;
+            float blockBotY = checkBounds.min.y;
+
+            float tolerance = 0.05f;
+            bool bAligned = Mathf.Abs(blockBotY - playerTopY) <= tolerance;
+
+            if (hAligned && bAligned) HitBlock(powerState);
         }
     }
 
