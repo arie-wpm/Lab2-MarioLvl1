@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: c1275891c353deb4498aefa68ab45c2b
+guid: a1ac2f9946ffb8644bee7c72e7e2723f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -506717764972755686
-    second: Coin_Underground_0
-  - first:
-      213: -7077760299051657714
-    second: Coin_Underground_1
-  - first:
-      213: 8777241930426200182
-    second: Coin_Underground_2
+      213: 1536296705554962757
+    second: Pipe_H_top_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,10 +46,10 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 6
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -128,50 +122,55 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: tvOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Coin_Underground_0
+      name: Pipe_H_top_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 549d43cc6b5025510800000000000000
+      internalID: 1536296705554962757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pipe_H_top_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 23
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fc50f7e1ff7bf34598cdfb50a508041
+      internalID: 221874520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pipe_H_top_2
       rect:
         serializedVersion: 2
         x: 0
@@ -186,19 +185,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f186965952a624b74944284d70705469
-      internalID: 1414586661
+      spriteID: c2f37b9a67c35df43806ab6ac87f85cf
+      internalID: 689792577
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coin_Underground_1
+      name: Pipe_H_top_3
       rect:
         serializedVersion: 2
         x: 16
         y: 0
-        width: 16
+        width: 23
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -208,30 +207,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96676ec7cb5374f6386a85a0510cb8c0
-      internalID: -1278355893
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Coin_Underground_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 61373d4cd688346c3b5ed83153cbf0f3
-      internalID: 468180897
+      spriteID: 0a7bb38538222de4cb7774278405b69b
+      internalID: -1339190025
       vertices: []
       indices: 
       edges: []
@@ -240,7 +217,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 154246f4024d648e291813369cb294f5
+    spriteID: aca8cd7f0b1298f42badaf33607fb0b5
     internalID: 0
     vertices: []
     indices: 
@@ -252,9 +229,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Coin_Underground_0: 1414586661
-      Coin_Underground_1: -1278355893
-      Coin_Underground_2: 468180897
+      Pipe_H_top_0: 1536296705554962757
+      Pipe_H_top_1: 221874520
+      Pipe_H_top_2: 689792577
+      Pipe_H_top_3: -1339190025
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
