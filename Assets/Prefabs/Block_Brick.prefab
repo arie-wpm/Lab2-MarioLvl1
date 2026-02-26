@@ -156,3 +156,4 @@ MonoBehaviour:
   hp: 1
   heldPickup: {fileID: 0}
   upgradedPickup: {fileID: 0}
+  brickDebrisPrefab: {fileID: 8782631454451822694, guid: 07309dd30a7e8fc4a8fdf7353f57e666, type: 3}
