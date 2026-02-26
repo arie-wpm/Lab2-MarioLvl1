@@ -120,9 +120,11 @@ public class InteractableBlock : MonoBehaviour
 
     private void SpawnPickup()
     {
-        
+        var blockCol = GetComponent<Collider2D>();
+        float x = blockCol.bounds.center.x;
+        float y = blockCol.bounds.center.y;
+        GameObject item = Instantiate(heldPickup, new Vector3(x, y, 0f), Quaternion.identity, transform);
     }
-
     IEnumerator MoveBlockAnimation()
     {
         Vector2 currentTransform = transform.position;

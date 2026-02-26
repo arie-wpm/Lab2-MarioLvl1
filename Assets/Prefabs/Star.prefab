@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 984781397190503066}
   - component: {fileID: 4092384327371851992}
   - component: {fileID: 6753600740193798656}
+  - component: {fileID: -517049667512490789}
+  - component: {fileID: 6042500742977337650}
   m_Layer: 7
   m_Name: Star
   m_TagString: Untagged
@@ -242,3 +244,34 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.5, y: 0.4}
   m_Radius: 0.38
+--- !u!114 &-517049667512490789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9068852077722777026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06bbeab0b74a845b197778606277b1d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlockItem
+--- !u!114 &6042500742977337650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9068852077722777026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3534931d354114090b94922f35cb2826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityMovement
+  speed: 3
+  direction: {x: 1, y: 0}
+  groundCheckDistance: 0.1
+  wallCheckDistance: 0.1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0

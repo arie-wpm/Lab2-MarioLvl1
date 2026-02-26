@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FlagpoleInteraction : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class FlagpoleInteraction : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        StateManager.EnteredWon ??= new UnityEvent();
         StateManager.EnteredWon.AddListener(MoveFlagToBase);
     }
 
