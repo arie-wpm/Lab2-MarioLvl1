@@ -56,6 +56,7 @@ public class InteractableBlock : MonoBehaviour
                         else
                         {
                             //bump hit anim, no hit function
+                            Bump();
                         }
                         break;
                     case MarioPowerState.Super:
@@ -79,6 +80,7 @@ public class InteractableBlock : MonoBehaviour
         }
         
         //bump hit anim
+        Bump();
         hp -= 1;
         if (heldPickup)
         {
@@ -111,6 +113,22 @@ public class InteractableBlock : MonoBehaviour
         if (hp != 0) return;
         anim.SetBool("isDepleted", true); //fix animation
         this.enabled = false;
+    }
+
+    private void Bump()
+    {
+        Vector2 point = new Vector2(col.bounds.center.x, col.bounds.max.y + 0.1f);
+        Vector2 size = new Vector2(col.bounds.size.x * 0.9f, 0.25f);
+        
+        Collider2D[] hits = Physics2D.OverlapBoxAll(point, size, 0f);
+        foreach(Collider2D hit in hits)
+        {
+            IBumpable bumpable = hit.GetComponent<IBumpable>();
+            if (bumpable != null)
+            {
+                bumpable.OnBump();
+            }
+        }
     }
 
     private void SpawnPickup()

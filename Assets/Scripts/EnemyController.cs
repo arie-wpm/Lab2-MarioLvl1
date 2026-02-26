@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IBumpable
 {
     private Vector2 moveDir;
     private Rigidbody2D rb;
@@ -253,5 +253,12 @@ public class EnemyController : MonoBehaviour
     {
         //score popup
         ScoreManager.ModifyScore(score);
+    }
+
+    public void OnBump()
+    {
+        if (isDead) return;
+        
+        DieKnockback(new Vector2(-0.3f, 0f));
     }
 }
