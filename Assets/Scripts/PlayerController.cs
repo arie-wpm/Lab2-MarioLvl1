@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float midAirBackwardsSlowSlowJumpDeceleration;
     
     public bool grounded;
-    private Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction jumpAction;
@@ -246,6 +246,38 @@ public class PlayerController : MonoBehaviour
         initialJumpXVelocity = Mathf.Abs(rb.linearVelocityX);
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Die();
+        }
+    }
+
+    public void Stomp()
+    {
+        rb.linearVelocityY = UnitsToHex(Mathf.Abs(rb.linearVelocityY), "04");
+    }
+
+    private void Die()
+    {
+        Debug.Log("Die");
+    }
+    
+    private float UnitsToHex(float value, string hexToAdd)
+    {
+        string valueHex = ((long)(value * Mathf.Pow(16, 4) / 60)).ToString("X5");
+        Debug.Log("valueHex: " + valueHex);
+        
+        string endHex = valueHex[^3..];
+        
+        string fullHex = hexToAdd + endHex;
+        Debug.Log("fullHex: " + fullHex);
+        
+        long newValue = Convert.ToInt64(fullHex, 16);
+        return (float)newValue / Mathf.Pow(16, 4) * 60;
+    }
+    
     void OnDrawGizmos()
     {
         if (groundCheckPos == null) return;
