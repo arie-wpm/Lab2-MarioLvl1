@@ -25947,6 +25947,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 758946371}
     m_Modifications:
+    - target: {fileID: 2913557966034603388, guid: 3e79bfc5c591f0c44b47a3eb56857365, type: 3}
+      propertyPath: isBreakable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3617977025220761552, guid: 3e79bfc5c591f0c44b47a3eb56857365, type: 3}
       propertyPath: m_Name
       value: Block_Brick
@@ -43731,6 +43735,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 758946371}
     m_Modifications:
+    - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
+      propertyPath: isInvisible
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Mushroom

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4373888531796031781}
   - component: {fileID: 4568485155527832928}
   - component: {fileID: 7860136715124317796}
+  - component: {fileID: 2913557966034603388}
   m_Layer: 6
   m_Name: Block_Brick
   m_TagString: Untagged
@@ -138,3 +139,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2913557966034603388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3617977025220761552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0587c9102e494346a31d43d909712ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableBlock
+  blockState: 2
+  destroyDelay: 0
+  hp: 1
+  heldPickup: {fileID: 0}
+  upgradedPickup: {fileID: 0}

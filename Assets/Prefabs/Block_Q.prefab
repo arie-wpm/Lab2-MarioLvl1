@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2377883989347002410}
   - component: {fileID: 4839090956558205516}
   - component: {fileID: 3713103621930689263}
+  - component: {fileID: -4619474197206590237}
   m_Layer: 6
   m_Name: Block_Q
   m_TagString: Untagged
@@ -161,3 +162,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-4619474197206590237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2452644610569566302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0587c9102e494346a31d43d909712ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableBlock
+  isInvisible: 0
+  isBreakable: 0
+  breakDelay: 0
+  hp: 1
+  heldPickup: {fileID: 0}
+  upgradedPickup: {fileID: 0}
