@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 7810989915801122934}
   - component: {fileID: 8016391307228921193}
   - component: {fileID: 791740561293845177}
+  - component: {fileID: 8590543887441211591}
   m_Layer: 0
   m_Name: Koopa
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,7 +83,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -3745163931830953359, guid: a491f3db01c5e584aa6e4fe5b33178db, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -188,4 +189,26 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!114 &8590543887441211591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281880764745605994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a143b56a2c928409de573bc649384d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  enemy: 1
+  score: 200
+  movespeed: 2
+  wallCheckDist: 0.1
+  deathDelay: 2
+  knockbackForceX: 6
+  knockbackForceY: 3
+  shellMovespeed: 6
+  shellReformDelay: 5
+  shellReformTime: 2

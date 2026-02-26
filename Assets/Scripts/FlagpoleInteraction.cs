@@ -30,6 +30,7 @@ public class FlagpoleInteraction : MonoBehaviour
             marioA.SetLayerWeight(0, 1);
             marioA.SetBool("isJumping", false);
             marioA.SetBool("isMoving", false);
+            marioA.SetLayerWeight(0, 1);
             marioA.SetBool("isPoleSliding", true);
             StartCoroutine(MoveToCastle(t));
         }

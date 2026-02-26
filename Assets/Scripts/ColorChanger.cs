@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ColorChanger : MonoBehaviour
@@ -23,10 +24,12 @@ public class ColorChanger : MonoBehaviour
     private Color _star2_3 = new Color32(254, 204, 197, 255);
     private Color _star3_3 = new Color32(153, 78, 0, 255);
 
-    private Color[] _currentColors;
+    private Color _transparent = new Color32(0, 0, 0, 0);
 
-    public void ChangeToDefault(SpriteRenderer[] sprites)
-    {
+    private Color[] _currentColors;
+    private float _flashInterval = 0.1f;
+
+    public void ChangeToDefault(SpriteRenderer[] sprites) {
         Color[] colors = { _default1, _default2, _default3 };
         for (int i = 0; i < sprites.Length; i++) {
             sprites[i].color = colors[i];
@@ -34,8 +37,7 @@ public class ColorChanger : MonoBehaviour
         _currentColors = colors;
     }
 
-    public void ChangeToFlower(SpriteRenderer[] sprites)
-    {
+    public void ChangeToFlower(SpriteRenderer[] sprites) {
         Color[] colors = { _flower1, _flower2, _flower3 };
         for (int i = 0; i < sprites.Length; i++) {
             sprites[i].color = colors[i];
@@ -47,9 +49,15 @@ public class ColorChanger : MonoBehaviour
         StartCoroutine(StarAnim(sprites, duration));
     }
 
-    public IEnumerator StarAnim(SpriteRenderer[] sprites, float totalDuration)
-    {
-        float flashInterval = 0.1f;
+    public void ChangeToIFrame(SpriteRenderer[] sprites, float duration) {
+        StartCoroutine(IFrameAnim(sprites, duration));
+    }
+
+    public void StartTransformFreeze() {
+        StartCoroutine(TransformFreeze());
+    }
+
+    public IEnumerator StarAnim(SpriteRenderer[] sprites, float totalDuration) {
 
         Color[][] flashSets = new Color[][] {
             new Color[] { _star1_1, _star2_1, _star3_1 },
@@ -68,12 +76,46 @@ public class ColorChanger : MonoBehaviour
                 sprites[i].color = currentSet[i];
             }
             setIndex = (setIndex + 1) % setCount;
-            yield return new WaitForSeconds(flashInterval);
-            elapsed += flashInterval;
+            yield return new WaitForSeconds(_flashInterval);
+            elapsed += _flashInterval;
         }
 
         for (int i = 0; i < sprites.Length; i++) {
             sprites[i].color = _currentColors[i];
         }
+    }
+
+    public IEnumerator IFrameAnim(SpriteRenderer[] sprites, float totalDuration) {
+        
+        Color[][] flashSets = new Color[][] {
+            new Color[] { _transparent, _transparent, _transparent },
+            _currentColors,
+        };
+
+        float elapsed = 0f;
+        int setIndex = 0;
+        int setCount = flashSets.Length;
+
+        while (elapsed < totalDuration) {
+            Color[] currentSet = flashSets[setIndex];
+
+            for (int i = 0; i < sprites.Length && i < currentSet.Length; i++) {
+                sprites[i].color = currentSet[i];
+            }
+            setIndex = (setIndex + 1) % setCount;
+            yield return new WaitForSeconds(_flashInterval);
+            elapsed += _flashInterval;
+        }
+
+        for (int i = 0; i < sprites.Length; i++) {
+            sprites[i].color = _currentColors[i];
+        }
+    }
+
+    public IEnumerator TransformFreeze() {
+        Time.timeScale = 0f;
+        Debug.Log("TimeScale: " + Time.timeScale);
+        yield return new WaitForSecondsRealtime(1f);
+        Time.timeScale = 1f;
     }
 }
