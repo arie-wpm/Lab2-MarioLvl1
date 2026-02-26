@@ -68,6 +68,7 @@ public class InteractableBlock : MonoBehaviour
         switch (blockState)
         {
             case BlockState.QBlockInvis:
+                SetInactive();
                 rend.enabled = true;
                 blockState = BlockState.QBlock;
                 break;
