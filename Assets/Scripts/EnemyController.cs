@@ -114,18 +114,17 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("collision with: " + other.gameObject.name +" with tag "+ other.gameObject.tag);
         if (other.gameObject.CompareTag("Player"))
         {
-            /*if(game state = invincible)
-            {
-                Vector2 knockbackDir = new Vector2(contact.normal.x, 0);
-                dieKnockback(knockbackDir);
-            } else
-            */
             float enemyTopY = col.bounds.max.y;
             float playerBotY = other.collider.bounds.min.y;
-            if (playerBotY > enemyTopY) //above -> stomp
+            
+            if (StateManager.CurrentGameState() == StateManager.GameState.Invincible)
+            {
+                Vector2 knockbackDir = other.transform.position.x < transform.position.x ? Vector2.right : Vector2.left;
+                DieKnockback(knockbackDir);
+            } 
+            else if (playerBotY > enemyTopY) //above -> stomp
             {
                 switch (enemy)
                 {
@@ -145,15 +144,14 @@ public class EnemyController : MonoBehaviour
                 }
                 //damage player -> player gets i-frames
             }
-        } else if (other.gameObject.CompareTag("Fireball") || other.gameObject.CompareTag("Shell")) //projectile being a fireball or shell
+        } else if (other.gameObject.CompareTag("Fireball") || other.gameObject.CompareTag("Shell"))
         {
-            ContactPoint2D contact = other.contacts[0];
-            Vector2 knockbackDir = new Vector2(contact.normal.x, 0);
+            Vector2 knockbackDir = other.transform.position.x < transform.position.x ? Vector2.right : Vector2.left;
             DieKnockback(knockbackDir);
         }
     }
 
-    private void GoombaStomp() //only used for Goomba
+    private void GoombaStomp()
     {
         isDead = true;
         col.enabled = false;
@@ -253,6 +251,6 @@ public class EnemyController : MonoBehaviour
     private void GiveScore()
     {
         //score popup
-        //+score to score manager
+        ScoreManager.ModifyScore(score);
     }
 }
