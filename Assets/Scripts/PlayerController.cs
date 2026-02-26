@@ -94,7 +94,8 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool hasVerticalVelocity = false;
     private int facingDirection = 1;
-
+    private float postStompTimer;
+    private float postStompTime = 0.1f;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -157,6 +158,8 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
+
+        postStompTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -295,7 +298,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && postStompTimer <=0 )
         {
             Die();
         }
@@ -304,6 +307,7 @@ public class PlayerController : MonoBehaviour
     public void Stomp()
     {
         rb.linearVelocityY = UnitsToHex(Mathf.Abs(rb.linearVelocityY), "04");
+        postStompTimer = postStompTime;
     }
 
     private void Die()
