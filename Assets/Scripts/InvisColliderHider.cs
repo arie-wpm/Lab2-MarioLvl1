@@ -4,6 +4,8 @@ public class InvisColliderHider : MonoBehaviour
 {
     void Update()
     {
-        // Hide Colliders when Mario is large sorry best solution right now
+        PlayerStats playerStats = GameManager.Instance.player.GetComponent<PlayerStats>();
+        if (playerStats.powerState == MarioPowerState.Small) gameObject.SetActive(true);
+        else gameObject.SetActive(false);
     }
 }
