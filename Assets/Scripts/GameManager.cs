@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        currentGameState = StateManager.CurrentGameState();
+
         switch (StateManager.CurrentGameState())
         {
             case StateManager.GameState.NULL:
@@ -61,6 +63,9 @@ public class GameManager : MonoBehaviour
                 break;
             case StateManager.GameState.PauseScreen:
                 UpdateInPauseScreen();
+                break;
+            case StateManager.GameState.Dead:
+                UpdateInDeadMode();
                 break;
         }
     }
@@ -127,6 +132,15 @@ public class GameManager : MonoBehaviour
             StateManager.SetPlayState();
             player.GetComponent<Animator>().speed = 1f;
         }
+    }
+
+    void UpdateInDeadMode()
+    {
+        StartScreenObj.SetActive(false);
+        if (StateManager.CurrentGameState() != StateManager.GameState.Dead)
+            return;
+        AudioManager.Instance.Play("death");
+        AudioManager.Instance.StopBGM();
     }
 
     public static IEnumerator RestartLevel()
