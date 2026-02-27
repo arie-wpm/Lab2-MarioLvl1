@@ -8,6 +8,8 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
+    private Vector3 startPos;
+
     [Header("Ground Velocities")]
     [SerializeField]
     private float minWalkVelocity;
@@ -122,6 +124,7 @@ public class PlayerController : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         runAction = InputSystem.actions.FindAction("Sprint");
         jumpAction = InputSystem.actions.FindAction("Jump");
+        startPos = transform.position;
         grounded = true;
     }
 
@@ -338,7 +341,6 @@ public class PlayerController : MonoBehaviour
         footCol.enabled = false;
         headCol.enabled = false;
         rb.bodyType = RigidbodyType2D.Static;
-
         StartCoroutine(MoveMarioDead());
     }
 
@@ -357,6 +359,14 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         rb.bodyType = RigidbodyType2D.Dynamic;
+        yield return new WaitForSeconds(3f);
+        mainCol.enabled = true;
+        footCol.enabled = true;
+        headCol.enabled = true;
+        animator.SetBool("isDead", false);
+        animator.ResetControllerState();
+        StateManager.SetPlayState();
+        transform.position = startPos;
     }
 
     private float UnitsToHex(float value, string hexToAdd)
