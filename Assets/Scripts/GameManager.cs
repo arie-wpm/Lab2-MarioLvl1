@@ -24,6 +24,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject selectorObj;
 
+    [Header("Respawn Locations")]
+    public Camera mainCamera;
+    public Camera underGroundCamera;
+    public Transform respawnPoint1;
+    public Transform respawnPoint2;
+    public Transform CamRespawnPoint1, CamRespawnPoint2;
+    public BoxCollider2D respawnTriggerBox;
+
+    public Transform _currentRespawnPoint;
+    public Transform _currentCamRespawnPoint;
+
     // using Attack as Start for now since default is Enter
     private InputAction _moveAction => InputSystem.actions.FindAction("Move");
     private InputAction _startAction => InputSystem.actions.FindAction("Next");
@@ -43,6 +54,8 @@ public class GameManager : MonoBehaviour
 
         colorChanger.ChangeToDefault(player.GetComponentsInChildren<SpriteRenderer>());
         StartScreenObj.SetActive(true);
+        _currentRespawnPoint = respawnPoint1;
+        _currentCamRespawnPoint = CamRespawnPoint1;
     }
 
     void Update()
@@ -52,10 +65,13 @@ public class GameManager : MonoBehaviour
         switch (StateManager.CurrentGameState())
         {
             case StateManager.GameState.NULL:
+                UIManager ui = GetComponent<UIManager>();
+                ui.DisableLivesScreen();
                 UpdateInStartScreen();
                 break;
             case StateManager.GameState.StartScreen:
                 StartScreenObj.SetActive(false);
+                SetMarioPosition();
                 break;
             case StateManager.GameState.Play:
                 AudioManager.Instance.PlayBGM();
@@ -68,6 +84,14 @@ public class GameManager : MonoBehaviour
                 UpdateInDeadMode();
                 break;
         }
+    }
+
+    void SetMarioPosition() {
+        CameraFollow camFollow = mainCamera.GetComponent<CameraFollow>();
+        camFollow.SetCamX(_currentCamRespawnPoint.transform.position.x);
+        camFollow.SetLeftEdge(_currentCamRespawnPoint.transform.position.x - 7.5f);
+        player.transform.position = _currentRespawnPoint.transform.position;
+        Camera.main.transform.position = _currentCamRespawnPoint.transform.position;
     }
 
     void UpdateInStartScreen()
@@ -143,17 +167,36 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.StopBGM();
     }
 
-    public static IEnumerator RestartLevel()
+    public IEnumerator RestartLevel()
     {
         StateManager.SetStartState();
         yield return new WaitForSeconds(5f);
         StateManager.SetPlayState();
     }
 
-    public static IEnumerator RestartGame()
+    public IEnumerator RestartGame()
     {
         StateManager.SetStartState();
         yield return new WaitForSeconds(5f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ResetSceneObjects();
+    }
+
+    public void ResetSceneObjects() {
+
+        // reset position
+        _currentRespawnPoint = respawnPoint1;
+        _currentCamRespawnPoint = CamRespawnPoint1;
+        player.transform.position = _currentRespawnPoint.transform.position;
+        Camera.main.transform.position = _currentCamRespawnPoint.transform.position;
+
+        // resetColor and State
+        colorChanger.ChangeToDefault(player.GetComponentsInChildren<SpriteRenderer>());
+        player.GetComponent<PlayerStats>().Reset();
+        StateManager.CurrentState = StateManager.GameState.NULL;
+        // ScoreManager score reset
+
+        //reset blocks
+
     }
 }

@@ -223,7 +223,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5905164457932916869}
   - component: {fileID: 663931747893184482}
-  - component: {fileID: 3059067789123369500}
   m_Layer: 0
   m_Name: FootCollider
   m_TagString: Player
@@ -292,18 +291,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7331929, y: 0.13916922}
   m_EdgeRadius: 0
---- !u!114 &3059067789123369500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3073578812832589860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e4e5e9d35588e34e8608099105c6412, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerFootCollider
 --- !u!1 &7217929059657012046
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,6 +464,11 @@ MonoBehaviour:
   midAirBackwardsSlowSlowJumpDeceleration: 8.346094
   grounded: 0
   rb: {fileID: 0}
+  pStats: {fileID: 0}
+  mainCol: {fileID: 0}
+  footCol: {fileID: 0}
+  headCol: {fileID: 0}
+  deathMoveHeight: 0
 --- !u!50 &7785003992496370886
 Rigidbody2D:
   serializedVersion: 5
@@ -585,7 +577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   coins: 0
-  lives: 3
+  lives: 1
   powerState: 0
   isInvincible: 0
 --- !u!1 &9160673143075147377

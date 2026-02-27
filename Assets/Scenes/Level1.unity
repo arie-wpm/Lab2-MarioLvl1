@@ -5399,6 +5399,8 @@ Transform:
   m_Children:
   - {fileID: 1281575487}
   - {fileID: 138917904}
+  - {fileID: 1941664409}
+  - {fileID: 1274305266}
   - {fileID: 416975640}
   - {fileID: 2038385485}
   - {fileID: 2002612357}
@@ -9227,6 +9229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 416975640}
   - component: {fileID: 416975641}
+  - component: {fileID: 416975642}
   m_Layer: 0
   m_Name: RespawnChange
   m_TagString: Respawn
@@ -9295,6 +9298,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 15}
   m_EdgeRadius: 0
+--- !u!114 &416975642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416975639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac591b6cdc09ce447b17c7b2740b89f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RespawnCollider
 --- !u!1 &419625534
 GameObject:
   m_ObjectHideFlags: 0
@@ -12317,6 +12332,15 @@ MonoBehaviour:
   player1GameObj: {fileID: 2003404242}
   player2GameObj: {fileID: 2106565847}
   selectorObj: {fileID: 1381986831}
+  mainCamera: {fileID: 485716632}
+  underGroundCamera: {fileID: 1429623436}
+  respawnPoint1: {fileID: 1281575487}
+  respawnPoint2: {fileID: 138917904}
+  CamRespawnPoint1: {fileID: 1941664409}
+  CamRespawnPoint2: {fileID: 1274305266}
+  respawnTriggerBox: {fileID: 416975641}
+  _currentRespawnPoint: {fileID: 0}
+  _currentCamRespawnPoint: {fileID: 0}
 --- !u!114 &526562724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29480,6 +29504,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1274305265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1274305266}
+  m_Layer: 0
+  m_Name: CamRepsawn2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1274305266
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274305265}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 31.87037, y: 0.6431499, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 265241027}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1275058196
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46291,7 +46346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -52983,6 +53038,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1941664408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1941664409}
+  m_Layer: 0
+  m_Name: CamRepsawn1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1941664409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941664408}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -48.22963, y: 0.6431499, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 265241027}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1944720846
 GameObject:
   m_ObjectHideFlags: 0

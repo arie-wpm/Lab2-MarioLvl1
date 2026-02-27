@@ -66,4 +66,11 @@ public class PlayerStats : MonoBehaviour
         Debug.Log("Star: invincible OFF");
         starCoroutine = null;
     }
+
+    public void Reset()
+    {
+        coins = 0;
+        lives = 3;
+        SetPowerState(MarioPowerState.Small);
+    }
 }

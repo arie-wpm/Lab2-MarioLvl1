@@ -18,6 +18,9 @@ public class CameraFollow : MonoBehaviour {
 
     void LateUpdate() {
 
+        // check if flagpole conflicts
+        if (StateManager.CurrentGameState() != StateManager.GameState.Play) return;
+
         _leftEdge = transform.position.x - 7.5f;
         if (_target == null) return;
 
@@ -42,5 +45,13 @@ public class CameraFollow : MonoBehaviour {
         }
 
         transform.position = new Vector3(_camX, transform.position.y, transform.position.z);      
+    }
+
+    public void SetCamX(float x) {
+        _camX = x;
+    }
+
+    public void SetLeftEdge(float x) {
+        _leftEdge = x;
     }
 }

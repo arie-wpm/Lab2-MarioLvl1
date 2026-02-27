@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
         runAction = InputSystem.actions.FindAction("Sprint");
         jumpAction = InputSystem.actions.FindAction("Jump");
         crouchAction = InputSystem.actions.FindAction("Crouch");
-        startPos = transform.position;
+        startPos = GameManager.Instance.respawnPoint1.transform.position;
         grounded = true;
     }
 
@@ -435,15 +435,17 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         mainCol.enabled = true;
         animator.SetBool("isDead", false);
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isJumping", false);
         animator.ResetControllerState();
-        if (pStats.lives >= 0)
+        
+        if (pStats.lives > 0)
         {
-            StartCoroutine(GameManager.RestartLevel());
-            transform.position = startPos;
+            StartCoroutine(GameManager.Instance.RestartLevel());
         }
-        if (pStats.lives < 0)
+        if (pStats.lives <= 0)
         {
-            StartCoroutine(GameManager.RestartGame());
+            StartCoroutine(GameManager.Instance.RestartGame());
         }
     }
 
