@@ -116,6 +116,7 @@ public class AudioManager : MonoBehaviour {
     public void StopBGM() {
         _bgmSource.Stop();
         _introSource.Stop();
+        _bgmCoroutine = null;
 
     }
     public void SpeedUpBGM() {

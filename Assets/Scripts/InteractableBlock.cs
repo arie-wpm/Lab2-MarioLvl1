@@ -87,8 +87,9 @@ public class InteractableBlock : MonoBehaviour
 
     private void BreakableBlock()
     {
+        AudioManager.Instance.Play("brick");
         Debug.LogWarning("Breakable");
-        if (hp != 0) return;
+        if (hp > 0) return;
         Instantiate(brickDebrisPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject, destroyDelay);
     }
@@ -98,12 +99,12 @@ public class InteractableBlock : MonoBehaviour
         if (hp != 0) return;
         StartCoroutine(MoveBlockAnimation());
         anim.SetBool("isDepleted", true);
-        // this.enabled = false; // Script looks disabled in editor but still works
-        Destroy(this, 0.3f);
+        this.enabled = false;
     }
 
     private void Bump()
     {
+        AudioManager.Instance.Play("bump");
         Vector2 point = new Vector2(col.bounds.center.x, col.bounds.max.y + 0.1f);
         Vector2 size = new Vector2(col.bounds.size.x * 0.9f, 0.25f);
         
@@ -123,7 +124,14 @@ public class InteractableBlock : MonoBehaviour
         var blockCol = GetComponent<Collider2D>();
         float x = blockCol.bounds.center.x;
         float y = blockCol.bounds.center.y;
-        GameObject item = Instantiate(heldPickup, new Vector3(x, y, 0f), Quaternion.identity, transform);
+        // check Mario size
+        PlayerStats playerstats = GameManager.Instance.player.GetComponent<PlayerStats>();
+        if (playerstats.powerState != MarioPowerState.Small) heldPickup = upgradedPickup;
+        if (heldPickup != null) {
+            GameObject item = Instantiate(heldPickup, new Vector3(x, y, 0f), Quaternion.identity, transform);
+            heldPickup = null;
+            upgradedPickup = null;
+        }
     }
     IEnumerator MoveBlockAnimation()
     {

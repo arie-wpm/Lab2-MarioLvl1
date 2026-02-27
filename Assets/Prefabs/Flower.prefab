@@ -9,15 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2800469622396797320}
+  - component: {fileID: 636415337508473404}
   - component: {fileID: -6907589408050254844}
-  - component: {fileID: -6473330004348627508}
   - component: {fileID: 3206377164905179871}
   - component: {fileID: 7313393111942614767}
   - component: {fileID: 3194750932425374423}
   - component: {fileID: 9170902875798792482}
   - component: {fileID: 7573410577856704125}
   m_Layer: 7
-  m_Name: SuperMushroom
+  m_Name: Flower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,6 +38,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &636415337508473404
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235620764702118516}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: af630a0485f43ed4dbbd8ddda3d47f28, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &-6907589408050254844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,21 +72,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bbeab0b74a845b197778606277b1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlockItem
---- !u!114 &-6473330004348627508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1235620764702118516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3534931d354114090b94922f35cb2826, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityMovement
-  speed: 3.5
-  direction: {x: 1, y: 0}
-  turnSmoothTime: 0.06
 --- !u!58 &3206377164905179871
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -186,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca105c5266114123aee690db9048a28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pickup
-  type: 1
+  type: 2
   amount: 1
   starDuration: 6
 --- !u!212 &7573410577856704125
@@ -238,7 +245,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: d2fb45f6630767c479b4c853a6e804bf, type: 3}
+  m_Sprite: {fileID: 3373568495408583166, guid: 6dd9437edaaa6684193383ae520d43e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

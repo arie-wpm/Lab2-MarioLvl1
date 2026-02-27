@@ -10,6 +10,7 @@ public class BlockItem : MonoBehaviour
     private EntityMovement movement;
     private Pickup pickup;
 
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,6 +28,11 @@ public class BlockItem : MonoBehaviour
 
     private IEnumerator Animate()
     {
+        // Audio addition
+        if (pickup.type == PickupType.SuperMushroom || pickup.type == PickupType.FireFlower || pickup.type == PickupType.OneUp) {
+            AudioManager.Instance.Play("item");
+        }
+        
         Transform block = transform.parent;
         Collider2D blockCol = block != null ? block.GetComponent<Collider2D>() : null;
 
