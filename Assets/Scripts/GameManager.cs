@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,13 +26,20 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(RestartGame());
+        StartCoroutine(RestartLevel());
+    }
+
+    public static IEnumerator RestartLevel()
+    {
+        StateManager.SetStartState();
+        yield return new WaitForSeconds(5f);
+        StateManager.SetPlayState();
     }
 
     public static IEnumerator RestartGame()
     {
         StateManager.SetStartState();
         yield return new WaitForSeconds(5f);
-        StateManager.SetPlayState();
+        SceneManager.LoadScene(0);
     }
 }
