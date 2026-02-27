@@ -90,7 +90,6 @@ public class Pickup : MonoBehaviour
             case PickupType.SuperMushroom:
                 AudioManager.Instance.Play("powerup");
                 GameManager.Instance.colorChanger.StartTransformFreeze();
-                Animator mario = GameManager.Instance.player.GetComponent<Animator>();
                 stats.SetPowerState(MarioPowerState.Super);
                 break;
 
