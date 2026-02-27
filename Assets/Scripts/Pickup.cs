@@ -76,6 +76,11 @@ public class Pickup : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void ApplyPickup()
+    {
+        ApplyPickup(_playerStats);
+    }
+
     private void ApplyPickup(PlayerStats stats)
     {
         switch (type)
