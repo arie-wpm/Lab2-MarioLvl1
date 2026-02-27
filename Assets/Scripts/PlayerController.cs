@@ -98,7 +98,6 @@ public class PlayerController : MonoBehaviour
     private string jumpType = "";
     private float initialJumpXVelocity;
 
-    private PlayerStats playerStats;
     private Animator animator;
     private bool isJumping = false;
     private bool hasVerticalVelocity = false;
@@ -126,7 +125,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        playerStats = GetComponent<PlayerStats>();
+        pStats = GetComponent<PlayerStats>();
         moveAction = InputSystem.actions.FindAction("Move");
         runAction = InputSystem.actions.FindAction("Sprint");
         jumpAction = InputSystem.actions.FindAction("Jump");
@@ -365,7 +364,7 @@ public class PlayerController : MonoBehaviour
 
             if (!hitFromBelow) return;
             
-            if ((other.gameObject.CompareTag("Block") && playerStats.powerState == MarioPowerState.Small) || 
+            if ((other.gameObject.CompareTag("Block") && pStats.powerState == MarioPowerState.Small) || 
                 (other.gameObject.CompareTag("QBlock") && other.gameObject.GetComponent<InteractableBlock>() != null))
             {
                 HeadButt("00"); 
