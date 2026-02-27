@@ -157,5 +157,7 @@ public class ColorChanger : MonoBehaviour
         marioAnimator.SetLayerWeight(1, 0f);
         Time.timeScale = 1f;
         currentTimeScale = 1f;
+        marioStats.SetPowerState(MarioPowerState.Small);
+        ChangeToIFrame(sprites, 2f);
     }
 }

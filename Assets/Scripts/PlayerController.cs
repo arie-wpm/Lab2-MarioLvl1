@@ -349,6 +349,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (postStompTimer <= 0)
             {
+                Debug.LogWarning(postStompTimer);
                 Die();
             }
         }
@@ -393,9 +394,12 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
+        SpriteRenderer[] sprites = GameManager.Instance.player.GetComponentsInChildren<SpriteRenderer>();
+
         if (pStats.powerState != MarioPowerState.Small)
         {
             AudioManager.Instance.Play("pipe");
+            GameManager.Instance.colorChanger.ChangeToDefault(sprites);
             GameManager.Instance.colorChanger.StartTransformOnHit();
             return;
         }
@@ -410,6 +414,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator MoveMarioDead()
     {
+        yield return new WaitForSeconds(0.5f);
         float newY = 0;
         UnityEngine.Vector3 aboveMario = new UnityEngine.Vector3(
             transform.position.x,
@@ -418,7 +423,7 @@ public class PlayerController : MonoBehaviour
         );
         while (Math.Abs(transform.position.y - aboveMario.y) > 0.01f)
         {
-            newY = Mathf.MoveTowards(transform.position.y, aboveMario.y, 10f * Time.deltaTime);
+            newY = Mathf.MoveTowards(transform.position.y, aboveMario.y, 5f * Time.deltaTime);
             transform.position = new UnityEngine.Vector3(transform.position.x, newY, 0);
             yield return null;
         }
