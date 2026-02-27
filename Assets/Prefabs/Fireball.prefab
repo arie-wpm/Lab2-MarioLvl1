@@ -129,9 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e56ba504346f9740a7bd6fa0af300e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fireball
-  speed: 10
-  bounceForce: 0
-  gravity: 1.5
+  speed: 9.5
+  velocityConversation: 0.95
+  gravity: 4.75
   angle: 30
   groundLayer:
     serializedVersion: 2
@@ -151,7 +151,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 2b19c097612557a44b4d384e40a41c7b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2

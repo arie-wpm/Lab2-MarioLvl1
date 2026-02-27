@@ -4,13 +4,14 @@ using UnityEngine;
 public class Fireball : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private float bounceForce;
+    [SerializeField] private float velocityConversation;
     [SerializeField] private float gravity = 1f;
     [SerializeField] private float angle;
     [SerializeField] private LayerMask groundLayer;
     
     private Rigidbody2D rb;
     private Vector2 direction;
+    private Vector2 velocityBeforeCollision;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,12 +22,13 @@ public class Fireball : MonoBehaviour
     public void Launch(Vector2 dir)
     {
         direction = dir;
-        rb.linearVelocity = new Vector2(speed * direction.x, -speed * Mathf.Tan(angle * MathF.PI / 180));
+        rb.linearVelocity = new Vector2(speed * direction.x, -speed);
     }
 
     private void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(speed * direction.x, rb.linearVelocity.y);
+        velocityBeforeCollision = rb.linearVelocity;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -38,7 +40,7 @@ public class Fireball : MonoBehaviour
                 if (contact.normal.y > 0.5f)
                 {
                     rb.gravityScale = gravity;
-                    rb.linearVelocity = new Vector2(speed * direction.x, speed * Mathf.Tan(angle * MathF.PI / 180));
+                    rb.linearVelocity = new Vector2(speed * direction.x, Mathf.Abs(velocityBeforeCollision.y) * velocityConversation );
                 }
             }
         }
