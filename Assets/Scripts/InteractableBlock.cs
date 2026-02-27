@@ -1,5 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractableBlock : MonoBehaviour
@@ -19,6 +19,7 @@ public class InteractableBlock : MonoBehaviour
     [SerializeField] private GameObject heldPickup;
     [SerializeField] private GameObject upgradedPickup;
     [SerializeField] private GameObject brickDebrisPrefab;
+    [SerializeField] Sprite qBlockSprite;
     
     private SpriteRenderer rend;
     private BoxCollider2D col;
@@ -27,7 +28,10 @@ public class InteractableBlock : MonoBehaviour
     private BlockState _initialBlockState;
     private GameObject _initalHeldPickup;
     private GameObject _initalUpgradedPickup;
-    private GameObject _spawnedItem;
+    private List<GameObject> _spawnedItems = new List<GameObject>();
+    private Sprite _initialSprite;
+    private int _initalHP;
+    private bool _isDisabled = false;
     
     void Start()
     {
@@ -43,10 +47,14 @@ public class InteractableBlock : MonoBehaviour
         _initialBlockState = blockState;
         _initalHeldPickup = heldPickup;
         _initalUpgradedPickup = upgradedPickup;
+        _initalHP = hp;
+        _initialSprite = rend.sprite;
+        _isDisabled = false;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (_isDisabled) return;
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerStats playerStats = other.gameObject.GetComponent<PlayerStats>();
@@ -91,6 +99,7 @@ public class InteractableBlock : MonoBehaviour
                 else BreakableBlock();
                 break;
             case BlockState.BrickUnbreakable:
+                if (hp <= 0) rend.sprite = qBlockSprite;
                 SetInactive();
                 break;
         }
@@ -99,7 +108,6 @@ public class InteractableBlock : MonoBehaviour
     private void BreakableBlock()
     {
         AudioManager.Instance.Play("brick");
-        Debug.LogWarning("Breakable");
         if (hp > 0) return;
         Instantiate(brickDebrisPrefab, transform.position, Quaternion.identity);
         // Destroy(gameObject, destroyDelay);
@@ -107,11 +115,11 @@ public class InteractableBlock : MonoBehaviour
     }
 
     private void SetInactive()
-    {
-        if (hp != 0) return;
+    {;
         StartCoroutine(MoveBlockAnimation());
-        anim.SetBool("isDepleted", true);
-        this.enabled = false;
+        if (hp > 0) return;
+        if (anim != null) anim.SetBool("isDepleted", true);
+        _isDisabled = true;
     }
 
     private void Bump()
@@ -138,9 +146,11 @@ public class InteractableBlock : MonoBehaviour
         float y = blockCol.bounds.center.y;
         // check Mario size
         PlayerStats playerstats = GameManager.Instance.player.GetComponent<PlayerStats>();
-        if (playerstats.powerState != MarioPowerState.Small) heldPickup = upgradedPickup;
+        if (playerstats.powerState != MarioPowerState.Small && upgradedPickup != null) heldPickup = upgradedPickup;
         if (heldPickup != null) {
-            _spawnedItem = Instantiate(heldPickup, new Vector3(x, y, 0f), Quaternion.identity, transform);
+            GameObject item = Instantiate(heldPickup, new Vector3(x, y, 0f), Quaternion.identity, transform);
+            _spawnedItems.Add(item);
+            if (hp > 0) return;
             heldPickup = null;
             upgradedPickup = null;
         }
@@ -168,13 +178,13 @@ public class InteractableBlock : MonoBehaviour
 
     public void Reset()
     {
-        Destroy(_spawnedItem);
-        this.enabled = true;
+        foreach (GameObject item in _spawnedItems) Destroy(item);
+        _isDisabled = false;
         blockState = _initialBlockState;
         heldPickup = _initalHeldPickup;
         upgradedPickup = _initalUpgradedPickup;
-
-        hp = 1;
+        hp = _initalHP;
+        rend.sprite = _initialSprite;
 
         if (_initialBlockState == BlockState.QBlockInvis || _initialBlockState == BlockState.QBlock)
         {

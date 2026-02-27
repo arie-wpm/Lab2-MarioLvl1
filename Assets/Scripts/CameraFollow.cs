@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
@@ -19,7 +20,13 @@ public class CameraFollow : MonoBehaviour {
     void LateUpdate() {
 
         // check if flagpole conflicts
-        if (StateManager.CurrentGameState() != StateManager.GameState.Play) return;
+        switch (StateManager.CurrentState) {
+            case StateManager.GameState.Won:
+            case StateManager.GameState.Play:
+                break;
+            default:
+                return;
+        }
 
         _leftEdge = transform.position.x - 7.5f;
         if (_target == null) return;

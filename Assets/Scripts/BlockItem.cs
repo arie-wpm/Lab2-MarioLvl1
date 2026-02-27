@@ -29,9 +29,10 @@ public class BlockItem : MonoBehaviour
     private IEnumerator Animate()
     {
         // Audio addition
-        if (pickup.type == PickupType.SuperMushroom || pickup.type == PickupType.FireFlower || pickup.type == PickupType.OneUp) {
+        if (pickup.type == PickupType.SuperMushroom || pickup.type == PickupType.FireFlower ||
+            pickup.type == PickupType.OneUp || pickup.type == PickupType.Star) {
             AudioManager.Instance.Play("item");
-        }
+        } else if (pickup.type == PickupType.Coin) AudioManager.Instance.Play("coin");
         
         Transform block = transform.parent;
         Collider2D blockCol = block != null ? block.GetComponent<Collider2D>() : null;

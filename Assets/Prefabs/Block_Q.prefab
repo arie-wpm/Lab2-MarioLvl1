@@ -180,3 +180,4 @@ MonoBehaviour:
   heldPickup: {fileID: 0}
   upgradedPickup: {fileID: 0}
   brickDebrisPrefab: {fileID: 0}
+  qBlockSprite: {fileID: 21300000, guid: 1fdabfb6b9afae4408b02d1677af4962, type: 3}
