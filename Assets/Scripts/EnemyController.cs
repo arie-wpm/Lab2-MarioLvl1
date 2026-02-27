@@ -157,6 +157,7 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private void GoombaStomp()
     {
+        AudioManager.Instance.Play("stomp");
         isDead = true;
         col.enabled = false;
         rb.linearVelocity = Vector2.zero;
@@ -172,6 +173,7 @@ public class EnemyController : MonoBehaviour, IBumpable
         switch (koopaState)
         {
             case KoopaState.Walking:
+                AudioManager.Instance.Play("stomp");
                 ShellTransform();
                 break;
             case KoopaState.ShellMoving:
@@ -194,6 +196,7 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private void StopShell()
     {
+        AudioManager.Instance.Play("stomp");
         rb.linearVelocityX = 0f;
         koopaState = KoopaState.ShellIdle;
         gameObject.tag = "Enemy";
@@ -202,6 +205,7 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private void StartMoveShell(Transform player)
     {
+        AudioManager.Instance.Play("kick");
         koopaState = KoopaState.ShellMoving;
         gameObject.tag = "Shell";
         if (koopaReformCoroutine != null) StopCoroutine(koopaReformCoroutine);
@@ -237,6 +241,7 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private void DieKnockback(Vector2 dir)
     {
+        AudioManager.Instance.Play("kick");
         isDead = true;
         rb.linearVelocity = Vector2.zero;
         col.enabled = false;

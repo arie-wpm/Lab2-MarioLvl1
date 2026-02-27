@@ -12809,8 +12809,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   colorChanger: {fileID: 526562722}
   player: {fileID: 721461617}
-  currentState: 0
+  currentGameState: 0
   StartScreenObj: {fileID: 1557459462}
+  player1GameObj: {fileID: 1547372348}
+  player2GameObj: {fileID: 1037842168}
+  selectorObj: {fileID: 958355505}
 --- !u!114 &526562724
 MonoBehaviour:
   m_ObjectHideFlags: 0
