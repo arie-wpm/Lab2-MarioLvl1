@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour {
 
-    public static AudioManager instance { get; private set; }
+    public static AudioManager Instance { get; private set; }
 
     [System.Serializable]
     public class Sound
@@ -23,13 +24,15 @@ public class AudioManager : MonoBehaviour {
     private AudioSource _introSource;
     private AudioSource _bgmSource;
 
+    private bool _isInPlayMode = false;
+
     void Awake() {
-        if (instance != null && instance != this) {
+        if (Instance != null && Instance != this) {
             Destroy(gameObject);
             return;
         }
 
-        instance = this;
+        Instance = this;
 
         _sfxSource = gameObject.AddComponent<AudioSource>();
         _bgmSource = gameObject.AddComponent<AudioSource>();
@@ -39,9 +42,40 @@ public class AudioManager : MonoBehaviour {
         foreach (Sound sound in sounds) {
             _soundLookup.Add(sound.name, sound);
         }
+
+        // prelaod audio
+        introClip.LoadAudioData();
+        loopClip.LoadAudioData();
+    }
+
+    void Start() {
+        // Prewarm BGMs
+        _introSource.clip = introClip;
+        _introSource.Play();
+        _introSource.Stop();
+        _introSource.volume = 0f;
+        _bgmSource.clip = loopClip;
+        _bgmSource.loop = true;
+        _bgmSource.Play();
+        _bgmSource.Stop();
+        _bgmSource.volume = 0f;
+    }
+
+    void Update()
+    {
+        StateManager.GameState currentState = StateManager.CurrentGameState();
+        
+        switch (currentState) {
+            case StateManager.GameState.Play: _isInPlayMode = true; break;
+            case StateManager.GameState.StartScreen: _isInPlayMode = false; break;
+            case StateManager.GameState.PauseScreen: _isInPlayMode = false; break;
+            case StateManager.GameState.Dead: _isInPlayMode = false; break;
+            case StateManager.GameState.Won: _isInPlayMode = true; break;
+        }
     }
 
     public void Play(string name) {
+        if (!_isInPlayMode) return;
         if (!_soundLookup.ContainsKey(name)) {
             Debug.LogWarning("Sound " + name + " not found!");
             return;
@@ -51,17 +85,36 @@ public class AudioManager : MonoBehaviour {
         _sfxSource.PlayOneShot(sound.clip, sound.volume);
     }
 
-    public void PlayBGM() {
-        double startTime = AudioSettings.dspTime + 0.1;
-        _introSource.clip = introClip;
-        _introSource.PlayScheduled(startTime);
-        _bgmSource.clip = loopClip;
-        _bgmSource.loop = true;
-        _bgmSource.PlayScheduled(startTime + introClip.length);
+    public void PlayBGM() => StartCoroutine(StartPlayingBGM());
+
+    IEnumerator StartPlayingBGM() {
+        _introSource.volume = 1f;
+        _introSource.Play();
+        yield return new WaitForSeconds(_introSource.clip.length);
+        _introSource.Stop();
+        _introSource.volume = 0f;
+        _bgmSource.volume = 1f;
+        _bgmSource.Play();
     }
 
-    public void PauseBGM() => _bgmSource.Pause();
-    public void ResumeBGM() => _bgmSource.UnPause();
-    public void StopBGM() => _bgmSource.Stop();
-    public void SpeedUpBGM() => _bgmSource.pitch = 1.25f;
+    public void PauseBGM() {
+        _bgmSource.Pause();
+        _introSource.Pause();
+    }
+
+    public void ResumeBGM() {
+        _bgmSource.UnPause();
+        _introSource.UnPause();
+    }
+
+    public void StopBGM() {
+        _bgmSource.Stop();
+        _introSource.Stop();
+
+    }
+    public void SpeedUpBGM() {
+        _bgmSource.pitch = 1.25f;
+        _introSource.pitch = 1.25f;
+    }
+    public bool IsBGMPlaying() => _isInPlayMode;
 }
