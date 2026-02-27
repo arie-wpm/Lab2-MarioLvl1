@@ -1,30 +1,40 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
-
+public class GameManager : MonoBehaviour
+{
     public static GameManager Instance { get; private set; }
     public ColorChanger colorChanger;
 
     public GameObject player;
     public StateManager.GameState currentGameState;
 
-    [SerializeField] private GameObject StartScreenObj;
+    [SerializeField]
+    private GameObject StartScreenObj;
 
     [Header("TitleScreenObj")]
-    [SerializeField] private GameObject player1GameObj;
-    [SerializeField] private GameObject player2GameObj;
-    [SerializeField] private GameObject selectorObj;
+    [SerializeField]
+    private GameObject player1GameObj;
+
+    [SerializeField]
+    private GameObject player2GameObj;
+
+    [SerializeField]
+    private GameObject selectorObj;
 
     // using Attack as Start for now since default is Enter
     private InputAction _moveAction => InputSystem.actions.FindAction("Move");
     private InputAction _attackAction => InputSystem.actions.FindAction("Attack");
+
     // private InputAction _pauseAction => InputSystem.actions.FindAction("Pause");
     private bool _selectTrack = true;
 
-    void Awake() {
-        if (Instance != null && Instance != this) {
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
             return;
         }
@@ -35,57 +45,67 @@ public class GameManager : MonoBehaviour {
         StartScreenObj.SetActive(true);
     }
 
-
-    void Update() {
-
-        currentGameState = StateManager.CurrentGameState();
-
-        switch (currentGameState) {
+    void Update()
+    {
+        switch (StateManager.CurrentGameState())
+        {
             case StateManager.GameState.NULL:
-                UpdateInStartScreen(); break;
+                UpdateInStartScreen();
+                break;
             case StateManager.GameState.StartScreen:
                 StartScreenObj.SetActive(false);
-                StartCoroutine(RestartGame());
                 break;
             case StateManager.GameState.Play:
                 AudioManager.Instance.PlayBGM();
-                UpdateInPlayMode(); break;
+                UpdateInPlayMode();
+                break;
             case StateManager.GameState.PauseScreen:
-                UpdateInPauseScreen(); break;
+                UpdateInPauseScreen();
+                break;
         }
     }
 
-    void UpdateInStartScreen() {
+    void UpdateInStartScreen()
+    {
         StartScreenObj.SetActive(true);
         // replicating select button here
         Vector2 move = _moveAction.ReadValue<Vector2>();
-        if (Mathf.Abs(move.x) > 0f) return;
+        if (Mathf.Abs(move.x) > 0f)
+            return;
 
-        if (_moveAction.WasPressedThisFrame()) {
+        if (_moveAction.WasPressedThisFrame())
+        {
             _selectTrack = !_selectTrack;
             Vector3 selectorPos = selectorObj.transform.position;
-            if (_selectTrack) {
+            if (_selectTrack)
+            {
                 selectorPos.y = player1GameObj.transform.position.y;
-            } else {
+            }
+            else
+            {
                 selectorPos.y = player2GameObj.transform.position.y;
             }
             selectorObj.transform.position = selectorPos;
         }
 
-        if (_attackAction.WasPressedThisFrame()) {
+        if (_attackAction.WasPressedThisFrame())
+        {
             // no logic here yet but we can add luigi colors if time permits
             // note: need to add a coroutine here to switch to BlackScreen
-            StateManager.SetStartState();
+            StartCoroutine(RestartLevel()); //
         }
     }
 
-    void UpdateInPlayMode() {
+    void UpdateInPlayMode()
+    {
         StartScreenObj.SetActive(false);
         Time.timeScale = 1f;
-        if (currentGameState != StateManager.GameState.Play) return;
+        if (StateManager.CurrentGameState() != StateManager.GameState.Play)
+            return;
 
         // check for Input Pause
-        if (_attackAction.WasPressedThisFrame()) {
+        if (_attackAction.WasPressedThisFrame())
+        {
             AudioManager.Instance.Play("pause");
             AudioManager.Instance.PauseBGM();
             StateManager.SetPauseState();
@@ -93,12 +113,15 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void UpdateInPauseScreen() {
+    void UpdateInPauseScreen()
+    {
         StartScreenObj.SetActive(false);
         Time.timeScale = 0f;
-        if (currentGameState != StateManager.GameState.PauseScreen) return;
+        if (StateManager.CurrentGameState() != StateManager.GameState.PauseScreen)
+            return;
 
-        if (_attackAction.WasPressedThisFrame()) {
+        if (_attackAction.WasPressedThisFrame())
+        {
             AudioManager.Instance.Play("pause");
             AudioManager.Instance.ResumeBGM();
             StateManager.SetPlayState();
@@ -106,10 +129,17 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public static IEnumerator RestartGame()
+    public static IEnumerator RestartLevel()
     {
+        StateManager.SetStartState();
         yield return new WaitForSeconds(5f);
         StateManager.SetPlayState();
     }
 
+    public static IEnumerator RestartGame()
+    {
+        StateManager.SetStartState();
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
