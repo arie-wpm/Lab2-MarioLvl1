@@ -106,6 +106,9 @@ public class PlayerController : MonoBehaviour
     private float postStompTime = 0.1f;
 
     [SerializeField]
+    private PlayerStats pStats;
+
+    [SerializeField]
     private Collider2D mainCol;
 
     [SerializeField]
@@ -336,6 +339,7 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         StateManager.SetDeadState();
+        pStats.lives--;
         animator.SetBool("isDead", true);
         mainCol.enabled = false;
         footCol.enabled = false;
@@ -365,8 +369,15 @@ public class PlayerController : MonoBehaviour
         headCol.enabled = true;
         animator.SetBool("isDead", false);
         animator.ResetControllerState();
-        StartCoroutine(GameManager.RestartGame());
-        transform.position = startPos;
+        if (pStats.lives >= 0)
+        {
+            StartCoroutine(GameManager.RestartLevel());
+            transform.position = startPos;
+        }
+        if (pStats.lives < 0)
+        {
+            StartCoroutine(GameManager.RestartGame());
+        }
     }
 
     private float UnitsToHex(float value, string hexToAdd)
