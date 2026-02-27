@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
@@ -34,14 +35,20 @@ public class GameManager : MonoBehaviour {
         StartScreenObj.SetActive(true);
     }
 
+
     void Update() {
 
         currentGameState = StateManager.CurrentGameState();
 
         switch (currentGameState) {
-            case StateManager.GameState.StartScreen:
+            case StateManager.GameState.NULL:
                 UpdateInStartScreen(); break;
+            case StateManager.GameState.StartScreen:
+                StartScreenObj.SetActive(false);
+                StartCoroutine(RestartGame());
+                break;
             case StateManager.GameState.Play:
+                AudioManager.Instance.PlayBGM();
                 UpdateInPlayMode(); break;
             case StateManager.GameState.PauseScreen:
                 UpdateInPauseScreen(); break;
@@ -68,8 +75,7 @@ public class GameManager : MonoBehaviour {
         if (_attackAction.WasPressedThisFrame()) {
             // no logic here yet but we can add luigi colors if time permits
             // note: need to add a coroutine here to switch to BlackScreen
-            StateManager.SetPlayState();
-            AudioManager.Instance.PlayBGM();
+            StateManager.SetStartState();
         }
     }
 
@@ -98,6 +104,12 @@ public class GameManager : MonoBehaviour {
             StateManager.SetPlayState();
             player.GetComponent<Animator>().speed = 1f;
         }
+    }
+
+    public static IEnumerator RestartGame()
+    {
+        yield return new WaitForSeconds(5f);
+        StateManager.SetPlayState();
     }
 
 }

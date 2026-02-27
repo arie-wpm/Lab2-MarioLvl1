@@ -24,6 +24,8 @@ public class AudioManager : MonoBehaviour {
     private AudioSource _introSource;
     private AudioSource _bgmSource;
 
+    private Coroutine _bgmCoroutine;
+
     private bool _isInPlayMode = false;
 
     void Awake() {
@@ -66,6 +68,7 @@ public class AudioManager : MonoBehaviour {
         StateManager.GameState currentState = StateManager.CurrentGameState();
         
         switch (currentState) {
+            case StateManager.GameState.NULL: _isInPlayMode = false; break;
             case StateManager.GameState.Play: _isInPlayMode = true; break;
             case StateManager.GameState.StartScreen: _isInPlayMode = false; break;
             case StateManager.GameState.PauseScreen: _isInPlayMode = false; break;
@@ -85,7 +88,10 @@ public class AudioManager : MonoBehaviour {
         _sfxSource.PlayOneShot(sound.clip, sound.volume);
     }
 
-    public void PlayBGM() => StartCoroutine(StartPlayingBGM());
+    public void PlayBGM() {
+        if (_bgmCoroutine != null) return;
+        _bgmCoroutine = StartCoroutine(StartPlayingBGM());
+    }
 
     IEnumerator StartPlayingBGM() {
         _introSource.volume = 1f;
