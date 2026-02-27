@@ -98,12 +98,17 @@ public class PlayerController : MonoBehaviour
     private string jumpType = "";
     private float initialJumpXVelocity;
 
+    private PlayerStats playerStats;
     private Animator animator;
     private bool isJumping = false;
     private bool hasVerticalVelocity = false;
     private int facingDirection = 1;
     private float postStompTimer;
     private float postStompTime = 0.1f;
+    private Vector2 velocityBeforeCollision;
+    
+    [SerializeField]
+    private PlayerStats pStats;
 
     [SerializeField]
     private Collider2D mainCol;
@@ -121,6 +126,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerStats = GetComponent<PlayerStats>();
         moveAction = InputSystem.actions.FindAction("Move");
         runAction = InputSystem.actions.FindAction("Sprint");
         jumpAction = InputSystem.actions.FindAction("Jump");
@@ -279,6 +285,8 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.linearVelocityX = rb.linearVelocity.x + a * Time.fixedDeltaTime;
+        
+        velocityBeforeCollision = rb.linearVelocity;
 
         if (rb.linearVelocityX > 0)
         {
@@ -321,25 +329,72 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") && postStompTimer <= 0)
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            Die();
+            bool stompedFromAbove = false;
+            foreach (ContactPoint2D contact in other.contacts)
+            {
+                if (contact.normal.y > 0.5f)
+                {
+                    stompedFromAbove = true;
+                    break;
+                }
+            }
+
+            if (stompedFromAbove)
+            {
+                Stomp();
+            }
+            else if (postStompTimer <= 0)
+            {
+                Die();
+            }
+        }
+        
+        if (other.gameObject.layer == 6)
+        {
+            bool hitFromBelow = false;
+            foreach (ContactPoint2D contact in other.contacts)
+            {
+                if (contact.normal.y < -0.5f)
+                {
+                    hitFromBelow = true;
+                    break;
+                }
+            }
+
+            if (!hitFromBelow) return;
+            
+            if ((other.gameObject.CompareTag("Block") && playerStats.powerState == MarioPowerState.Small) || 
+                (other.gameObject.CompareTag("QBlock") && other.gameObject.GetComponent<InteractableBlock>() != null))
+            {
+                HeadButt("00"); 
+            }
+            else if (other.gameObject.CompareTag("QBlock") && other.gameObject.GetComponent<InteractableBlock>() == null)
+            {
+                HeadButt("01"); 
+            }
+            
         }
     }
 
     public void Stomp()
     {
-        rb.linearVelocityY = UnitsToHex(Mathf.Abs(rb.linearVelocityY), "04");
+        rb.linearVelocityY = UnitsToHex(Mathf.Abs(velocityBeforeCollision.y), "04");
         postStompTimer = postStompTime;
+    }
+
+    public void HeadButt(string hex)
+    {
+        rb.linearVelocityY = -UnitsToHex(Mathf.Abs(velocityBeforeCollision.y), hex);
     }
 
     private void Die()
     {
         StateManager.SetDeadState();
+        pStats.lives--;
         animator.SetBool("isDead", true);
         mainCol.enabled = false;
-        footCol.enabled = false;
-        headCol.enabled = false;
         rb.bodyType = RigidbodyType2D.Static;
         StartCoroutine(MoveMarioDead());
     }
@@ -361,12 +416,17 @@ public class PlayerController : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Dynamic;
         yield return new WaitForSeconds(3f);
         mainCol.enabled = true;
-        footCol.enabled = true;
-        headCol.enabled = true;
         animator.SetBool("isDead", false);
         animator.ResetControllerState();
-        StartCoroutine(GameManager.RestartGame());
-        transform.position = startPos;
+        if (pStats.lives >= 0)
+        {
+            StartCoroutine(GameManager.RestartLevel());
+            transform.position = startPos;
+        }
+        if (pStats.lives < 0)
+        {
+            StartCoroutine(GameManager.RestartGame());
+        }
     }
 
     private float UnitsToHex(float value, string hexToAdd)
