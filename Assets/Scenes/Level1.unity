@@ -12341,6 +12341,8 @@ MonoBehaviour:
   respawnTriggerBox: {fileID: 416975641}
   _currentRespawnPoint: {fileID: 0}
   _currentCamRespawnPoint: {fileID: 0}
+  interactables: {fileID: 758946370}
+  spawnedGrouping: {fileID: 1022106272}
 --- !u!114 &526562724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24227,6 +24229,37 @@ Transform:
   - {fileID: 1380426936}
   - {fileID: 1043868763}
   m_Father: {fileID: 1131567677}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1022106272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1022106273}
+  m_Layer: 0
+  m_Name: SpawnedObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1022106273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022106272}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1024582552
 PrefabInstance:
@@ -57092,3 +57125,4 @@ SceneRoots:
   - {fileID: 1880182988}
   - {fileID: 1399522056}
   - {fileID: 1859300069}
+  - {fileID: 1022106273}

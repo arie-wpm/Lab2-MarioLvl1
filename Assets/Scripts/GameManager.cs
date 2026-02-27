@@ -35,6 +35,12 @@ public class GameManager : MonoBehaviour
     public Transform _currentRespawnPoint;
     public Transform _currentCamRespawnPoint;
 
+    [Header("Blocks")]
+    public GameObject interactables;
+
+    [Header("SpawnedObjects")]
+    public GameObject spawnedGrouping;
+
     // using Attack as Start for now since default is Enter
     private InputAction _moveAction => InputSystem.actions.FindAction("Move");
     private InputAction _startAction => InputSystem.actions.FindAction("Next");
@@ -197,6 +203,7 @@ public class GameManager : MonoBehaviour
         // ScoreManager score reset
 
         //reset blocks
-
+        InteractableBlock[] blocks = interactables.GetComponentsInChildren<InteractableBlock>();
+        foreach (InteractableBlock block in blocks) block.Reset();
     }
 }

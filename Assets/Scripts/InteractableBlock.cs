@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InteractableBlock : MonoBehaviour
@@ -22,6 +23,11 @@ public class InteractableBlock : MonoBehaviour
     private SpriteRenderer rend;
     private BoxCollider2D col;
     private Animator anim;
+
+    private BlockState _initialBlockState;
+    private GameObject _initalHeldPickup;
+    private GameObject _initalUpgradedPickup;
+    private GameObject _spawnedItem;
     
     void Start()
     {
@@ -32,6 +38,11 @@ public class InteractableBlock : MonoBehaviour
         {
             rend.enabled = false;
         }
+
+        // store init state
+        _initialBlockState = blockState;
+        _initalHeldPickup = heldPickup;
+        _initalUpgradedPickup = upgradedPickup;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -91,7 +102,8 @@ public class InteractableBlock : MonoBehaviour
         Debug.LogWarning("Breakable");
         if (hp > 0) return;
         Instantiate(brickDebrisPrefab, transform.position, Quaternion.identity);
-        Destroy(gameObject, destroyDelay);
+        // Destroy(gameObject, destroyDelay);
+        StartCoroutine(SoftDestroy(destroyDelay));
     }
 
     private void SetInactive()
@@ -128,7 +140,7 @@ public class InteractableBlock : MonoBehaviour
         PlayerStats playerstats = GameManager.Instance.player.GetComponent<PlayerStats>();
         if (playerstats.powerState != MarioPowerState.Small) heldPickup = upgradedPickup;
         if (heldPickup != null) {
-            GameObject item = Instantiate(heldPickup, new Vector3(x, y, 0f), Quaternion.identity, transform);
+            _spawnedItem = Instantiate(heldPickup, new Vector3(x, y, 0f), Quaternion.identity, transform);
             heldPickup = null;
             upgradedPickup = null;
         }
@@ -152,5 +164,50 @@ public class InteractableBlock : MonoBehaviour
             transform.position = Vector2.Lerp(targetTransform, currentTransform, timer / 0.1f);
             yield return null;
         }
+    }
+
+    public void Reset()
+    {
+        Destroy(_spawnedItem);
+        this.enabled = true;
+        blockState = _initialBlockState;
+        heldPickup = _initalHeldPickup;
+        upgradedPickup = _initalUpgradedPickup;
+
+        hp = 1;
+
+        if (_initialBlockState == BlockState.QBlockInvis || _initialBlockState == BlockState.QBlock)
+        {
+            anim.ResetControllerState();
+            anim.SetBool("isDepleted", false);
+        }
+
+        if (_initialBlockState == BlockState.BrickBreakable || _initialBlockState == BlockState.BrickUnbreakable)
+        {
+            AddInteractions();
+        }
+
+        if (blockState == BlockState.QBlockInvis)
+        {
+            rend.enabled = false;
+        }
+    }
+
+    IEnumerator SoftDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        RemoveInteractions();
+    }
+
+    public void RemoveInteractions()
+    {
+        rend.enabled = false;
+        col.enabled = false;
+    }
+
+    public void AddInteractions()
+    {
+        rend.enabled = true;
+        col.enabled = true;
     }
 }
