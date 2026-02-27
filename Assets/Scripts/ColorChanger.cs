@@ -58,6 +58,10 @@ public class ColorChanger : MonoBehaviour
         StartCoroutine(TransformFreeze());
     }
 
+    public void StartTransformOnHit() {
+        StartCoroutine(TransformOnHit());
+    }
+
     public IEnumerator StarAnim(SpriteRenderer[] sprites, float totalDuration) {
 
         Color[][] flashSets = new Color[][] {
@@ -132,6 +136,25 @@ public class ColorChanger : MonoBehaviour
         marioAnimator.speed = 1f;
         marioAnimator.SetBool("isTransforming", false);
         marioAnimator.SetLayerWeight(1, 1f);
+        Time.timeScale = 1f;
+        currentTimeScale = 1f;
+    }
+
+    public IEnumerator TransformOnHit() {
+        Time.timeScale = 0f;
+        currentTimeScale = Time.timeScale;
+
+        Animator marioAnimator = GameManager.Instance.player.GetComponent<Animator>();
+        PlayerStats marioStats = GameManager.Instance.player.GetComponent<PlayerStats>();
+        SpriteRenderer[] sprites = GameManager.Instance.player.GetComponentsInChildren<SpriteRenderer>();
+
+        if (marioStats.powerState != MarioPowerState.Small) marioAnimator.SetBool("isTransforming", true);
+
+        yield return new WaitForSecondsRealtime(1f);
+
+        marioAnimator.speed = 1f;
+        marioAnimator.SetBool("isTransforming", false);
+        marioAnimator.SetLayerWeight(1, 0f);
         Time.timeScale = 1f;
         currentTimeScale = 1f;
     }

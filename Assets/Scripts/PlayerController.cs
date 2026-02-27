@@ -304,6 +304,9 @@ public class PlayerController : MonoBehaviour
         isJumping = true;
         grounded = false;
 
+        if (pStats.powerState == MarioPowerState.Small) AudioManager.Instance.Play("jumpsmall");
+        else AudioManager.Instance.Play("jumplarge");
+
         if (Mathf.Abs(rb.linearVelocityX) < 3.75)
         {
             jumpType = "Slow";
@@ -390,6 +393,13 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
+        if (pStats.powerState != MarioPowerState.Small)
+        {
+            AudioManager.Instance.Play("pipe");
+            GameManager.Instance.colorChanger.StartTransformOnHit();
+            return;
+        }
+
         StateManager.SetDeadState();
         pStats.lives--;
         animator.SetBool("isDead", true);
