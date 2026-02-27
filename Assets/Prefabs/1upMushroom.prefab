@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2530381973383450393}
   - component: {fileID: 7116589168486157916}
   - component: {fileID: 8545021620490973295}
+  - component: {fileID: 1993362740524484258}
+  - component: {fileID: 351240008305940144}
   - component: {fileID: 1476296340666373902}
   m_Layer: 7
   m_Name: 1upMushroom
@@ -206,6 +208,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1993362740524484258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5084980527480931667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3534931d354114090b94922f35cb2826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityMovement
+  speed: 3
+  direction: {x: 1, y: 0}
+  groundCheckDistance: 0.1
+  wallCheckDistance: 0.1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &351240008305940144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5084980527480931667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06bbeab0b74a845b197778606277b1d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlockItem
 --- !u!58 &1476296340666373902
 CircleCollider2D:
   m_ObjectHideFlags: 0
