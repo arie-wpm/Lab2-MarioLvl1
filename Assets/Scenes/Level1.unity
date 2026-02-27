@@ -34868,7 +34868,7 @@ MonoBehaviour:
   - name: 1up
     clip: {fileID: 8300000, guid: 1dbc202f004352f408633492be4d4dd5, type: 3}
     volume: 1
-  - name: fireworks
+  - name: firework
     clip: {fileID: 8300000, guid: 464b1e9da2f314a4394e4395748d2008, type: 3}
     volume: 1
   - name: brick
@@ -34918,6 +34918,9 @@ MonoBehaviour:
     volume: 1
   - name: stomp
     clip: {fileID: 8300000, guid: 6ef10fdcb98681244a849e2e91d8d450, type: 3}
+    volume: 1
+  - name: stageclear
+    clip: {fileID: 8300000, guid: b76b5d8c7c928ef47887cfc1a1400b62, type: 3}
     volume: 1
   introClip: {fileID: 8300000, guid: 87cc7dbf0b2339841af7a16de325c351, type: 3}
   loopClip: {fileID: 8300000, guid: a10d63d0631b5434b98900da6035e7e8, type: 3}
