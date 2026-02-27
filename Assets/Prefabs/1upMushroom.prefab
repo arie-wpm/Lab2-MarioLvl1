@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8713440128191964819}
-  - component: {fileID: 3535005099509266951}
   - component: {fileID: 4168869372858189197}
   - component: {fileID: 2530381973383450393}
   - component: {fileID: 7116589168486157916}
@@ -39,28 +38,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3535005099509266951
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5084980527480931667}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: af630a0485f43ed4dbbd8ddda3d47f28, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &4168869372858189197
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -98,7 +75,7 @@ BoxCollider2D:
   m_Offset: {x: 0.50774115, y: 0.49023286}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -222,11 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityMovement
   speed: 3
   direction: {x: 1, y: 0}
-  groundCheckDistance: 0.1
-  wallCheckDistance: 0.1
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
+  turnSmoothTime: 0.06
 --- !u!114 &351240008305940144
 MonoBehaviour:
   m_ObjectHideFlags: 0
