@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,7 +16,7 @@ public class FlagpoleInteraction : MonoBehaviour
     private Transform GroundPoint;
 
     [SerializeField]
-    Animation poleSlide;
+    Collider2D player;
 
     public float flagX;
 
@@ -32,6 +34,12 @@ public class FlagpoleInteraction : MonoBehaviour
     [SerializeField]
     private Vector3 cFlagEndPos = new Vector3();
 
+    [SerializeField]
+    private AudioManager am;
+
+    [SerializeField]
+    private List<Animator> fireworks = new List<Animator>();
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,14 +52,24 @@ public class FlagpoleInteraction : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision == player)
         {
             Debug.Log("Hit Pole");
+            am.StopBGM();
+            am.Play("flagslide");
+
             StateManager.SetWinState();
-            collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
+            {
+                collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            }
             Transform t = collision.gameObject.GetComponent<Transform>();
             t.position = new Vector3(flagX, t.position.y, 0);
-            Animator marioA = collision.GetComponent<Animator>();
+            Animator marioA = new Animator();
+            if (collision.GetComponent<Animator>() != null)
+            {
+                marioA = collision.GetComponent<Animator>();
+            }
             marioA.SetLayerWeight(0, 1);
             marioA.SetBool("isJumping", false);
             marioA.SetBool("isMoving", false);
@@ -69,7 +87,7 @@ public class FlagpoleInteraction : MonoBehaviour
 
         while (Mathf.Abs(t.position.y - ClimbPoint.position.y) > 0.01f)
         {
-            newY = Mathf.MoveTowards(t.position.y, ClimbPoint.position.y, 3.5f * Time.deltaTime);
+            newY = Mathf.MoveTowards(t.position.y, ClimbPoint.position.y, 6.2f * Time.deltaTime);
             t.position = new Vector3(t.position.x, newY, 0);
             yield return null;
         }
@@ -79,6 +97,7 @@ public class FlagpoleInteraction : MonoBehaviour
         a.gameObject.transform.Rotate(new Vector3(0, 180, 0));
         a.gameObject.transform.position += new Vector3(0.38f, 0, 0);
         yield return new WaitForSeconds(0.5f);
+        am.Play("stageclear");
         a.ResetControllerState();
         a.speed = 1;
         a.SetBool("isJumping", true);
@@ -118,7 +137,7 @@ public class FlagpoleInteraction : MonoBehaviour
         float newY = 0;
         while (Mathf.Abs(flag.position.y - flagBasePos.y) > 0.01f)
         {
-            newY = Mathf.MoveTowards(flag.position.y, flagBasePos.y, 2f * Time.deltaTime);
+            newY = Mathf.MoveTowards(flag.position.y, flagBasePos.y, 6f * Time.deltaTime);
             flag.position = new Vector3(flag.position.x, newY, 0);
             yield return null;
         }
@@ -138,6 +157,17 @@ public class FlagpoleInteraction : MonoBehaviour
             newY = Mathf.MoveTowards(castleFlag.position.y, cFlagEndPos.y, 2f * Time.deltaTime);
             castleFlag.position = new Vector3(castleFlag.position.x, newY, 0);
             yield return null;
+        }
+        StartCoroutine(PlayFireworks());
+    }
+
+    IEnumerator PlayFireworks()
+    {
+        foreach (var anim in fireworks)
+        {
+            anim.SetTrigger("Explode");
+            am.Play("firework");
+            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         }
     }
 }
