@@ -333,6 +333,11 @@ public class PlayerController : MonoBehaviour
         postStompTimer = postStompTime;
     }
 
+    public void HeadButt(string hex)
+    {
+        rb.linearVelocityY = -UnitsToHex(Mathf.Abs(rb.linearVelocityY), hex);
+    }
+
     private void Die()
     {
         StateManager.SetDeadState();
