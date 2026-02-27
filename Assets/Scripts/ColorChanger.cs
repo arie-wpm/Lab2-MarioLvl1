@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ColorChanger : MonoBehaviour
@@ -28,6 +27,8 @@ public class ColorChanger : MonoBehaviour
 
     private Color[] _currentColors;
     private float _flashInterval = 0.1f;
+
+    public float currentTimeScale = 1f;
 
     public void ChangeToDefault(SpriteRenderer[] sprites) {
         Color[] colors = { _default1, _default2, _default3 };
@@ -76,7 +77,7 @@ public class ColorChanger : MonoBehaviour
                 sprites[i].color = currentSet[i];
             }
             setIndex = (setIndex + 1) % setCount;
-            yield return new WaitForSeconds(_flashInterval);
+            yield return new WaitForSecondsRealtime(_flashInterval);
             elapsed += _flashInterval;
         }
 
@@ -103,7 +104,7 @@ public class ColorChanger : MonoBehaviour
                 sprites[i].color = currentSet[i];
             }
             setIndex = (setIndex + 1) % setCount;
-            yield return new WaitForSeconds(_flashInterval);
+            yield return new WaitForSecondsRealtime(_flashInterval);
             elapsed += _flashInterval;
         }
 
@@ -114,8 +115,24 @@ public class ColorChanger : MonoBehaviour
 
     public IEnumerator TransformFreeze() {
         Time.timeScale = 0f;
-        Debug.Log("TimeScale: " + Time.timeScale);
+        currentTimeScale = Time.timeScale;
+
+        Animator marioAnimator = GameManager.Instance.player.GetComponent<Animator>();
+        PlayerStats marioStats = GameManager.Instance.player.GetComponent<PlayerStats>();
+        SpriteRenderer[] sprites = GameManager.Instance.player.GetComponentsInChildren<SpriteRenderer>();
+
+        if (marioStats.powerState == MarioPowerState.Small) marioAnimator.SetBool("isTransforming", true);
+        else {
+            marioAnimator.speed = 0f;
+            ChangeToStar(sprites, 1f);
+        }
+
         yield return new WaitForSecondsRealtime(1f);
+
+        marioAnimator.speed = 1f;
+        marioAnimator.SetBool("isTransforming", false);
+        marioAnimator.SetLayerWeight(1, 1f);
         Time.timeScale = 1f;
+        currentTimeScale = 1f;
     }
 }

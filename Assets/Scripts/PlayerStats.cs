@@ -46,7 +46,6 @@ public class PlayerStats : MonoBehaviour
 
         if (newState == MarioPowerState.Fire) GameManager.Instance.colorChanger.ChangeToFlower(sprites);
         else GameManager.Instance.colorChanger.ChangeToDefault(sprites);
-        ChangeAnimator(newState);
     }
 
     public void ActivateStar(float duration)
@@ -67,11 +66,4 @@ public class PlayerStats : MonoBehaviour
         Debug.Log("Star: invincible OFF");
         starCoroutine = null;
     }
-
-    void ChangeAnimator(MarioPowerState newState)
-    {
-        Animator animator = GetComponent<Animator>();
-        if (newState == MarioPowerState.Small) animator.SetLayerWeight(1, 0f);            
-        else animator.SetLayerWeight(1, 1f);
-    }   
 }
