@@ -11,7 +11,8 @@ public class PlayerFootCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") && playerController.rb.linearVelocityY < 0)
+        if (other.gameObject.CompareTag("Enemy") && playerController.rb.linearVelocityY < 0 
+                                                 && other.transform.position.y < playerController.transform.position.y)
         {
             playerController.Stomp();
         }
