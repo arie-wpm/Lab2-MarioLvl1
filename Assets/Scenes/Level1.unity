@@ -12343,6 +12343,9 @@ MonoBehaviour:
   _currentCamRespawnPoint: {fileID: 0}
   interactables: {fileID: 758946370}
   spawnedGrouping: {fileID: 1022106272}
+  allEnemies: {fileID: 1859300068}
+  goombaPrefab: {fileID: 6563347764075190145, guid: ff16f6364486c1e46bb7b5e020745175, type: 3}
+  koopaPrefab: {fileID: 281880764745605994, guid: 70545fca6eebec44d8c0550025024b39, type: 3}
 --- !u!114 &526562724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51982,6 +51985,10 @@ PrefabInstance:
     - target: {fileID: 6927866992779325569, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479588835678342748, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
+      propertyPath: lives
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7785003992496370886, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
       propertyPath: m_AngularDamping

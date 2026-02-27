@@ -1,7 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,6 +41,14 @@ public class GameManager : MonoBehaviour
 
     [Header("SpawnedObjects")]
     public GameObject spawnedGrouping;
+    public GameObject allEnemies;
+    public GameObject goombaPrefab;
+    public GameObject koopaPrefab;
+
+    private List<Vector2> _enemyTransform = new();
+    private List<int> _enemyType = new();
+
+    private bool isGameOver = false;
 
     // using Attack as Start for now since default is Enter
     private InputAction _moveAction => InputSystem.actions.FindAction("Move");
@@ -62,6 +71,17 @@ public class GameManager : MonoBehaviour
         StartScreenObj.SetActive(true);
         _currentRespawnPoint = respawnPoint1;
         _currentCamRespawnPoint = CamRespawnPoint1;
+
+        // store all enemy positions and type
+        Transform[] enemies = allEnemies.GetComponentsInChildren<Transform>()
+            .Skip(1)
+            .ToArray();
+        
+        foreach (Transform enemy in enemies) {
+            _enemyTransform.Add(enemy.transform.position);
+            if (enemy.name.Contains("Goomba")) _enemyType.Add(0);
+            else _enemyType.Add(1);
+        }
     }
 
     void Update()
@@ -176,12 +196,14 @@ public class GameManager : MonoBehaviour
     public IEnumerator RestartLevel()
     {
         StateManager.SetStartState();
+        ResetSceneObjects();
         yield return new WaitForSeconds(5f);
         StateManager.SetPlayState();
     }
 
     public IEnumerator RestartGame()
     {
+        isGameOver = true;
         StateManager.SetStartState();
         yield return new WaitForSeconds(5f);
         // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -191,19 +213,30 @@ public class GameManager : MonoBehaviour
     public void ResetSceneObjects() {
 
         // reset position
-        _currentRespawnPoint = respawnPoint1;
-        _currentCamRespawnPoint = CamRespawnPoint1;
-        player.transform.position = _currentRespawnPoint.transform.position;
-        Camera.main.transform.position = _currentCamRespawnPoint.transform.position;
-
-        // resetColor and State
-        colorChanger.ChangeToDefault(player.GetComponentsInChildren<SpriteRenderer>());
-        player.GetComponent<PlayerStats>().Reset();
-        StateManager.CurrentState = StateManager.GameState.NULL;
-        // ScoreManager score reset
+        if (isGameOver) {
+            _currentRespawnPoint = respawnPoint1;
+            _currentCamRespawnPoint = CamRespawnPoint1;
+            player.transform.position = _currentRespawnPoint.transform.position;
+            Camera.main.transform.position = _currentCamRespawnPoint.transform.position;
+            // resetColor and State
+            colorChanger.ChangeToDefault(player.GetComponentsInChildren<SpriteRenderer>());
+            player.GetComponent<PlayerStats>().Reset();
+            StateManager.CurrentState = StateManager.GameState.NULL;
+            // ScoreManager score reset
+            isGameOver = false;
+        }
 
         //reset blocks
         InteractableBlock[] blocks = interactables.GetComponentsInChildren<InteractableBlock>();
         foreach (InteractableBlock block in blocks) block.Reset();
+
+        // reset enemies
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies) Destroy(enemy);
+
+        for (int i = 0; i < _enemyTransform.Count; i++) {
+            if (_enemyType[i] == 0) Instantiate(goombaPrefab, _enemyTransform[i], Quaternion.identity);
+            else Instantiate(koopaPrefab, _enemyTransform[i], Quaternion.identity);
+        }
     }
 }
