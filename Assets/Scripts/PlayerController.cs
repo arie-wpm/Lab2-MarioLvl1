@@ -1,6 +1,10 @@
 using System;
+using System.Collections;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
@@ -81,7 +85,9 @@ public class PlayerController : MonoBehaviour
     private float midAirBackwardsSlowSlowJumpDeceleration;
 
     public bool grounded;
-    [HideInInspector] public Rigidbody2D rb;
+
+    [HideInInspector]
+    public Rigidbody2D rb;
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction jumpAction;
@@ -96,6 +102,19 @@ public class PlayerController : MonoBehaviour
     private int facingDirection = 1;
     private float postStompTimer;
     private float postStompTime = 0.1f;
+
+    [SerializeField]
+    private Collider2D mainCol;
+
+    [SerializeField]
+    private Collider2D footCol;
+
+    [SerializeField]
+    private Collider2D headCol;
+
+    [SerializeField]
+    private float deathMoveHeight = 0;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -299,7 +318,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") && postStompTimer <=0 )
+        if (other.gameObject.CompareTag("Enemy") && postStompTimer <= 0)
         {
             Die();
         }
@@ -313,23 +332,47 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Die");
+        StateManager.SetDeadState();
+        animator.SetBool("isDead", true);
+        mainCol.enabled = false;
+        footCol.enabled = false;
+        headCol.enabled = false;
+        rb.bodyType = RigidbodyType2D.Static;
+
+        StartCoroutine(MoveMarioDead());
     }
-    
+
+    private IEnumerator MoveMarioDead()
+    {
+        float newY = 0;
+        UnityEngine.Vector3 aboveMario = new UnityEngine.Vector3(
+            transform.position.x,
+            transform.position.y + deathMoveHeight,
+            0
+        );
+        while (Math.Abs(transform.position.y - aboveMario.y) > 0.01f)
+        {
+            newY = Mathf.MoveTowards(transform.position.y, aboveMario.y, 10f * Time.deltaTime);
+            transform.position = new UnityEngine.Vector3(transform.position.x, newY, 0);
+            yield return null;
+        }
+        rb.bodyType = RigidbodyType2D.Dynamic;
+    }
+
     private float UnitsToHex(float value, string hexToAdd)
     {
         string valueHex = ((long)(value * Mathf.Pow(16, 4) / 60)).ToString("X5");
         Debug.Log("valueHex: " + valueHex);
-        
+
         string endHex = valueHex[^3..];
-        
+
         string fullHex = hexToAdd + endHex;
         Debug.Log("fullHex: " + fullHex);
-        
+
         long newValue = Convert.ToInt64(fullHex, 16);
         return (float)newValue / Mathf.Pow(16, 4) * 60;
     }
-    
+
     void OnDrawGizmos()
     {
         if (groundCheckPos == null)
