@@ -7,6 +7,8 @@ public class BlockItem : MonoBehaviour
     private CircleCollider2D physicsCollider;
     private BoxCollider2D triggerCollider;
     private SpriteRenderer spriteRenderer;
+    private EntityMovement movement;
+    private Pickup pickup;
 
     private void Awake()
     {
@@ -14,11 +16,12 @@ public class BlockItem : MonoBehaviour
         physicsCollider = GetComponent<CircleCollider2D>();
         triggerCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        movement = GetComponent<EntityMovement>();
+        pickup = GetComponent<Pickup>();
     }
 
     private void Start()
     {
-        if (rb == null || physicsCollider == null || triggerCollider == null || spriteRenderer == null) return;
         StartCoroutine(Animate());
     }
 
@@ -36,58 +39,80 @@ public class BlockItem : MonoBehaviour
 
         transform.SetParent(null, true);
 
-        var movement = GetComponent<EntityMovement>();
         if (movement != null) movement.enabled = false;
 
-        rb.bodyType = RigidbodyType2D.Kinematic;
         rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.simulated = false;
 
         physicsCollider.enabled = false;
         triggerCollider.enabled = false;
         spriteRenderer.enabled = false;
 
-        yield return new WaitForSeconds(0.3f);
-
-        Bounds blockB = blockCol != null ? blockCol.bounds : new Bounds(rb.position, Vector3.one);
-
-        float xOffset = -0.5f;
-
-        Vector2 offsetWorld = Vector2.Scale(physicsCollider.offset, transform.lossyScale);
-        float itemHalfH = physicsCollider.radius * transform.lossyScale.y;
-
-        Vector2 startCenter = new Vector2(blockB.center.x + xOffset, blockB.center.y);
-        Vector2 endCenter = new Vector2(blockB.center.x + xOffset, blockB.max.y + itemHalfH + 0.01f);
-
-        Vector2 startPos = startCenter - offsetWorld;
-        Vector2 endPos = endCenter - offsetWorld;
-
-        rb.position = startPos;
+        yield return new WaitForSeconds(0.25f);
 
         spriteRenderer.enabled = true;
 
-        float duration = 0.5f;
+        if (blockCol == null)
+            yield break;
+
+        Bounds bb = blockCol.bounds;
+
+        Vector2 startCenter = bb.center;
+        Vector2 endCenter = new Vector2(bb.center.x, bb.max.y + physicsCollider.bounds.extents.y + 0.02f);
+
+        Vector2 deltaToStart = startCenter - (Vector2)physicsCollider.bounds.center;
+        transform.position += (Vector3)deltaToStart;
+
+        Vector2 startPos = transform.position;
+
+        Vector2 deltaToEnd = endCenter - (Vector2)physicsCollider.bounds.center;
+        Vector2 endPos = (Vector2)transform.position + deltaToEnd;
+
         float elapsed = 0f;
+        float duration = 0.5f;
 
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-            rb.position = Vector2.Lerp(startPos, endPos, t);
+            transform.position = Vector2.Lerp(startPos, endPos, t);
             elapsed += Time.deltaTime;
             yield return null;
         }
 
+        transform.position = endPos;
+
+        rb.simulated = true;
         rb.position = endPos;
         rb.linearVelocity = Vector2.zero;
-
-        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.angularVelocity = 0f;
 
         physicsCollider.enabled = true;
         triggerCollider.enabled = true;
 
+        Physics2D.IgnoreCollision(physicsCollider, blockCol, true);
+
         yield return new WaitForFixedUpdate();
 
+        rb.position = endPos;
         rb.linearVelocity = Vector2.zero;
 
-        if (movement != null) movement.enabled = true;
+        yield return new WaitForSeconds(0.1f);
+
+        Physics2D.IgnoreCollision(physicsCollider, blockCol, false);
+
+        if (movement != null)
+        {
+            movement.direction = Vector2.right;
+            movement.enabled = true;
+        }
+
+        if (pickup.type == PickupType.Coin)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            pickup.ApplyPickup();
+            Destroy(gameObject);
+        }
     }
 }
