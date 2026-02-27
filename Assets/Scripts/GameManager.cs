@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     // using Attack as Start for now since default is Enter
     private InputAction _moveAction => InputSystem.actions.FindAction("Move");
-    private InputAction _attackAction => InputSystem.actions.FindAction("Attack");
+    private InputAction _startAction => InputSystem.actions.FindAction("Next");
 
     // private InputAction _pauseAction => InputSystem.actions.FindAction("Pause");
     private bool _selectTrack = true;
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
             selectorObj.transform.position = selectorPos;
         }
 
-        if (_attackAction.WasPressedThisFrame())
+        if (_startAction.WasPressedThisFrame())
         {
             // no logic here yet but we can add luigi colors if time permits
             // note: need to add a coroutine here to switch to BlackScreen
@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
             return;
 
         // check for Input Pause
-        if (_attackAction.WasPressedThisFrame())
+        if (_startAction.WasPressedThisFrame())
         {
             AudioManager.Instance.Play("pause");
             AudioManager.Instance.PauseBGM();
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
         if (StateManager.CurrentGameState() != StateManager.GameState.PauseScreen)
             return;
 
-        if (_attackAction.WasPressedThisFrame())
+        if (_startAction.WasPressedThisFrame())
         {
             AudioManager.Instance.Play("pause");
             AudioManager.Instance.ResumeBGM();

@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction jumpAction;
+    private InputAction crouchAction;
     private Vector2 moveValue;
     private Vector2 currentDirection;
     private string jumpType = "";
@@ -129,6 +130,7 @@ public class PlayerController : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         runAction = InputSystem.actions.FindAction("Sprint");
         jumpAction = InputSystem.actions.FindAction("Jump");
+        crouchAction = InputSystem.actions.FindAction("Crouch");
         startPos = transform.position;
         grounded = true;
     }
@@ -140,27 +142,29 @@ public class PlayerController : MonoBehaviour
         AnimCheckVelocity();
         moveValue = moveAction.ReadValue<Vector2>();
 
-        // RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, groundCheckDistance, groundLayer);
-        // grounded = hit.collider != null;
-        // Debug.DrawRay(groundCheckPos.position, Vector2.down, Color.green, groundCheckDistance);
-        // if (jumpAction.WasPressedThisFrame() && grounded)
-        // {
-        //     Debug.Log("Im Jumping");
-        //     Jump();
-        // }
+        float halfWidth = 0.3f;
+        Vector2 center = groundCheckPos.position;
+        Vector2 leftRay = center + Vector2.left * halfWidth;
+        Vector2 rightRay = center + Vector2.right * halfWidth;
 
-        // Sorry James for you to review
+        RaycastHit2D leftHit = Physics2D.Raycast(leftRay, Vector2.down, groundCheckDistance, groundLayer);
+        RaycastHit2D rightHit = Physics2D.Raycast(rightRay, Vector2.down, groundCheckDistance, groundLayer);
+        RaycastHit2D centerHit = Physics2D.Raycast(center, Vector2.down, groundCheckDistance, groundLayer);
 
-        Vector2 boxSize = new Vector2(0.65f, 0.5f);
-        RaycastHit2D hit = Physics2D.BoxCast(
-            groundCheckPos.position,
-            boxSize,
-            0f,
-            Vector2.down,
-            groundCheckDistance,
-            groundLayer
-        );
-        grounded = hit.collider != null;
+        Debug.DrawRay(leftRay, Vector2.down * groundCheckDistance, Color.red);
+        Debug.DrawRay(rightRay, Vector2.down * groundCheckDistance, Color.red);
+        Debug.DrawRay(center, Vector2.down * groundCheckDistance, Color.red);
+
+        bool leftGrounded = leftHit.collider != null && leftHit.normal.y > 0.99f;
+        bool rightGrounded = rightHit.collider != null && rightHit.normal.y > 0.99f;
+        bool centerGrounded = centerHit.collider != null && centerHit.normal.y > 0.99f;
+
+        grounded = leftGrounded || rightGrounded || centerGrounded;
+
+        if (crouchAction.IsPressed() && pStats.powerState != MarioPowerState.Small) {
+            animator.SetBool("isCrouching", true);
+            if (grounded) moveValue = Vector2.zero;
+        } else animator.SetBool("isCrouching", false);
 
         if (jumpAction.WasPressedThisFrame() && grounded)
         {
@@ -455,16 +459,6 @@ public class PlayerController : MonoBehaviour
 
         long newValue = Convert.ToInt64(fullHex, 16);
         return (float)newValue / Mathf.Pow(16, 4) * 60;
-    }
-
-    void OnDrawGizmos()
-    {
-        if (groundCheckPos == null)
-            return;
-        Vector2 boxSize = new Vector2(0.65f, 0.5f);
-        Vector2 boxCenter = groundCheckPos.position + Vector3.down * groundCheckDistance;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(boxCenter, boxSize);
     }
 
     void AnimCheckVelocity()
