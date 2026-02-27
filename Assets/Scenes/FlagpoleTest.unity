@@ -2104,6 +2104,10 @@ PrefabInstance:
       value: 191.26
       objectReference: {fileID: 0}
     - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1167871007}
+    - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
       propertyPath: ClimbPoint
       value: 
       objectReference: {fileID: 721554366}
@@ -2134,6 +2138,38 @@ PrefabInstance:
     - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
       propertyPath: flagBasePos.y
       value: -4.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: fireworks.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: 'fireworks.Array.data[0]'
+      value: 
+      objectReference: {fileID: 442190170}
+    - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: 'fireworks.Array.data[1]'
+      value: 
+      objectReference: {fileID: 918943057}
+    - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: 'fireworks.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1544988590}
+    - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: 'fireworks.Array.data[3]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: 'fireworks.Array.data[4]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: 'fireworks.Array.data[5]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: 'fireworks.Array.data[6]'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7467322828642348791, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8698,6 +8734,11 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!95 &442190170 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5142430990338438230, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+  m_PrefabInstance: {fileID: 6163071123772491139}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &442607764
 GameObject:
   m_ObjectHideFlags: 0
@@ -18699,6 +18740,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4373888531796031781, guid: 3e79bfc5c591f0c44b47a3eb56857365, type: 3}
   m_PrefabInstance: {fileID: 917544206}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &918943056
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 194.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645127360986575216, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_Name
+      value: Firework (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+--- !u!95 &918943057 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5142430990338438230, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+  m_PrefabInstance: {fileID: 918943056}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &920367331 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7619404851386124751, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
@@ -24792,6 +24895,11 @@ MonoBehaviour:
   lives: 3
   powerState: 0
   isInvincible: 0
+--- !u!61 &1167871007 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3983164134561673421, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
+  m_PrefabInstance: {fileID: 1880182988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1169974506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30906,6 +31014,9 @@ MonoBehaviour:
   - name: stageclear
     clip: {fileID: 8300000, guid: b76b5d8c7c928ef47887cfc1a1400b62, type: 3}
     volume: 1
+  - name: firework
+    clip: {fileID: 8300000, guid: 464b1e9da2f314a4394e4395748d2008, type: 3}
+    volume: 1
   introClip: {fileID: 8300000, guid: 87cc7dbf0b2339841af7a16de325c351, type: 3}
   loopClip: {fileID: 8300000, guid: a10d63d0631b5434b98900da6035e7e8, type: 3}
 --- !u!1 &1472153925
@@ -32739,6 +32850,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4373888531796031781, guid: 3e79bfc5c591f0c44b47a3eb56857365, type: 3}
   m_PrefabInstance: {fileID: 1539354324}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1544988589
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 200.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645127360986575216, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_Name
+      value: Firework (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+--- !u!95 &1544988590 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5142430990338438230, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+  m_PrefabInstance: {fileID: 1544988589}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1546963415
 GameObject:
@@ -50874,6 +51047,63 @@ Transform:
   - {fileID: 1120824836}
   m_Father: {fileID: 1323515179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &6163071123772491139
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 196.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429548045046944715, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645127360986575216, guid: c9af21f495b824645beb0f332b67e043, type: 3}
+      propertyPath: m_Name
+      value: Firework
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c9af21f495b824645beb0f332b67e043, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -50885,3 +51115,6 @@ SceneRoots:
   - {fileID: 902110392}
   - {fileID: 1880182988}
   - {fileID: 1557459463}
+  - {fileID: 6163071123772491139}
+  - {fileID: 918943056}
+  - {fileID: 1544988589}
