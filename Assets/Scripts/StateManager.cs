@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -5,18 +6,16 @@ public class StateManager : MonoBehaviour
 {
     public enum GameState
     {
+        NULL,
         StartScreen,
         Play,
         PauseScreen,
-        Invincible,
-
-        FireFlower,
         Dead,
         Won,
     }
 
     // State Related Events Invoked whenever a state is entered.
-    public static GameState CurrentState;
+    public static GameState CurrentState = GameState.NULL;
 
     public static UnityEvent EnteredStartScreen;
     public static UnityEvent EnteredPlay;
@@ -24,9 +23,13 @@ public class StateManager : MonoBehaviour
     public static UnityEvent EnteredInvincible;
     public static UnityEvent EnteredFireFlower;
     public static UnityEvent EnteredDead;
+    public static UnityEvent DeathAnimationFinished;
     public static UnityEvent EnteredWon;
 
-    void OnEnable()
+    [SerializeField]
+    private UIManager uiMan;
+
+    void Awake()
     {
         EnteredStartScreen ??= new UnityEvent();
         EnteredPlay ??= new UnityEvent();
@@ -35,13 +38,12 @@ public class StateManager : MonoBehaviour
         EnteredFireFlower ??= new UnityEvent();
         EnteredDead ??= new UnityEvent();
         EnteredWon ??= new UnityEvent();
+        EnteredWon.AddListener(PrintWin);
+        EnteredStartScreen.AddListener(uiMan.EnableLivesScreen);
+        EnteredPlay.AddListener(uiMan.DisableLivesScreen);
     }
 
-    void Start()
-    {
-        CurrentState = GameState.Play;
-        EnteredWon.AddListener(PrintWin);
-    }
+    void Start() { }
 
     public static GameState CurrentGameState()
     {
@@ -70,22 +72,6 @@ public class StateManager : MonoBehaviour
             return;
         CurrentState = GameState.PauseScreen;
         EnteredPauseScreen.Invoke();
-    }
-
-    public static void SetInvincibleState()
-    {
-        if (CurrentState == GameState.Invincible)
-            return;
-        CurrentState = GameState.Invincible;
-        EnteredInvincible.Invoke();
-    }
-
-    public static void SetFireFlowerState()
-    {
-        if (CurrentState == GameState.FireFlower)
-            return;
-        CurrentState = GameState.FireFlower;
-        EnteredFireFlower.Invoke();
     }
 
     public static void SetDeadState()

@@ -365,7 +365,7 @@ public class PlayerController : MonoBehaviour
         headCol.enabled = true;
         animator.SetBool("isDead", false);
         animator.ResetControllerState();
-        StateManager.SetPlayState();
+        StartCoroutine(GameManager.RestartGame());
         transform.position = startPos;
     }
 
