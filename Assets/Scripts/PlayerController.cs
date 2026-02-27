@@ -454,6 +454,7 @@ public class PlayerController : MonoBehaviour
 
     void AnimCheckVelocity()
     {
+        if (GameManager.Instance.colorChanger.currentTimeScale == 0f) return; 
         animator.SetFloat("MoveSpeed", Mathf.Abs(rb.linearVelocityX));
         hasVerticalVelocity = Mathf.Abs(rb.linearVelocity.y) > 0.1f;
 

@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
     void UpdateInPlayMode()
     {
         StartScreenObj.SetActive(false);
-        Time.timeScale = 1f;
+        Time.timeScale = GameManager.Instance.colorChanger.currentTimeScale;
         if (StateManager.CurrentGameState() != StateManager.GameState.Play)
             return;
 
