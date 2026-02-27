@@ -17,30 +17,6 @@ public class StateManager : MonoBehaviour
     // State Related Events Invoked whenever a state is entered.
     public static GameState CurrentState = GameState.NULL;
 
-<<<<<<< HEAD
-    public static UnityEvent EnteredStartScreen = new UnityEvent();
-    public static UnityEvent EnteredPlay = new UnityEvent();
-    public static UnityEvent EnteredPauseScreen = new UnityEvent();
-    public static UnityEvent EnteredInvincible = new UnityEvent();
-    public static UnityEvent EnteredFireFlower = new UnityEvent();
-    public static UnityEvent EnteredDead = new UnityEvent();
-    public static UnityEvent EnteredWon = new UnityEvent();
-
-    // void OnEnable()
-    // {
-    //     EnteredStartScreen ??= new UnityEvent();
-    //     EnteredPlay ??= new UnityEvent();
-    //     EnteredPauseScreen ??= new UnityEvent();
-    //     EnteredInvincible ??= new UnityEvent();
-    //     EnteredFireFlower ??= new UnityEvent();
-    //     EnteredDead ??= new UnityEvent();
-    //     EnteredWon ??= new UnityEvent();
-    // }
-
-    void Start()
-    {
-        CurrentState = GameState.StartScreen;
-=======
     public static UnityEvent EnteredStartScreen;
     public static UnityEvent EnteredPlay;
     public static UnityEvent EnteredPauseScreen;
@@ -62,7 +38,6 @@ public class StateManager : MonoBehaviour
         EnteredFireFlower ??= new UnityEvent();
         EnteredDead ??= new UnityEvent();
         EnteredWon ??= new UnityEvent();
->>>>>>> d34a3ab97c4e02c95e5b73c3905f94f86928d8ce
         EnteredWon.AddListener(PrintWin);
         EnteredStartScreen.AddListener(uiMan.EnableLivesScreen);
         EnteredPlay.AddListener(uiMan.DisableLivesScreen);
