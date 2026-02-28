@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour, IBumpable
     [SerializeField] private float movespeed = 2f;
     [SerializeField] private float wallCheckDist = 0.1f;
     [SerializeField] private float deathDelay = 1f;
+    private float instantDespawn = 0f;
     [SerializeField] private float knockbackForceX;
     [SerializeField] private float knockbackForceY;
     
@@ -55,6 +56,12 @@ public class EnemyController : MonoBehaviour, IBumpable
     {
         idle = false;
         anim.SetBool("isMoving", true);
+    }
+
+    private void OnBecameInvisible()
+    {
+        if (idle) return;
+        Despawn(instantDespawn);
     }
 
     // Update is called once per frame
@@ -152,9 +159,6 @@ public class EnemyController : MonoBehaviour, IBumpable
         {
             Vector2 knockbackDir = other.transform.position.x < transform.position.x ? Vector2.right : Vector2.left;
             DieKnockback(knockbackDir);
-        } else if (other.gameObject.CompareTag("DeathBox"))
-        {
-            Despawn();
         }
     }
 
@@ -168,7 +172,7 @@ public class EnemyController : MonoBehaviour, IBumpable
         anim.SetBool("isMoving", false);
         anim.SetBool("isDead", true);
         GiveScore();
-        Despawn();
+        Despawn(deathDelay);
     }
 
     private void KoopaStomp(Transform player)
@@ -252,12 +256,12 @@ public class EnemyController : MonoBehaviour, IBumpable
         anim.SetBool("isMoving", false);
         anim.SetBool("isDead", true);
         GiveScore();
-        Despawn();
+        Despawn(deathDelay);
     }
 
-    private void Despawn() //use when enemy falls out of level to not give score
+    private void Despawn(float delay)
     {
-        Destroy(gameObject, deathDelay);
+        Destroy(gameObject, delay);
     }
 
     private void GiveScore()
