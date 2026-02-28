@@ -70,10 +70,11 @@ public class FlagpoleInteraction : MonoBehaviour
             {
                 marioA = collision.GetComponent<Animator>();
             }
-            marioA.SetLayerWeight(0, 1);
+            // marioA.SetLayerWeight(0, 1);
             marioA.SetBool("isJumping", false);
             marioA.SetBool("isMoving", false);
-            marioA.SetLayerWeight(0, 1);
+            // marioA.SetLayerWeight(0, 1);
+            marioA.speed = 1f;
             marioA.SetBool("isPoleSliding", true);
             StartCoroutine(MoveToCastle(t, marioA));
         }
@@ -158,7 +159,7 @@ public class FlagpoleInteraction : MonoBehaviour
             castleFlag.position = new Vector3(castleFlag.position.x, newY, 0);
             yield return null;
         }
-        StartCoroutine(PlayFireworks()); // plug GetFireWorkCount()
+        StartCoroutine(PlayFireworks(GetFireWorkCount(GameManager.Timer)));
 
         // also start Coroutine for timer deduction + score add
     }

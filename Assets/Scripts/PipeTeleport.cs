@@ -33,11 +33,13 @@ public class PipeTeleport : MonoBehaviour
     private int _spriteSortingOrder;
 
     private InputAction _crouchAction;
+    private InputAction _moveAction;
     private bool _playerInPipe = false;
 
     private void Start() {
         _player = GameManager.Instance.player;
-        _crouchAction = InputSystem.actions.FindAction("Crouch");;
+        _crouchAction = InputSystem.actions.FindAction("Crouch");
+        _moveAction = InputSystem.actions.FindAction("Move");
 
         _playerRb = _player.GetComponent<Rigidbody2D>();
         _playerCol = _player.GetComponent<BoxCollider2D>();
@@ -70,7 +72,8 @@ public class PipeTeleport : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other) {
         // this pipe requires no input
-        if (other.gameObject.tag == "Player" && gameObject.name == "UndergroundPipeEnter") {
+        if (other.gameObject.tag == "Player"  && _playerController.grounded
+            && gameObject.name == "UndergroundPipeEnter" && _moveAction.IsPressed() && _moveAction.ReadValue<Vector2>().x > 0) {
             _oEntry = StartCoroutine(OEntry());    
             return;
         }
@@ -81,6 +84,7 @@ public class PipeTeleport : MonoBehaviour
         _blackPanel.SetActive(true);
         
         AudioManager.Instance.StopBGM();
+        _playerAnimator.SetBool("isCrouching", false);
 
         SwitchCameras(isUnderground);
         _player.transform.position = transform.position;
@@ -125,7 +129,6 @@ public class PipeTeleport : MonoBehaviour
     IEnumerator OEntry() {
         AudioManager.Instance.Play("pipe");
         TogglePlayerComponents(false);
-        SetAllAnimParamsFalse();
         _playerAnimator.SetBool("isMoving", true);
 
         Vector2 startPos = _player.transform.position;
