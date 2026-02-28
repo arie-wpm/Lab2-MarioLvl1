@@ -142,6 +142,8 @@ public class PlayerController : MonoBehaviour
         {
             if (FindObjectsByType<Fireball>(FindObjectsSortMode.None).Length < 2)
             {
+                animator.SetTrigger("Fire");
+                AudioManager.Instance.Play("fireball");
                 GameObject fireBall = Instantiate(fireballPrefab, fireBallThrowPoint.position, quaternion.identity);
                 fireBall.GetComponent<Fireball>().Launch(transform.localScale);
             }
