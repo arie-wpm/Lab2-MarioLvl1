@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class ScorePopupHandler : MonoBehaviour
 {
-    [SerializeField] private float movespeed;
-    [SerializeField] private float despawnDelay;
+    [SerializeField]
+    private float movespeed;
+
+    [SerializeField]
+    public float despawnDelay;
     private float timer;
-    
-    [SerializeField] private GameObject[] hundredsArr;
-    [SerializeField] private GameObject[] thousandsArr;
+
+    [SerializeField]
+    private GameObject[] hundredsArr;
+
+    [SerializeField]
+    private GameObject[] thousandsArr;
 
     private int thousands;
     private int hundreds;
@@ -22,9 +28,9 @@ public class ScorePopupHandler : MonoBehaviour
         { 2, 2 },
         { 4, 3 },
         { 5, 4 },
-        { 8, 5 }
+        { 8, 5 },
     };
-    
+
     public void ShowPopup(int score)
     {
         ScoreToDigits(score);
@@ -57,5 +63,4 @@ public class ScorePopupHandler : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }
