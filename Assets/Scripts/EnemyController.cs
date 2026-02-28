@@ -269,8 +269,7 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private void GiveScore()
     {
-        _uiManager.SpawnPopup(score, transform.position + new Vector3(0, col.bounds.extents.y, 0));
-        ScoreManager.ModifyScore(score);
+        ScoreManager.AddScoreWithModifier(score, transform.position + new Vector3(0, col.bounds.extents.y, 0));
     }
 
 

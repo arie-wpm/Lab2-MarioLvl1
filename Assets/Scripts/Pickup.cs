@@ -21,10 +21,15 @@ public class Pickup : MonoBehaviour
     private bool pickedUp;
     private List<GameObject> _mushroomToFlower = new List<GameObject>();
     private PlayerStats _playerStats;
+    
+    private Collider2D col;
+    private UIManager _uiManager;
 
     void Start()
     {
         _playerStats = GameManager.Instance.player.GetComponent<PlayerStats>();
+        col = GetComponent<Collider2D>();
+        _uiManager = GameObject.FindWithTag("GameManager").GetComponent<UIManager>();
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -114,16 +119,13 @@ public class Pickup : MonoBehaviour
     
     private void GiveScore()
     {
-        Collider2D col = GetComponent<Collider2D>();
-        UIManager _uiManager = GameObject.FindWithTag("GameManager").GetComponent<UIManager>();
         _uiManager.SpawnPopup(score, transform.position + new Vector3(0, col.bounds.extents.y, 0));
-        ScoreManager.ModifyScore(score);
+        ScoreManager.AddScore(score);
     }
 
     private void OneUpPopup()
     {
-        Collider2D col = GetComponent<Collider2D>();
-        UIManager _uiManager = GameObject.FindWithTag("GameManager").GetComponent<UIManager>();
+        
         _uiManager.Spawn1UPPopup(score, transform.position + new Vector3(0, col.bounds.extents.y, 0));
     }
 }
