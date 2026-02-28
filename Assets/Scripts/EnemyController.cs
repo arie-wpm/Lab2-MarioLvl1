@@ -119,8 +119,8 @@ public class EnemyController : MonoBehaviour, IBumpable
                 moveDir *= -1f;
                 spriteRenderer.flipX = !spriteRenderer.flipX;
             }
-            rb.linearVelocity = new Vector2(moveDir.x * ms, rb.linearVelocityY);
         }
+        rb.linearVelocity = new Vector2(moveDir.x * ms, rb.linearVelocityY);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -200,6 +200,8 @@ public class EnemyController : MonoBehaviour, IBumpable
         anim.SetBool("isMoving", false);
         anim.SetBool("isShell", true);
         
+        groundLayers &= ~(1 << LayerMask.NameToLayer("Enemy"));
+        
         koopaReformCoroutine = StartCoroutine(ShellReform());
     }
 
@@ -245,6 +247,7 @@ public class EnemyController : MonoBehaviour, IBumpable
             anim.SetBool("isMoving", true);
         }
         koopaState = KoopaState.Walking;
+        groundLayers |= 1 << LayerMask.NameToLayer("Enemy");
         moveDir = Vector2.left;
     }
 

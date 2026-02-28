@@ -52,8 +52,6 @@ public class EntityMovement : MonoBehaviour
     {
         if (Time.time < bounceCooldownUntil) return;
         
-        //if ((groundLayers.value & (1 << collision.gameObject.layer)) == 0) return;
-        
         for (int i = 0; i < collision.contactCount; i++)
         {
             var n = collision.GetContact(i).normal;
