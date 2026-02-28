@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
             if (FindObjectsByType<Fireball>(FindObjectsSortMode.None).Length < 2)
             {
                 GameObject fireBall = Instantiate(fireballPrefab, fireBallThrowPoint.position, quaternion.identity);
-                fireBall.GetComponent<Fireball>().Launch(currentDirection);
+                fireBall.GetComponent<Fireball>().Launch(transform.localScale);
             }
         }
 

@@ -129,9 +129,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e56ba504346f9740a7bd6fa0af300e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fireball
-  speed: 9.5
+  speed: 11
+  currentSpeed: 9.5
   velocityConversation: 0.95
-  gravity: 4.75
+  gravity: 6
   angle: 30
   groundLayer:
     serializedVersion: 2
@@ -161,7 +162,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &5500610564629068590
 CircleCollider2D:
