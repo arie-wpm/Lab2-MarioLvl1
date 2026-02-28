@@ -140,8 +140,11 @@ public class PlayerController : MonoBehaviour
 
         if (runAction.WasPressedThisFrame() && pStats.powerState == MarioPowerState.Fire)
         {
-            GameObject fireBall = Instantiate(fireballPrefab, fireBallThrowPoint.position, quaternion.identity);
-            fireBall.GetComponent<Fireball>().Launch(currentDirection);
+            if (FindObjectsByType<Fireball>(FindObjectsSortMode.None).Length < 2)
+            {
+                GameObject fireBall = Instantiate(fireballPrefab, fireBallThrowPoint.position, quaternion.identity);
+                fireBall.GetComponent<Fireball>().Launch(currentDirection);
+            }
         }
 
         postStompTimer -= Time.deltaTime;

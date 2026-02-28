@@ -8,22 +8,42 @@ public class Fireball : MonoBehaviour
     [SerializeField] private float gravity = 1f;
     [SerializeField] private float angle;
     [SerializeField] private LayerMask groundLayer;
-    
+
+    private Camera cam;
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 direction;
     private Vector2 velocityBeforeCollision;
+    private Vector3 bottomLeft;
+    private Vector3 topRight;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
+    
+    private void Start()
+    {
+        cam = Camera.main;
+        bottomLeft = cam.ViewportToWorldPoint(new Vector3(-0.1f, -0.1f, cam.nearClipPlane));
+        topRight = cam.ViewportToWorldPoint(new Vector3(1.1f, 1.1f, cam.nearClipPlane));
+    }
 
     public void Launch(Vector2 dir)
     {
         direction = dir;
         rb.linearVelocity = new Vector2(speed * direction.x, -speed);
+    }
+
+    private void Update()
+    {
+        if ((transform.position.x < bottomLeft.x || transform.position.x > topRight.x) ||
+            (transform.position.y < bottomLeft.y || transform.position.y > topRight.y))
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()
