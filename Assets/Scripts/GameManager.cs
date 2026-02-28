@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject selectorObj;
 
+    [SerializeField] private float _blackScreenDuration = 2.5f;
+
     [Header("Respawn Locations")]
     public Camera mainCamera;
     public Camera underGroundCamera;
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
     private List<int> _enemyType = new();
 
     private bool isGameOver = false;
+    private bool isFirstStart = true;
 
     // using Attack as Start for now since default is Enter
     private InputAction _moveAction => InputSystem.actions.FindAction("Move");
@@ -100,7 +103,7 @@ public class GameManager : MonoBehaviour
                 SetMarioPosition();
                 break;
             case StateManager.GameState.Play:
-                AudioManager.Instance.PlayBGM();
+                HandlePlayBGMOnce();
                 UpdateInPlayMode();
                 break;
             case StateManager.GameState.PauseScreen:
@@ -109,6 +112,13 @@ public class GameManager : MonoBehaviour
             case StateManager.GameState.Dead:
                 UpdateInDeadMode();
                 break;
+        }
+    }
+
+    void HandlePlayBGMOnce() {
+        if (isFirstStart) {
+            AudioManager.Instance.PlayBGM();
+            isFirstStart = false;
         }
     }
 
@@ -197,7 +207,7 @@ public class GameManager : MonoBehaviour
     {
         StateManager.SetStartState();
         ResetSceneObjects();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(_blackScreenDuration);
         StateManager.SetPlayState();
     }
 
@@ -205,7 +215,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         StateManager.SetStartState();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(_blackScreenDuration);
         // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         ResetSceneObjects();
     }
@@ -238,5 +248,7 @@ public class GameManager : MonoBehaviour
             if (_enemyType[i] == 0) Instantiate(goombaPrefab, _enemyTransform[i], Quaternion.identity);
             else Instantiate(koopaPrefab, _enemyTransform[i], Quaternion.identity);
         }
+
+        isFirstStart = true;
     }
 }

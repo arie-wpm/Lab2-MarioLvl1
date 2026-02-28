@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour {
     public Sound[] sounds;
     public AudioClip introClip;
     public AudioClip loopClip;
+    public AudioClip underGroundClip;
 
 
     private Dictionary<string, Sound> _soundLookup;
@@ -48,6 +49,7 @@ public class AudioManager : MonoBehaviour {
         // prelaod audio
         introClip.LoadAudioData();
         loopClip.LoadAudioData();
+        underGroundClip.LoadAudioData();
     }
 
     void Start() {
@@ -89,8 +91,15 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void PlayBGM() {
+        _bgmSource.clip = loopClip;
         if (_bgmCoroutine != null) return;
         _bgmCoroutine = StartCoroutine(StartPlayingBGM());
+    }
+
+    public void PlayBGMUnderground() {
+        _bgmSource.clip = underGroundClip;
+        _bgmSource.loop = true;
+        _bgmSource.Play();
     }
 
     IEnumerator StartPlayingBGM() {

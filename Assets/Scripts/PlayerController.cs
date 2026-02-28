@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private bool isJumping = false;
     private bool hasVerticalVelocity = false;
-    private int facingDirection = 1;
+    public int facingDirection = 1;
     private float postStompTimer;
     private float postStompTime = 0.1f;
     private Vector2 velocityBeforeCollision;
