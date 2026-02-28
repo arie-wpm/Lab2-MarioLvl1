@@ -28,6 +28,7 @@ public class BlockItem : MonoBehaviour
 
     private IEnumerator Animate()
     {
+        if (rb == null || physicsCollider == null || triggerCollider == null || spriteRenderer == null) yield break;
         // Audio addition
         if (pickup.type == PickupType.SuperMushroom || pickup.type == PickupType.FireFlower ||
             pickup.type == PickupType.OneUp || pickup.type == PickupType.Star) {
