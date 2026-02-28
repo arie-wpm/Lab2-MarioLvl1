@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour
     public static int Score;
     public static int Combo = 0;
     public static float ScoreMultiplier;
-    [SerializeField] private static float comboResetTime = 1f; // time in seconds before combo resets
+    [SerializeField] private static float comboResetTime = 0.8f; // time in seconds before combo resets
     private static float lastScoreTime;
     
     [SerializeField] private UIManager uiManager;
@@ -35,6 +35,7 @@ public class ScoreManager : MonoBehaviour
         float timeSinceLastScore = Time.time - lastScoreTime;
         if (timeSinceLastScore <= comboResetTime)
         {
+            Debug.Log(timeSinceLastScore);
             Combo++;
         }
         else
