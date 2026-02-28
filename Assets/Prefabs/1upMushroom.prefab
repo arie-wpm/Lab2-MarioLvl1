@@ -126,6 +126,7 @@ MonoBehaviour:
   type: 4
   amount: 1
   starDuration: 6
+  score: 0
 --- !u!212 &8545021620490973295
 SpriteRenderer:
   serializedVersion: 2
@@ -200,6 +201,9 @@ MonoBehaviour:
   speed: 3
   direction: {x: 1, y: 0}
   turnSmoothTime: 0.06
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 72
 --- !u!114 &351240008305940144
 MonoBehaviour:
   m_ObjectHideFlags: 0

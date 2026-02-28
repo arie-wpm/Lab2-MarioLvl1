@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour, IBumpable
     [SerializeField] private int score;
     [SerializeField] private float movespeed = 2f;
     [SerializeField] private float wallCheckDist = 0.1f;
+    [SerializeField] private LayerMask groundLayers;
     
     [Header("Death Vars")]
     [SerializeField] private float deathDelay = 1f;
@@ -71,12 +72,6 @@ public class EnemyController : MonoBehaviour, IBumpable
         Despawn(instantDespawn);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
     private void FixedUpdate()
     {
         if (isDead) return; 
@@ -106,21 +101,20 @@ public class EnemyController : MonoBehaviour, IBumpable
     {
         Vector2 origin = col.bounds.center;
         origin.x += moveDir.x * (col.bounds.extents.x + 0.01f);
-        RaycastHit2D hit = Physics2D.Raycast(origin, moveDir, wallCheckDist);
+        RaycastHit2D hit = Physics2D.Raycast(origin, moveDir, wallCheckDist, groundLayers);
 
         if (hit.collider && hit.collider.CompareTag("Respawn")) return;
 
         if (koopaState == KoopaState.ShellMoving)
         {
-            if (hit.collider && !hit.collider.CompareTag("Player") && !hit.collider.CompareTag("Fireball") && !hit.collider.CompareTag("Shell") && !hit.collider.CompareTag("Enemy"))
+            if (hit.collider)
             {
                 moveDir *= -1f;
             }
-            rb.linearVelocity = new Vector2(moveDir.x * ms, rb.linearVelocityY);
         }
         else
         {
-            if (hit.collider && !hit.collider.CompareTag("Player") && !hit.collider.CompareTag("Fireball") && !hit.collider.CompareTag("Shell"))
+            if (hit.collider)
             {
                 moveDir *= -1f;
                 spriteRenderer.flipX = !spriteRenderer.flipX;

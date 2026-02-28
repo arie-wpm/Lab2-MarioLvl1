@@ -7,6 +7,8 @@ public class EntityMovement : MonoBehaviour
     public Vector2 direction = Vector2.right;
     public float turnSmoothTime = 0.06f;
 
+    [SerializeField] private LayerMask groundLayers;
+
     private Rigidbody2D rb;
     private float velXSmooth;
     private float bounceCooldownUntil;
@@ -49,7 +51,9 @@ public class EntityMovement : MonoBehaviour
     private void TryBounce(Collision2D collision)
     {
         if (Time.time < bounceCooldownUntil) return;
-
+        
+        //if ((groundLayers.value & (1 << collision.gameObject.layer)) == 0) return;
+        
         for (int i = 0; i < collision.contactCount; i++)
         {
             var n = collision.GetContact(i).normal;
