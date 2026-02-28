@@ -7,6 +7,10 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public static int Timer = 400;
+
+    private float timeUnitIncrementSize = 0.4f;
+    private float currentTimeUnitPos = 0.4f;
     public ColorChanger colorChanger;
 
     public GameObject player;
@@ -25,14 +29,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject selectorObj;
 
-    [SerializeField] private float _blackScreenDuration = 2.5f;
+    [SerializeField]
+    private float _blackScreenDuration = 2.5f;
 
     [Header("Respawn Locations")]
     public Camera mainCamera;
     public Camera underGroundCamera;
     public Transform respawnPoint1;
     public Transform respawnPoint2;
-    public Transform CamRespawnPoint1, CamRespawnPoint2;
+    public Transform CamRespawnPoint1,
+        CamRespawnPoint2;
     public BoxCollider2D respawnTriggerBox;
 
     public Transform _currentRespawnPoint;
@@ -58,7 +64,6 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject timeUpPanel;
 
-
     // using Attack as Start for now since default is Enter
     private InputAction _moveAction => InputSystem.actions.FindAction("Move");
     private InputAction _startAction => InputSystem.actions.FindAction("Next");
@@ -82,14 +87,15 @@ public class GameManager : MonoBehaviour
         _currentCamRespawnPoint = CamRespawnPoint1;
 
         // store all enemy positions and type
-        Transform[] enemies = allEnemies.GetComponentsInChildren<Transform>()
-            .Skip(1)
-            .ToArray();
-        
-        foreach (Transform enemy in enemies) {
+        Transform[] enemies = allEnemies.GetComponentsInChildren<Transform>().Skip(1).ToArray();
+
+        foreach (Transform enemy in enemies)
+        {
             _enemyTransform.Add(enemy.transform.position);
-            if (enemy.name.Contains("Goomba")) _enemyType.Add(0);
-            else _enemyType.Add(1);
+            if (enemy.name.Contains("Goomba"))
+                _enemyType.Add(0);
+            else
+                _enemyType.Add(1);
         }
     }
 
@@ -121,14 +127,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void HandlePlayBGMOnce() {
-        if (isFirstStart) {
+    void HandlePlayBGMOnce()
+    {
+        if (isFirstStart)
+        {
             AudioManager.Instance.PlayBGM();
             isFirstStart = false;
         }
     }
 
-    void SetMarioPosition() {
+    void SetMarioPosition()
+    {
         CameraFollow camFollow = mainCamera.GetComponent<CameraFollow>();
         camFollow.SetCamX(_currentCamRespawnPoint.transform.position.x);
         camFollow.SetLeftEdge(_currentCamRespawnPoint.transform.position.x - 7.5f);
@@ -170,7 +179,11 @@ public class GameManager : MonoBehaviour
     void UpdateInPlayMode()
     {
         // hacking in time out for now
-        // if (Time <= 0f) hasTimeRunOut = true; RunTimeOut();
+        if (Timer <= 0f)
+        {
+            hasTimeRunOut = true;
+            RunTimeOut();
+        }
 
         StartScreenObj.SetActive(false);
         Time.timeScale = GameManager.Instance.colorChanger.currentTimeScale;
@@ -185,9 +198,21 @@ public class GameManager : MonoBehaviour
             StateManager.SetPauseState();
             player.GetComponent<Animator>().speed = 0f;
         }
+
+        //Checks if mario time unit has passed (0.4f) then decrements visual timer if it has.
+        if (currentTimeUnitPos >= timeUnitIncrementSize)
+        {
+            Timer--;
+            currentTimeUnitPos = 0;
+        }
+        else
+        {
+            currentTimeUnitPos += Time.deltaTime;
+        }
     }
 
-    void RunTimeOut() {
+    void RunTimeOut()
+    {
         StateManager.SetDeadState();
         PlayerStats pStats = player.GetComponent<PlayerStats>();
         PlayerController pController = player.GetComponent<PlayerController>();
@@ -234,6 +259,10 @@ public class GameManager : MonoBehaviour
         StateManager.SetPlayState();
     }
 
+    public IEnumerator TimeRanOut()
+    {
+        yield return new WaitForSeconds(_blackScreenDuration);
+        yield return StartCoroutine(OtherBlackScreen(_blackScreenDuration));
     public IEnumerator TimeRanOut() {
         yield return StartCoroutine(OtherBlackScreen(5f));
         ResetSceneObjects();
@@ -246,10 +275,11 @@ public class GameManager : MonoBehaviour
         ResetSceneObjects();
     }
 
-    public void ResetSceneObjects() {
-
+    public void ResetSceneObjects()
+    {
         // reset position
-        if (isGameOver) {
+        if (isGameOver)
+        {
             _currentRespawnPoint = respawnPoint1;
             _currentCamRespawnPoint = CamRespawnPoint1;
             player.transform.position = _currentRespawnPoint.transform.position;
@@ -264,19 +294,25 @@ public class GameManager : MonoBehaviour
 
         //reset blocks
         InteractableBlock[] blocks = interactables.GetComponentsInChildren<InteractableBlock>();
-        foreach (InteractableBlock block in blocks) block.Reset();
+        foreach (InteractableBlock block in blocks)
+            block.Reset();
 
         // reset enemies
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies) Destroy(enemy);
+        foreach (GameObject enemy in enemies)
+            Destroy(enemy);
 
-        for (int i = 0; i < _enemyTransform.Count; i++) {
-            if (_enemyType[i] == 0) Instantiate(goombaPrefab, _enemyTransform[i], Quaternion.identity);
-            else Instantiate(koopaPrefab, _enemyTransform[i], Quaternion.identity);
+        for (int i = 0; i < _enemyTransform.Count; i++)
+        {
+            if (_enemyType[i] == 0)
+                Instantiate(goombaPrefab, _enemyTransform[i], Quaternion.identity);
+            else
+                Instantiate(koopaPrefab, _enemyTransform[i], Quaternion.identity);
         }
 
         isFirstStart = true;
         hasTimeRunOut = false;
+        Timer = 400;
     }
 
     IEnumerator OtherBlackScreen(float duration) {
@@ -285,7 +321,9 @@ public class GameManager : MonoBehaviour
             blackPanel.SetActive(true);
             gameOverPanel.SetActive(true);
             timeUpPanel.SetActive(false);
-        } else if (hasTimeRunOut) {
+        }
+        else if (hasTimeRunOut)
+        {
             blackPanel.SetActive(true);
             timeUpPanel.SetActive(true);
             gameOverPanel.SetActive(false);

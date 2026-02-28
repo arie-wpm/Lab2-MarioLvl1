@@ -12607,6 +12607,7 @@ GameObject:
   - component: {fileID: 526562724}
   - component: {fileID: 526562725}
   - component: {fileID: 526562726}
+  - component: {fileID: 526562727}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -12745,6 +12746,18 @@ MonoBehaviour:
   _score5: {fileID: 683829467}
   _score6: {fileID: 401923100}
   _lives1: {fileID: 984834075}
+--- !u!114 &526562727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526562720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa10318adb81ec24280c44f8ce7adf41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
 --- !u!1 &526941037
 GameObject:
   m_ObjectHideFlags: 0

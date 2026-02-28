@@ -1,30 +1,51 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UISpriteSwitcher : MonoBehaviour {
+public class UISpriteSwitcher : MonoBehaviour
+{
+    [Header("Numer Sprites")]
+    [SerializeField]
+    private Sprite[] _numbers;
 
-    [Header("Numer Sprites")] 
-    [SerializeField] private Sprite[] _numbers;
+    [Header("Timer Sprite Ref")]
+    [SerializeField]
+    private Image _digit1;
 
-    [Header("Timer Sprite Ref")] 
-    [SerializeField] private Image _digit1;
-    [SerializeField] private Image _digit2;
-    [SerializeField] private Image _digit3;
+    [SerializeField]
+    private Image _digit2;
+
+    [SerializeField]
+    private Image _digit3;
 
     [Header("Coins Sprite Ref ")]
-    [SerializeField] private Image _coin1;
-    [SerializeField] private Image _coin2;
+    [SerializeField]
+    private Image _coin1;
+
+    [SerializeField]
+    private Image _coin2;
 
     [Header("Score Sprite Ref ")]
-    [SerializeField] private Image _score1;
-    [SerializeField] private Image _score2;
-    [SerializeField] private Image _score3;
-    [SerializeField] private Image _score4;
-    [SerializeField] private Image _score5;
-    [SerializeField] private Image _score6;
+    [SerializeField]
+    private Image _score1;
+
+    [SerializeField]
+    private Image _score2;
+
+    [SerializeField]
+    private Image _score3;
+
+    [SerializeField]
+    private Image _score4;
+
+    [SerializeField]
+    private Image _score5;
+
+    [SerializeField]
+    private Image _score6;
 
     [Header("Lives Sprite Ref ")]
-    [SerializeField] private Image _lives1;
+    [SerializeField]
+    private Image _lives1;
 
     private int _time;
     private int _coins;
@@ -33,34 +54,46 @@ public class UISpriteSwitcher : MonoBehaviour {
 
     private PlayerStats playerStats;
 
-    private void Start() {
-
+    private void Start()
+    {
         // hook up stuff
         playerStats = GameManager.Instance.player.GetComponent<PlayerStats>();
         _time = 200; // random test
         _coins = 0;
         _score = 6969; // random test
         _lives = 0;
+
+        ScoreManager.ScoreChanged.AddListener(UpdateScore);
+    }
+
+    void OnDisable()
+    {
+        ScoreManager.ScoreChanged.RemoveListener(UpdateScore);
     }
 
     void Update()
     {
-        if (StateManager.CurrentGameState() == StateManager.GameState.NULL) return;
+        if (StateManager.CurrentGameState() == StateManager.GameState.NULL)
+            return;
         UpdateTime();
         UpdateCoins();
         UpdateScore();
         UpdateLives();
     }
 
-    void UpdateCoins() {
+    void UpdateCoins()
+    {
         _coins = playerStats.coins;
         _coins = Mathf.Clamp(_coins, 0, 99);
         _coin1.sprite = _numbers[_coins / 10];
         _coin2.sprite = _numbers[_coins % 10];
     }
 
-    void UpdateTime() {
-        _time = Mathf.Clamp(_time, 0, 999);
+    void UpdateTime()
+    {
+        _time = GameManager.Timer;
+        if (_time < 0)
+            return;
         int digit1 = _time / 100;
         int digit2 = (_time / 10) % 10;
         int digit3 = _time % 10;
@@ -70,8 +103,9 @@ public class UISpriteSwitcher : MonoBehaviour {
         _digit3.sprite = _numbers[digit3];
     }
 
-    void UpdateScore() {
-        _score = Mathf.Clamp(_score, 0, 999999);
+    public void UpdateScore()
+    {
+        _score = ScoreManager.GetScore();
         _score1.sprite = _numbers[(_score / 100000) % 10];
         _score2.sprite = _numbers[(_score / 10000) % 10];
         _score3.sprite = _numbers[(_score / 1000) % 10];
@@ -80,7 +114,8 @@ public class UISpriteSwitcher : MonoBehaviour {
         _score6.sprite = _numbers[_score % 10];
     }
 
-    void UpdateLives() {
+    void UpdateLives()
+    {
         _lives = playerStats.lives;
         _lives = Mathf.Clamp(_lives, 0, _numbers.Length - 1);
         _lives1.sprite = _numbers[_lives];
