@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
     private bool isFirstStart = true;
     public bool hasTimeRunOut = false;
     public bool hasWon = false;
+    private Coroutine _speedUpBGMCoroutine;
 
     public GameObject blackPanel;
     public GameObject gameOverPanel;
@@ -208,11 +211,17 @@ public class GameManager : MonoBehaviour
     void UpdateInPlayMode()
     {
         // hacking in time out for now
-        if (Timer <= 0f)
+        if (Timer <= 0)
         {
             hasTimeRunOut = true;
             RunTimeOut();
+            return;
         }
+
+        if (Timer == 100) {
+            if (_speedUpBGMCoroutine == null) _speedUpBGMCoroutine = StartCoroutine(SpeedUpBGM());
+        }
+
 
         StartScreenObj.SetActive(false);
         Time.timeScale = GameManager.Instance.colorChanger.currentTimeScale;
@@ -317,8 +326,13 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator TimeRanOut()
     {
+        colorChanger.ChangeToDefault(player.GetComponentsInChildren<SpriteRenderer>());
         yield return StartCoroutine(OtherBlackScreen(5f));
         ResetSceneObjects();
+        SetMarioPosition();
+        player.GetComponent<PlayerStats>().powerState = MarioPowerState.Small;
+        player.GetComponent<Animator>().SetLayerWeight(1, 0f);
+        StateManager.SetPlayState();     
     }
 
     public IEnumerator RestartGame()
@@ -372,6 +386,7 @@ public class GameManager : MonoBehaviour
 
         isFirstStart = true;
         hasTimeRunOut = false;
+        AudioManager.Instance.ResetBGMSpeed();
         Timer = 400;
     }
 
@@ -396,5 +411,14 @@ public class GameManager : MonoBehaviour
         blackPanel.SetActive(false);
         gameOverPanel.SetActive(false);
         timeUpPanel.SetActive(false);
+    }
+
+    IEnumerator SpeedUpBGM() {
+        AudioManager.Instance.PauseBGM();
+        AudioManager.Instance.Play("hurryup");
+        yield return new WaitForSeconds(2.9f);
+        AudioManager.Instance.SpeedUpBGM();
+        AudioManager.Instance.ResumeBGM();
+        _speedUpBGMCoroutine = null;
     }
 }

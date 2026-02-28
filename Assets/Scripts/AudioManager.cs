@@ -148,5 +148,11 @@ public class AudioManager : MonoBehaviour {
         _bgmSource.pitch = 1.25f;
         _introSource.pitch = 1.25f;
     }
+
+    public void ResetBGMSpeed() {
+        _bgmSource.pitch = 1f;
+        _introSource.pitch = 1f;
+    }
+    
     public bool IsBGMPlaying() => _isInPlayMode;
 }

@@ -63,6 +63,8 @@ public class FlagpoleInteraction : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        // sorry plugging this in as this is the end of the play cycle
+        AudioManager.Instance.ResetBGMSpeed();
         if (collision == player)
         {
             Debug.Log("Hit Pole");
