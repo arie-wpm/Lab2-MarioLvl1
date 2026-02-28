@@ -180,6 +180,7 @@ public class FlagpoleInteraction : MonoBehaviour
             yield return null;
         }
         //Calculate Time Score
+        yield return new WaitForSeconds(0.5f);
         StartCoroutine(TabulateTimeScore());
         yield return new WaitUntil(() => timeScoreTotaled);
         MoveFlagOutOfCastle();
