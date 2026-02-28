@@ -65,6 +65,9 @@ MonoBehaviour:
   speed: 3.5
   direction: {x: 1, y: 0}
   turnSmoothTime: 0.06
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 72
 --- !u!58 &3206377164905179871
 CircleCollider2D:
   m_ObjectHideFlags: 0

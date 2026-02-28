@@ -272,3 +272,6 @@ MonoBehaviour:
   speed: 3
   direction: {x: 1, y: 0}
   turnSmoothTime: 0.06
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 72

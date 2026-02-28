@@ -206,6 +206,9 @@ MonoBehaviour:
   score: 200
   movespeed: 2
   wallCheckDist: 0.1
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 72
   deathDelay: 1
   knockbackForceX: 6
   knockbackForceY: 3
