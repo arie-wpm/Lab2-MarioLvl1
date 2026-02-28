@@ -2371,13 +2371,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 758946371}
     m_Modifications:
+    - target: {fileID: 431526255878882639, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 431526255878882639, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006796273359568646, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006796273359568646, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1530063140324314630, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1603456264810290468, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603456264810290468, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5728338964330850647, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
       propertyPath: m_Name
       value: Flagpole
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044893047115975836, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044893047115975836, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
       propertyPath: am
@@ -2391,6 +2423,10 @@ PrefabInstance:
       propertyPath: flagX
       value: 191.26
       objectReference: {fileID: 0}
+    - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: uiMan
+      value: 
+      objectReference: {fileID: 526562725}
     - target: {fileID: 7230224597265050757, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
       propertyPath: player
       value: 
@@ -2443,6 +2479,14 @@ PrefabInstance:
       propertyPath: 'fireworks.Array.data[2]'
       value: 
       objectReference: {fileID: 88054690}
+    - target: {fileID: 7280663612146938371, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7280663612146938371, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7467322828642348791, guid: 291431e3451e6f949ab8eab76d372db3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 201.965
@@ -11972,10 +12016,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 3.1875
-    y: 0.12916668
-    width: 3
-    height: 3.0000002
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -37481,6 +37525,9 @@ MonoBehaviour:
     volume: 1
   - name: stageclear
     clip: {fileID: 8300000, guid: b76b5d8c7c928ef47887cfc1a1400b62, type: 3}
+    volume: 1
+  - name: timeblip
+    clip: {fileID: 8300000, guid: ea25cc676db6e4e4b89b26d631b41f36, type: 3}
     volume: 1
   introClip: {fileID: 8300000, guid: 87cc7dbf0b2339841af7a16de325c351, type: 3}
   loopClip: {fileID: 8300000, guid: a10d63d0631b5434b98900da6035e7e8, type: 3}
