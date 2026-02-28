@@ -37570,6 +37570,7 @@ MonoBehaviour:
   loopClip: {fileID: 8300000, guid: a10d63d0631b5434b98900da6035e7e8, type: 3}
   underGroundClip: {fileID: 8300000, guid: 18f800d347cc55d49bf7d9a0fe2e06d0, type: 3}
   invincibilityClip: {fileID: 8300000, guid: e49d2bdb24d775043a2c35a9f5612a33, type: 3}
+  coinRingClip: {fileID: 8300000, guid: 3d7c7b6a151917e488e442efe415023f, type: 3}
 --- !u!1 &1472153925
 GameObject:
   m_ObjectHideFlags: 0

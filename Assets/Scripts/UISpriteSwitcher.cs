@@ -72,6 +72,7 @@ public class UISpriteSwitcher : MonoBehaviour
         _lives = 0;
 
         ScoreManager.ScoreChanged.AddListener(UpdateScore);
+        UpdateTopScore();
     }
 
     void OnDisable()

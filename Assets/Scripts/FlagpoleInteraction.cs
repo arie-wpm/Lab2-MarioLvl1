@@ -49,6 +49,7 @@ public class FlagpoleInteraction : MonoBehaviour
     private UIManager uiMan;
 
     private int fireworksCount = 0;
+    private Rigidbody2D playerRb;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -68,7 +69,6 @@ public class FlagpoleInteraction : MonoBehaviour
             am.StopBGM();
             am.Play("flagslide");
             StateManager.SetWinState();
-            GameManager.Instance.hasWon = true;
             int timerLastDigit = GameManager.Timer % 10;
             if (new[] { 1, 2, 6 }.Contains(timerLastDigit))
             {
@@ -113,7 +113,8 @@ public class FlagpoleInteraction : MonoBehaviour
 
             if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
             {
-                collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                playerRb = collision.gameObject.GetComponent<Rigidbody2D>();
+                playerRb.bodyType = RigidbodyType2D.Static;
             }
             t.position = new Vector3(flagX, t.position.y, 0);
             Animator marioA = new Animator();
@@ -235,12 +236,29 @@ public class FlagpoleInteraction : MonoBehaviour
     {
         for (int i = 0; i < worksToPlay; i++)
         {
-            fireworks[i].SetTrigger("Explode");
-            yield return new WaitForSeconds(fireworks[i].GetCurrentAnimatorStateInfo(0).length / 2);
+            // needs this guard since only 3 animators
+            int index = i % fireworks.Count;
+
+            fireworks[index].SetTrigger("Explode");
+
+            yield return new WaitForSeconds(
+                fireworks[index].GetCurrentAnimatorStateInfo(0).length / 2
+            );
+
             ScoreManager.ModifyScore(500);
             am.Play("firework");
-            yield return new WaitForSeconds(fireworks[i].GetCurrentAnimatorStateInfo(0).length / 2);
-            fireworks[i].ResetControllerState();
+
+            yield return new WaitForSeconds(
+                fireworks[index].GetCurrentAnimatorStateInfo(0).length / 2
+            );
+
+            fireworks[index].ResetControllerState();
         }
+
+        GameManager.Instance.hasWon = true;
+
+        yield return new WaitForSeconds(3f);
+        playerRb.bodyType = RigidbodyType2D.Dynamic;
+        StartCoroutine(GameManager.Instance.RestartGame());
     }
 }

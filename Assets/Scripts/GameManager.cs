@@ -250,6 +250,13 @@ public class GameManager : MonoBehaviour
             if (currentScore > highScore) {
                 PlayerPrefs.SetInt("HighScore", currentScore);
             }
+
+            Animator pAnim = player.GetComponent<Animator>();
+            pAnim.SetBool("isMoving", false);
+            pAnim.SetBool("isJumping", false);
+            pAnim.SetBool("isDead", false);
+            pAnim.SetBool("isSliding", false);
+            pAnim.speed = 1f;
         }
     }
 
