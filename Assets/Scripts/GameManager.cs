@@ -214,8 +214,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator RestartGame()
     {
         isGameOver = true;
-        StateManager.SetStartState();
-        yield return new WaitForSeconds(_blackScreenDuration);
+        yield return new WaitForSeconds(_blackScreenDuration); // can attach a gameover coroutine
         // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         ResetSceneObjects();
     }

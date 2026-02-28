@@ -409,7 +409,7 @@ public class PlayerController : MonoBehaviour
         }
 
         StateManager.SetDeadState();
-        pStats.lives--;
+        --pStats.lives;
         animator.SetBool("isDead", true);
         mainCol.enabled = false;
         rb.bodyType = RigidbodyType2D.Static;

@@ -37,9 +37,9 @@ public class UISpriteSwitcher : MonoBehaviour {
 
         // hook up stuff
         playerStats = GameManager.Instance.player.GetComponent<PlayerStats>();
-        _time = 0;
+        _time = 200; // random test
         _coins = 0;
-        _score = 0;
+        _score = 6969; // random test
         _lives = 0;
     }
 
@@ -52,12 +52,15 @@ public class UISpriteSwitcher : MonoBehaviour {
         UpdateLives();
     }
 
+    void UpdateCoins() {
+        _coins = playerStats.coins;
+        _coins = Mathf.Clamp(_coins, 0, 99);
+        _coin1.sprite = _numbers[_coins / 10];
+        _coin2.sprite = _numbers[_coins % 10];
+    }
+
     void UpdateTime() {
-        if (_time < 0) {
-            _time = Mathf.Max(0, _time);
-            return;
-        }
-        _time = 100; // implement
+        _time = Mathf.Clamp(_time, 0, 999);
         int digit1 = _time / 100;
         int digit2 = (_time / 10) % 10;
         int digit3 = _time % 10;
@@ -67,23 +70,9 @@ public class UISpriteSwitcher : MonoBehaviour {
         _digit3.sprite = _numbers[digit3];
     }
 
-    void UpdateCoins() {
-        if (_coins < 0) {
-            _coins = Mathf.Max(0, _coins);
-            return;
-        }
-        _coins = playerStats.coins;
-        _coin1.sprite = _numbers[_coins / 10];
-        _coin2.sprite = _numbers[_coins % 10];
-    }
-
     void UpdateScore() {
-        if (_score < 0) {
-            _score = Mathf.Max(0, _score);
-            return;
-        }
-        _score = 1234;
-        _score1.sprite = _numbers[_score / 100000];
+        _score = Mathf.Clamp(_score, 0, 999999);
+        _score1.sprite = _numbers[(_score / 100000) % 10];
         _score2.sprite = _numbers[(_score / 10000) % 10];
         _score3.sprite = _numbers[(_score / 1000) % 10];
         _score4.sprite = _numbers[(_score / 100) % 10];
@@ -92,11 +81,8 @@ public class UISpriteSwitcher : MonoBehaviour {
     }
 
     void UpdateLives() {
-        if (_lives < 0) {
-            _lives = Mathf.Max(0, _lives);
-            return;
-        }
         _lives = playerStats.lives;
+        _lives = Mathf.Clamp(_lives, 0, _numbers.Length - 1);
         _lives1.sprite = _numbers[_lives];
     }
 }
