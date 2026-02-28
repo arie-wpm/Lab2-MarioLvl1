@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour, IBumpable
     [SerializeField] private int score;
     [SerializeField] private float movespeed = 2f;
     [SerializeField] private float wallCheckDist = 0.1f;
-    [SerializeField] private float deathDelay = 2f;
+    [SerializeField] private float deathDelay = 1f;
     [SerializeField] private float knockbackForceX;
     [SerializeField] private float knockbackForceY;
     
@@ -152,6 +152,9 @@ public class EnemyController : MonoBehaviour, IBumpable
         {
             Vector2 knockbackDir = other.transform.position.x < transform.position.x ? Vector2.right : Vector2.left;
             DieKnockback(knockbackDir);
+        } else if (other.gameObject.CompareTag("DeathBox"))
+        {
+            Despawn();
         }
     }
 

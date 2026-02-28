@@ -206,7 +206,7 @@ MonoBehaviour:
   score: 100
   movespeed: 2
   wallCheckDist: 0.1
-  deathDelay: 2
+  deathDelay: 1
   knockbackForceX: 6
   knockbackForceY: 3
   shellMovespeed: 6

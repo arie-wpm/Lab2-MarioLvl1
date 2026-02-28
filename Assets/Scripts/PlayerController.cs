@@ -335,6 +335,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.gameObject.CompareTag("DeathBox"))
+        {
+            Die();
+        }
         if (other.gameObject.CompareTag("Enemy"))
         {
             bool stompedFromAbove = false;
