@@ -11,15 +11,19 @@ public class EnemyController : MonoBehaviour, IBumpable
     private SpriteRenderer spriteRenderer;
     private UIManager _uiManager;
     
+    [Header("Enemy Type Vars")]
     [SerializeField] private EnemyType enemy;
     [SerializeField] private int score;
     [SerializeField] private float movespeed = 2f;
     [SerializeField] private float wallCheckDist = 0.1f;
+    
+    [Header("Death Vars")]
     [SerializeField] private float deathDelay = 1f;
     private float instantDespawn = 0f;
     [SerializeField] private float knockbackForceX;
     [SerializeField] private float knockbackForceY;
     
+    [Header("Koopa Shell Vars")]
     [SerializeField] private float shellMovespeed = 6f;
     [SerializeField] private float shellReformDelay = 5f;
     [SerializeField] private float shellReformTime = 2f;
