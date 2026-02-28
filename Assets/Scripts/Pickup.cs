@@ -14,7 +14,7 @@ public class Pickup : MonoBehaviour
 {
     public PickupType type;
     public int amount = 1;
-    public float starDuration = 6f;
+    public float starDuration = 12f;
 
     private bool pickedUp;
     private List<GameObject> _mushroomToFlower = new List<GameObject>();

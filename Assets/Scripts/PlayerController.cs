@@ -423,6 +423,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator MoveMarioDead()
     {
+        AudioManager.Instance.Play("death");
         yield return new WaitForSeconds(0.5f);
         float newY = 0;
         UnityEngine.Vector3 aboveMario = new UnityEngine.Vector3(
