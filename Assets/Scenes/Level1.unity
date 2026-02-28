@@ -21158,6 +21158,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       insertIndex: -1
       addedObject: {fileID: 867684416}
+    - targetCorrespondingSourceObject: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 867684426}
   m_SourcePrefab: {fileID: 100100000, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
 --- !u!4 &867684411 stripped
 Transform:
@@ -21179,10 +21182,23 @@ PlatformEffector2D:
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
+  m_SurfaceArc: 60
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &867684426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332545642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785e1aa206e1d904db9c4c06d2349ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InvisBlockHack
+  platformEffector2D: {fileID: 0}
 --- !u!1 &867727540
 GameObject:
   m_ObjectHideFlags: 0
