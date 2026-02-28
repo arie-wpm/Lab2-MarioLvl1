@@ -33,6 +33,7 @@ public class PipeTeleport : MonoBehaviour
     private int _spriteSortingOrder;
 
     private InputAction _crouchAction;
+    private bool _playerInPipe = false;
 
     private void Start() {
         _player = GameManager.Instance.player;
@@ -44,15 +45,30 @@ public class PipeTeleport : MonoBehaviour
         _playerController = _player.GetComponent<PlayerController>();
         _playerSpriteRenderer = _player.GetComponentsInChildren<SpriteRenderer>();
         _spriteSortingOrder = _playerSpriteRenderer[0].sortingOrder;
+
+        // damn button press timing
+        _crouchAction.performed += ctx => {
+            if (_playerInPipe && _playerController.grounded) _uEntry = StartCoroutine(UEntry());
+        };
+    }
+
+    void OnDestroy() {
+        if (_crouchAction != null) {
+            _crouchAction.performed -= ctx => {
+                if (_playerInPipe && _playerController.grounded) _uEntry = StartCoroutine(UEntry());
+                };
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "Player" && gameObject.name == "PipeEnter") _playerInPipe = true;
+    }
+
+    void OnTriggerExit2D(Collider2D other) { 
+        if (other.gameObject.tag == "Player" && gameObject.name == "PipeEnter") _playerInPipe = false;
     }
 
     void OnTriggerStay2D(Collider2D other) {
-
-        if (other.gameObject.tag == "Player" && gameObject.name == "PipeEnter" && _playerController.grounded) {
-            if (_crouchAction.IsPressed()) _uEntry = StartCoroutine(UEntry());            
-            return;
-        }
-
         // this pipe requires no input
         if (other.gameObject.tag == "Player" && gameObject.name == "UndergroundPipeEnter") {
             _oEntry = StartCoroutine(OEntry());    
@@ -82,6 +98,9 @@ public class PipeTeleport : MonoBehaviour
     IEnumerator UEntry() {
         AudioManager.Instance.Play("pipe");
         TogglePlayerComponents(false);
+        SetAllAnimParamsFalse();
+        if (_player.GetComponent<PlayerStats>().powerState != MarioPowerState.Small)
+            _playerAnimator.SetBool("isCrouching", true);
 
         Vector2 startPos = _player.transform.position;
         Vector2 endPos = new Vector2(startPos.x, startPos.y - 2f);
