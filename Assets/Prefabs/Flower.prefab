@@ -196,6 +196,7 @@ MonoBehaviour:
   type: 2
   amount: 1
   starDuration: 6
+  score: 1000
 --- !u!212 &7573410577856704125
 SpriteRenderer:
   serializedVersion: 2

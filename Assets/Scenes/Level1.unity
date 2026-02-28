@@ -12712,6 +12712,7 @@ MonoBehaviour:
   blackPanel: {fileID: 1641135857}
   livesPanel: {fileID: 1534859617}
   ScorePopupPrefab: {fileID: 6369725320741821894, guid: b7c808ee987f8ff4abfdcdfbdd4aaba2, type: 3}
+  oneUpPopupPrefab: {fileID: 6369725320741821894, guid: dc67deec9beaf0b4e811b59d74916670, type: 3}
 --- !u!114 &526562726
 MonoBehaviour:
   m_ObjectHideFlags: 0

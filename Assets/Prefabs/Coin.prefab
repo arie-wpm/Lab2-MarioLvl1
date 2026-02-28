@@ -192,6 +192,7 @@ MonoBehaviour:
   type: 0
   amount: 1
   starDuration: 6
+  score: 200
 --- !u!50 &7521242681751524493
 Rigidbody2D:
   serializedVersion: 5

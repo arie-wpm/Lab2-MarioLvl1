@@ -16,6 +16,8 @@ public class Pickup : MonoBehaviour
     public int amount = 1;
     public float starDuration = 12f;
 
+    [SerializeField] private int score;
+
     private bool pickedUp;
     private List<GameObject> _mushroomToFlower = new List<GameObject>();
     private PlayerStats _playerStats;
@@ -79,15 +81,18 @@ public class Pickup : MonoBehaviour
         switch (type)
         {
             case PickupType.Coin:
+                GiveScore();
                 stats.AddCoins(amount);
                 break;
 
             case PickupType.OneUp:
+                OneUpPopup();
                 AudioManager.Instance.Play("1up");
                 stats.AddLife(1);
                 break;
 
             case PickupType.SuperMushroom:
+                GiveScore();
                 AudioManager.Instance.Play("powerup");
                 GameManager.Instance.colorChanger.StartTransformFreeze();
                 Animator mario = GameManager.Instance.player.GetComponent<Animator>();
@@ -95,6 +100,7 @@ public class Pickup : MonoBehaviour
                 break;
 
             case PickupType.FireFlower:
+                GiveScore();
                 AudioManager.Instance.Play("powerup");
                 GameManager.Instance.colorChanger.StartTransformFreeze();
                 stats.SetPowerState(MarioPowerState.Fire);
@@ -104,5 +110,20 @@ public class Pickup : MonoBehaviour
                 stats.ActivateStar(starDuration);
                 break;
         }
+    }
+    
+    private void GiveScore()
+    {
+        Collider2D col = GetComponent<Collider2D>();
+        UIManager _uiManager = GameObject.FindWithTag("GameManager").GetComponent<UIManager>();
+        _uiManager.SpawnPopup(score, transform.position + new Vector3(0, col.bounds.extents.y, 0));
+        ScoreManager.ModifyScore(score);
+    }
+
+    private void OneUpPopup()
+    {
+        Collider2D col = GetComponent<Collider2D>();
+        UIManager _uiManager = GameObject.FindWithTag("GameManager").GetComponent<UIManager>();
+        _uiManager.Spawn1UPPopup(score, transform.position + new Vector3(0, col.bounds.extents.y, 0));
     }
 }

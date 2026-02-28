@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     private GameObject livesPanel;
 
     [SerializeField] private GameObject ScorePopupPrefab;
+    [SerializeField] private GameObject oneUpPopupPrefab;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Start() { }
@@ -48,6 +49,19 @@ public class UIManager : MonoBehaviour
         scorePopup.GetComponent<RectTransform>().localPosition = localPoint;
         
         scorePopup.GetComponent<ScorePopupHandler>().ShowPopup(score);
+    }
+    
+    public void Spawn1UPPopup(int score, Vector3 spawnPos)
+    {
+        GameObject oneUpPopup = Instantiate(oneUpPopupPrefab, mainCanvas.transform);
+        
+        RectTransform canvasRect = mainCanvas.GetComponent<RectTransform>();
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(spawnPos);
+        
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, mainCanvas.worldCamera, out localPoint);
+        
+        oneUpPopup.GetComponent<RectTransform>().localPosition = localPoint;
     }
         
         
