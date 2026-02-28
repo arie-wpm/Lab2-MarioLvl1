@@ -188,6 +188,7 @@ public class FlagpoleInteraction : MonoBehaviour
         {
             GameManager.Timer--;
             ScoreManager.ModifyScore(50);
+            am.Play("timeblip");
             yield return null;
         }
         timeScoreTotaled = true;
@@ -237,6 +238,7 @@ public class FlagpoleInteraction : MonoBehaviour
             ScoreManager.ModifyScore(500);
             am.Play("firework");
             yield return new WaitForSeconds(fireworks[i].GetCurrentAnimatorStateInfo(0).length / 2);
+            fireworks[i].ResetControllerState();
         }
     }
 }
