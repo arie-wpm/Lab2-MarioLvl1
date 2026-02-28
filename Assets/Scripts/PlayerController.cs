@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Numerics;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
@@ -11,85 +12,47 @@ public class PlayerController : MonoBehaviour
     private Vector3 startPos;
 
     [Header("Ground Velocities")]
-    [SerializeField]
-    private float minWalkVelocity;
-
-    [SerializeField]
-    private float maxWalkVelocity;
-
-    [SerializeField]
-    private float maxRunningVelocity;
-
+    [SerializeField] private float minWalkVelocity;
+    [SerializeField] private float maxWalkVelocity;
+    [SerializeField] private float maxRunningVelocity;
+    
     [Header("Ground Accelerations")]
-    [SerializeField]
-    private float walkAcceleration;
-
-    [SerializeField]
-    private float runAcceleration;
-
-    [SerializeField]
-    private float deceleration;
-
-    [SerializeField]
-    private float skidDeceleration;
-
+    [SerializeField] private float walkAcceleration;
+    [SerializeField] private float runAcceleration;
+    [SerializeField] private float deceleration;
+    [SerializeField] private float skidDeceleration;
+    
     [Header("Jump Values")]
-    [SerializeField]
-    private float slowJumpVelocity;
-
-    [SerializeField]
-    private float slowJumpHoldGravity;
-
-    [SerializeField]
-    private float slowJumpFallGravity;
-
-    [SerializeField]
-    private float walkJumpVelocity;
-
-    [SerializeField]
-    private float walkJumpHoldGravity;
-
-    [SerializeField]
-    private float walkJumpFallGravity;
-
-    [SerializeField]
-    private float runJumpVelocity;
-
-    [SerializeField]
-    private float runJumpHoldGravity;
-
-    [SerializeField]
-    private float runJumpFallGravity;
-
-    [SerializeField]
-    private Transform groundCheckPos;
-
-    [SerializeField]
-    private float groundCheckDistance = 0.2f;
-
-    [SerializeField]
-    private LayerMask groundLayer;
+    [SerializeField] private float slowJumpVelocity;
+    [SerializeField] private float slowJumpHoldGravity;
+    [SerializeField] private float slowJumpFallGravity;
+    [SerializeField] private float walkJumpVelocity;
+    [SerializeField] private float walkJumpHoldGravity;
+    [SerializeField] private float walkJumpFallGravity;
+    [SerializeField] private float runJumpVelocity;
+    [SerializeField] private float runJumpHoldGravity;
+    [SerializeField] private float runJumpFallGravity;
+    [SerializeField] private Transform groundCheckPos;
+    [SerializeField] private float groundCheckDistance = 0.2f;
+    [SerializeField] private LayerMask groundLayer;
 
     [Header("Mid air accelerations")]
-    [SerializeField]
-    private float midAirForwardSlowAcceleration;
-
-    [SerializeField]
-    private float midAirForwardFastAcceleration;
-
-    [SerializeField]
-    private float midAirBackwardsFastDeceleration;
-
-    [SerializeField]
-    private float midAirBackwardsSlowFastJumpDeceleration;
-
-    [SerializeField]
-    private float midAirBackwardsSlowSlowJumpDeceleration;
-
-    public bool grounded;
-
-    [HideInInspector]
-    public Rigidbody2D rb;
+    [SerializeField] private float midAirForwardSlowAcceleration;
+    [SerializeField] private float midAirForwardFastAcceleration;
+    [SerializeField] private float midAirBackwardsFastDeceleration;
+    [SerializeField] private float midAirBackwardsSlowFastJumpDeceleration;
+    [SerializeField] private float midAirBackwardsSlowSlowJumpDeceleration;
+    
+    [Header("Extras")]
+    [SerializeField] private PlayerStats pStats;
+    [SerializeField] private Collider2D mainCol;
+    [SerializeField] private float deathMoveHeight = 0;
+    [SerializeField] private GameObject fireballPrefab;
+    [SerializeField] private Transform fireBallThrowPoint;
+    
+    [HideInInspector] public bool grounded;
+    [HideInInspector] public Rigidbody2D rb;
+    
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction jumpAction;
@@ -107,20 +70,6 @@ public class PlayerController : MonoBehaviour
     private float postStompTime = 0.1f;
     private Vector2 velocityBeforeCollision;
     
-    [SerializeField]
-    private PlayerStats pStats;
-
-    [SerializeField]
-    private Collider2D mainCol;
-
-    [SerializeField]
-    private Collider2D footCol;
-
-    [SerializeField]
-    private Collider2D headCol;
-
-    [SerializeField]
-    private float deathMoveHeight = 0;
 
     private void Start()
     {
@@ -187,6 +136,12 @@ public class PlayerController : MonoBehaviour
                     rb.gravityScale = runJumpFallGravity;
                     break;
             }
+        }
+
+        if (runAction.WasPressedThisFrame() && pStats.powerState == MarioPowerState.Fire)
+        {
+            GameObject fireBall = Instantiate(fireballPrefab, fireBallThrowPoint.position, quaternion.identity);
+            fireBall.GetComponent<Fireball>().Launch(currentDirection);
         }
 
         postStompTimer -= Time.deltaTime;
