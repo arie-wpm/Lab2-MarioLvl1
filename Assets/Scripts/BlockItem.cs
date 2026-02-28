@@ -66,19 +66,18 @@ public class BlockItem : MonoBehaviour
 
         if (pickup.type == PickupType.Coin)
         {
-            // Disable physics and movement for coin pop animation
+            transform.localScale *= 0.8f;
             if (movement != null) movement.enabled = false;
 
             rb.simulated = false;
             physicsCollider.enabled = false;
             triggerCollider.enabled = false;
 
-            // Pop higher and faster
             Vector3 coinStartPos = transform.position;
             float coinElapsed = 0f;
-            Vector3 peakPos = coinStartPos + Vector3.up * 2f;   // higher than mushroom
-            float upDuration = 0.15f;                       // faster up
-            float downDuration = 0.15f;                     // fast down
+            Vector3 peakPos = coinStartPos + Vector3.up * 2f;
+            float upDuration = 0.15f;
+            float downDuration = 0.15f;
 
             // Move up
             while (coinElapsed < upDuration)
