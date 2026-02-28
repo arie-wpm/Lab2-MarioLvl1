@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6787134998874396397}
   - component: {fileID: 3394581715720984126}
   - component: {fileID: 954162386889815673}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Goomba
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -212,5 +212,3 @@ MonoBehaviour:
   shellMovespeed: 6
   shellReformDelay: 5
   shellReformTime: 2
-  ScorePopupPrefab: {fileID: 6369725320741821894, guid: b7c808ee987f8ff4abfdcdfbdd4aaba2, type: 3}
-  canvas: {fileID: 0}

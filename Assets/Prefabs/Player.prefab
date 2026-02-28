@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1060366620648254801}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: groundCheckPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8528593641959612325}
   - component: {fileID: 8164608945227229637}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Layer2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8624659558424233975}
   - component: {fileID: 4670417100722830087}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Layer1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3169530722703151310}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FireballThrowPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2619119001080731101}
   - component: {fileID: 2528602855463684032}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Layer3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 3983164134561673421}
   - component: {fileID: 4092837538124265621}
   - component: {fileID: 7479588835678342748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
