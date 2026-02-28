@@ -53618,6 +53618,14 @@ PrefabInstance:
       propertyPath: deathMoveHeight
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4653211045582086561, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
+      propertyPath: slowJumpVelocity
+      value: 15.275
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653211045582086561, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
+      propertyPath: walkJumpVelocity
+      value: 15.275
+      objectReference: {fileID: 0}
     - target: {fileID: 4670417100722830087, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
       propertyPath: m_SortingOrder
       value: 3

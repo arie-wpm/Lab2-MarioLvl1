@@ -214,10 +214,6 @@ public class PlayerController : MonoBehaviour
             {
                 a = moveValue.x * runAcceleration;
 
-                if (MathF.Abs(rb.linearVelocityX) > maxRunningVelocity)
-                {
-                    rb.linearVelocityX = maxRunningVelocity * currentDirection.x;
-                }
             }
             else
             {
@@ -288,6 +284,10 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.linearVelocityX = rb.linearVelocity.x + a * Time.fixedDeltaTime;
+        if (MathF.Abs(rb.linearVelocityX) > maxRunningVelocity)
+        {
+            rb.linearVelocityX = maxRunningVelocity * currentDirection.x;
+        }
         
         velocityBeforeCollision = rb.linearVelocity;
 
