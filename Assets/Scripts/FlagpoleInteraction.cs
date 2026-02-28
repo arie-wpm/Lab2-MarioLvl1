@@ -158,16 +158,41 @@ public class FlagpoleInteraction : MonoBehaviour
             castleFlag.position = new Vector3(castleFlag.position.x, newY, 0);
             yield return null;
         }
-        StartCoroutine(PlayFireworks());
+        StartCoroutine(PlayFireworks()); // plug GetFireWorkCount()
+
+        // also start Coroutine for timer deduction + score add
     }
 
-    IEnumerator PlayFireworks()
+
+    // 0 = top, 1 = right, 2 = left
+    IEnumerator PlayFireworks(int count = 6)
     {
-        foreach (var anim in fireworks)
+
+        // foreach (var anim in fireworks)
+        // {
+        //     anim.SetTrigger("Explode");
+        //     am.Play("firework");
+        //     yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        // }
+
+        for (int i = 0; i < count; i++)
         {
-            anim.SetTrigger("Explode");
+            int index = i % fireworks.Count;
+            fireworks[index].SetTrigger("Explode");
             am.Play("firework");
-            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+            yield return new WaitForSeconds((fireworks[index].GetCurrentAnimatorStateInfo(0).length) - 0.25f);
+            fireworks[index].SetTrigger("Clear");
+        }
+    }
+
+    int GetFireWorkCount(int timeRemaining) {
+        int lastDigit = timeRemaining % 10;
+        
+        switch (lastDigit) {
+            case 1: return 1;
+            case 3: return 3;
+            case 6: return 6;
+            default: return 0;
         }
     }
 }
