@@ -70,6 +70,7 @@ public class FlagpoleInteraction : MonoBehaviour
             am.StopBGM();
             am.Play("flagslide");
             StateManager.SetWinState();
+            GameManager.Instance.hasWon = true;
             int timerLastDigit = GameManager.Timer % 10;
             if (new[] { 1, 2, 6 }.Contains(timerLastDigit))
             {

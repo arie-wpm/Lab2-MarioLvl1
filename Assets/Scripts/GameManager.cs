@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     private bool isGameOver = false;
     private bool isFirstStart = true;
     public bool hasTimeRunOut = false;
+    public bool hasWon = false;
 
     public GameObject blackPanel;
     public GameObject gameOverPanel;
@@ -130,6 +131,9 @@ public class GameManager : MonoBehaviour
                 break;
             case StateManager.GameState.Dead:
                 UpdateInDeadMode();
+                break;
+            case StateManager.GameState.Won:
+                UpdateInWinMode();
                 break;
         }
     }
@@ -232,6 +236,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void UpdateInWinMode()
+    {
+        StartScreenObj.SetActive(false);
+        if (StateManager.CurrentGameState() != StateManager.GameState.Won)
+            return;
+
+        if (hasWon) {
+            hasWon = false;
+
+            int currentScore = ScoreManager.GetScore();
+            int highScore = PlayerPrefs.GetInt("HighScore", 0);
+            if (currentScore > highScore) {
+                PlayerPrefs.SetInt("HighScore", currentScore);
+            }
+        }
+    }
+
     void RunTimeOut()
     {
         StateManager.SetDeadState();
@@ -315,6 +336,7 @@ public class GameManager : MonoBehaviour
             // ScoreManager score reset
             ScoreManager.ResetScore();
             isGameOver = false;
+            hasWon = false;
         }
 
         //reset blocks

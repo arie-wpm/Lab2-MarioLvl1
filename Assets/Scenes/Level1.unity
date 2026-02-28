@@ -12913,6 +12913,7 @@ MonoBehaviour:
   goombaPrefab: {fileID: 6563347764075190145, guid: ff16f6364486c1e46bb7b5e020745175, type: 3}
   koopaPrefab: {fileID: 281880764745605994, guid: 70545fca6eebec44d8c0550025024b39, type: 3}
   hasTimeRunOut: 0
+  hasWon: 0
   blackPanel: {fileID: 1641135857}
   gameOverPanel: {fileID: 1631815515}
   timeUpPanel: {fileID: 1761851049}
@@ -12987,6 +12988,12 @@ MonoBehaviour:
   _score5: {fileID: 683829467}
   _score6: {fileID: 401923100}
   _lives1: {fileID: 984834075}
+  _topScore1: {fileID: 1399522062}
+  _topScore2: {fileID: 1399522061}
+  _topScore3: {fileID: 1399522060}
+  _topScore4: {fileID: 1399522059}
+  _topScore5: {fileID: 1399522058}
+  _topScore6: {fileID: 1399522057}
 --- !u!114 &526562727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34502,6 +34509,36 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13c9e722562f3f54082ad4775a74bef4, type: 3}
+--- !u!212 &1399522057 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2178644090970308738, guid: 13c9e722562f3f54082ad4775a74bef4, type: 3}
+  m_PrefabInstance: {fileID: 1399522056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1399522058 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1399990083363527136, guid: 13c9e722562f3f54082ad4775a74bef4, type: 3}
+  m_PrefabInstance: {fileID: 1399522056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1399522059 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 919083830420134456, guid: 13c9e722562f3f54082ad4775a74bef4, type: 3}
+  m_PrefabInstance: {fileID: 1399522056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1399522060 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1271540482014206472, guid: 13c9e722562f3f54082ad4775a74bef4, type: 3}
+  m_PrefabInstance: {fileID: 1399522056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1399522061 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1978337217242427400, guid: 13c9e722562f3f54082ad4775a74bef4, type: 3}
+  m_PrefabInstance: {fileID: 1399522056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1399522062 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3575812606963312309, guid: 13c9e722562f3f54082ad4775a74bef4, type: 3}
+  m_PrefabInstance: {fileID: 1399522056}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1400512797
 GameObject:
   m_ObjectHideFlags: 0

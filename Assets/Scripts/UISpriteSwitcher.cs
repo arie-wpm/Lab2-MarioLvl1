@@ -47,6 +47,14 @@ public class UISpriteSwitcher : MonoBehaviour
     [SerializeField]
     private Image _lives1;
 
+    [Header("Top Score Sprite Ref ")]
+    [SerializeField] private SpriteRenderer _topScore1;
+    [SerializeField] private SpriteRenderer _topScore2;
+    [SerializeField] private SpriteRenderer _topScore3;
+    [SerializeField] private SpriteRenderer _topScore4;
+    [SerializeField] private SpriteRenderer _topScore5;
+    [SerializeField] private SpriteRenderer _topScore6;
+
     private int _time;
     private int _coins;
     private int _score;
@@ -79,6 +87,7 @@ public class UISpriteSwitcher : MonoBehaviour
         UpdateCoins();
         UpdateScore();
         UpdateLives();
+        UpdateTopScore();
     }
 
     void UpdateCoins()
@@ -119,5 +128,16 @@ public class UISpriteSwitcher : MonoBehaviour
         _lives = playerStats.lives;
         _lives = Mathf.Clamp(_lives, 0, _numbers.Length - 1);
         _lives1.sprite = _numbers[_lives];
+    }
+
+    void UpdateTopScore()
+    {
+        int highscore = PlayerPrefs.GetInt("HighScore", 0);
+        _topScore1.sprite = _numbers[(highscore / 100000) % 10];
+        _topScore2.sprite = _numbers[(highscore / 10000) % 10];
+        _topScore3.sprite = _numbers[(highscore / 1000) % 10];
+        _topScore4.sprite = _numbers[(highscore / 100) % 10];
+        _topScore5.sprite = _numbers[(highscore / 10) % 10];
+        _topScore6.sprite = _numbers[highscore % 10];
     }
 }
