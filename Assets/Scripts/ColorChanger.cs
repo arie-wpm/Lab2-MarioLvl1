@@ -7,6 +7,10 @@ public class ColorChanger : MonoBehaviour
     private Color _default2 = new Color32(234, 158, 34, 255);
     private Color _default3 = new Color32(107, 109, 0, 255);
 
+    private Color _luigi1 = new Color32(255, 254, 255, 255);
+    private Color _luigi2 = new Color32(234, 158, 34, 255);
+    private Color _luigi3 = new Color32(56, 135, 0, 255);
+
     private Color _flower1 = new Color32(247, 216, 165, 255);
     private Color _flower2 = new Color32(234, 158, 34, 255);
     private Color _flower3 = new Color32(181, 49, 32, 255);
@@ -31,10 +35,13 @@ public class ColorChanger : MonoBehaviour
     public float currentTimeScale = 1f;
 
     public void ChangeToDefault(SpriteRenderer[] sprites) {
-        Color[] colors = { _default1, _default2, _default3 };
-        for (int i = 0; i < sprites.Length; i++) {
-            sprites[i].color = colors[i];
-        }
+        Color[] colors;
+
+        if (GameManager.Instance._character == "mario") colors = new Color[] { _default1, _default2, _default3 };
+        else colors = new Color[] { _luigi1, _luigi2, _luigi3 };
+
+        for (int i = 0; i < sprites.Length; i++) sprites[i].color = colors[i];
+
         _currentColors = colors;
     }
 

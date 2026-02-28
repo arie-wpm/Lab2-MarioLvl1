@@ -68,6 +68,13 @@ public class GameManager : MonoBehaviour
     private InputAction _moveAction => InputSystem.actions.FindAction("Move");
     private InputAction _startAction => InputSystem.actions.FindAction("Next");
 
+    // extra luigi and mario
+    public string _character = "mario";
+    public GameObject marioObj;
+    public GameObject luigiObj;
+    public GameObject marioScreen;
+    public GameObject luigiScreen;
+
     // private InputAction _pauseAction => InputSystem.actions.FindAction("Pause");
     private bool _selectTrack = true;
 
@@ -171,8 +178,22 @@ public class GameManager : MonoBehaviour
         if (_startAction.WasPressedThisFrame())
         {
             // no logic here yet but we can add luigi colors if time permits
-            // note: need to add a coroutine here to switch to BlackScreen
-            StartCoroutine(RestartLevel()); //
+            if (selectorObj.transform.position.y == player1GameObj.transform.position.y) {
+                _character = "mario";
+                marioObj.SetActive(true);
+                luigiObj.SetActive(false);
+                marioScreen.SetActive(true);
+                luigiScreen.SetActive(false);
+            }
+            else {
+                _character = "luigi";
+                marioObj.SetActive(false);
+                luigiObj.SetActive(true);
+                marioScreen.SetActive(false);
+                luigiScreen.SetActive(true);
+            }
+            
+            StartCoroutine(RestartLevel());
         }
     }
 
@@ -253,6 +274,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator RestartLevel()
     {
+        colorChanger.ChangeToDefault(player.GetComponentsInChildren<SpriteRenderer>());
         StateManager.SetStartState();
         yield return new WaitForSeconds(_blackScreenDuration);
         ResetSceneObjects();
@@ -282,10 +304,16 @@ public class GameManager : MonoBehaviour
             player.transform.position = _currentRespawnPoint.transform.position;
             Camera.main.transform.position = _currentCamRespawnPoint.transform.position;
             // resetColor and State
+            _character = "mario";
+            marioObj.SetActive(true);
+            luigiObj.SetActive(false);
+            marioScreen.SetActive(true);
+            luigiScreen.SetActive(false);
             colorChanger.ChangeToDefault(player.GetComponentsInChildren<SpriteRenderer>());
             player.GetComponent<PlayerStats>().Reset();
             StateManager.CurrentState = StateManager.GameState.NULL;
             // ScoreManager score reset
+            ScoreManager.ResetScore();
             isGameOver = false;
         }
 

@@ -1,7 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -35,5 +33,10 @@ public class ScoreManager : MonoBehaviour
     public static int GetScore()
     {
         return Score;
+    }
+
+    public static void ResetScore()
+    {
+        Score = 0;
     }
 }
