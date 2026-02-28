@@ -261,9 +261,6 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator TimeRanOut()
     {
-        yield return new WaitForSeconds(_blackScreenDuration);
-        yield return StartCoroutine(OtherBlackScreen(_blackScreenDuration));
-    public IEnumerator TimeRanOut() {
         yield return StartCoroutine(OtherBlackScreen(5f));
         ResetSceneObjects();
     }
@@ -315,8 +312,10 @@ public class GameManager : MonoBehaviour
         Timer = 400;
     }
 
-    IEnumerator OtherBlackScreen(float duration) {
-        if (isGameOver) {
+    IEnumerator OtherBlackScreen(float duration)
+    {
+        if (isGameOver)
+        {
             AudioManager.Instance.Play("gameover");
             blackPanel.SetActive(true);
             gameOverPanel.SetActive(true);
