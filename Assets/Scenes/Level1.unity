@@ -12917,6 +12917,7 @@ MonoBehaviour:
   blackPanel: {fileID: 1641135857}
   gameOverPanel: {fileID: 1631815515}
   timeUpPanel: {fileID: 1761851049}
+  timer: {fileID: 1949592010}
   _character: mario
   marioObj: {fileID: 1000993034}
   luigiObj: {fileID: 287517756}
@@ -12951,6 +12952,7 @@ MonoBehaviour:
   topPanel: {fileID: 573926472}
   blackPanel: {fileID: 1641135857}
   livesPanel: {fileID: 1534859617}
+  timer: {fileID: 1949592010}
   ScorePopupPrefab: {fileID: 6369725320741821894, guid: b7c808ee987f8ff4abfdcdfbdd4aaba2, type: 3}
   oneUpPopupPrefab: {fileID: 6369725320741821894, guid: dc67deec9beaf0b4e811b59d74916670, type: 3}
 --- !u!114 &526562726
@@ -24277,7 +24279,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1965870716}
+  m_Father: {fileID: 1949592011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -33600,7 +33602,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1965870716}
+  m_Father: {fileID: 1949592011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -49852,7 +49854,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1965870716}
+  m_Father: {fileID: 1949592011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -56462,6 +56464,44 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1949592010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1949592011}
+  m_Layer: 5
+  m_Name: TIME
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1949592011
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949592010}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1367249135}
+  - {fileID: 983096235}
+  - {fileID: 1683481743}
+  m_Father: {fileID: 1965870716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1954800070
 GameObject:
   m_ObjectHideFlags: 0
@@ -56821,9 +56861,7 @@ RectTransform:
   - {fileID: 1800545416}
   - {fileID: 392951884}
   - {fileID: 1287853770}
-  - {fileID: 1367249135}
-  - {fileID: 983096235}
-  - {fileID: 1683481743}
+  - {fileID: 1949592011}
   m_Father: {fileID: 573926473}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
