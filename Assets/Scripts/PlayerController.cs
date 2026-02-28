@@ -69,7 +69,8 @@ public class PlayerController : MonoBehaviour
     private float postStompTimer;
     private float postStompTime = 0.1f;
     private Vector2 velocityBeforeCollision;
-    
+    private bool dead;
+    [HideInInspector] public bool canDie;
 
     private void Start()
     {
@@ -82,6 +83,7 @@ public class PlayerController : MonoBehaviour
         crouchAction = InputSystem.actions.FindAction("Crouch");
         startPos = GameManager.Instance.respawnPoint1.transform.position;
         grounded = true;
+        canDie = true;
     }
 
     private void Update()
@@ -314,7 +316,7 @@ public class PlayerController : MonoBehaviour
             {
                 Stomp();
             }
-            else if (postStompTimer <= 0)
+            else if (postStompTimer <= 0 && !pStats.isInvincible && canDie)
             {
                 Debug.LogWarning(postStompTimer);
                 Die();
@@ -361,16 +363,20 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
+        
         SpriteRenderer[] sprites = GameManager.Instance.player.GetComponentsInChildren<SpriteRenderer>();
 
         if (pStats.powerState != MarioPowerState.Small)
         {
+            canDie = false;
             AudioManager.Instance.Play("pipe");
             GameManager.Instance.colorChanger.ChangeToDefault(sprites);
             GameManager.Instance.colorChanger.StartTransformOnHit();
             return;
         }
 
+        if (dead) return;
+        dead = true;
         StateManager.SetDeadState();
         pStats.lives--;
         animator.SetBool("isDead", true);
@@ -397,6 +403,8 @@ public class PlayerController : MonoBehaviour
         }
         rb.bodyType = RigidbodyType2D.Dynamic;
         yield return new WaitForSeconds(3f);
+
+        dead = false;
         mainCol.enabled = true;
         animator.SetBool("isDead", false);
         animator.SetBool("isMoving", false);

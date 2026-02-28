@@ -17,7 +17,7 @@ public class PlayerStats : MonoBehaviour
     [Header("Star")]
     public bool isInvincible;
     private Coroutine starCoroutine;
-
+    
     private SpriteRenderer[] sprites;
 
     void Start() {
