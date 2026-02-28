@@ -1,11 +1,19 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class ScoreManager : MonoBehaviour
 {
     //Static Variable that can be edited easily from any script.
     public static int Score;
+
+    public static UnityEvent ScoreChanged;
+
+    void Awake()
+    {
+        ScoreChanged ??= new UnityEvent();
+    }
 
     //Usable for nonstatic functions that will modify the score, however I doubt this will be needed.
     public int score
