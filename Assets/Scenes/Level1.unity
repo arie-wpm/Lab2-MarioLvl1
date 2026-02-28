@@ -55165,10 +55165,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4653211045582086561, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
-      propertyPath: fireballPrefab
-      value: 
-      objectReference: {fileID: 1047033012234128704, guid: a4b42fe8ac0cd7941b760f46c7c6b494, type: 3}
     - target: {fileID: 6927866992779325569, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5

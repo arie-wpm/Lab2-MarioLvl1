@@ -422,6 +422,7 @@ MonoBehaviour:
   grounded: 0
   rb: {fileID: 0}
   facingDirection: 1
+  canDie: 0
 --- !u!50 &7785003992496370886
 Rigidbody2D:
   serializedVersion: 5

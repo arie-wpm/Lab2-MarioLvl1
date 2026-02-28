@@ -122,6 +122,9 @@ public class ColorChanger : MonoBehaviour
         for (int i = 0; i < sprites.Length; i++) {
             sprites[i].color = _currentColors[i];
         }
+
+        PlayerController player = GameManager.Instance.player.GetComponent<PlayerController>();
+        player.canDie = true;
     }
 
     public IEnumerator TransformFreeze() {

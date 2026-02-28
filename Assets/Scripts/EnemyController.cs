@@ -168,6 +168,7 @@ public class EnemyController : MonoBehaviour, IBumpable
             DieKnockback(knockbackDir);
         }
     }
+    
 
     private void GoombaStomp()
     {
