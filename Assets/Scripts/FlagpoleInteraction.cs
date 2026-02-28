@@ -1,7 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class FlagpoleInteraction : MonoBehaviour
 {
@@ -20,6 +24,7 @@ public class FlagpoleInteraction : MonoBehaviour
     public float flagX;
 
     private bool flagDropped;
+    private bool timeScoreTotaled;
 
     [SerializeField]
     private Transform flag;
@@ -39,9 +44,18 @@ public class FlagpoleInteraction : MonoBehaviour
     [SerializeField]
     private List<Animator> fireworks = new List<Animator>();
 
+    [SerializeField]
+    private List<GameObject> pointDividers = new List<GameObject>();
+
+    [SerializeField]
+    private UIManager uiMan;
+
+    private int fireworksCount = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        StateManager.EnteredWon ??= new UnityEvent();
         StateManager.EnteredWon.AddListener(MoveFlagToBase);
     }
 
@@ -55,23 +69,64 @@ public class FlagpoleInteraction : MonoBehaviour
             Debug.Log("Hit Pole");
             am.StopBGM();
             am.Play("flagslide");
-
             StateManager.SetWinState();
+            int timerLastDigit = GameManager.Timer % 10;
+            if (new[] { 1, 2, 6 }.Contains(timerLastDigit))
+            {
+                fireworksCount = timerLastDigit;
+            }
+
+            int pointsAwarded = 0;
+            Transform t = collision.gameObject.GetComponent<Transform>();
+            if (t.position.y <= pointDividers[0].transform.position.y)
+            {
+                pointsAwarded = 100;
+            }
+            else if (
+                t.position.y > pointDividers[0].transform.position.y
+                && t.position.y <= pointDividers[1].transform.position.y
+            )
+            {
+                pointsAwarded = 400;
+            }
+            else if (
+                t.position.y > pointDividers[1].transform.position.y
+                && t.position.y <= pointDividers[2].transform.position.y
+            )
+            {
+                pointsAwarded = 800;
+            }
+            else if (
+                t.position.y > pointDividers[2].transform.position.y
+                && t.position.y <= pointDividers[3].transform.position.y
+            )
+            {
+                pointsAwarded = 2000;
+            }
+            else if (t.position.y > pointDividers[3].transform.position.y)
+            {
+                pointsAwarded = 5000;
+            }
+
+            Debug.Log($"Points Awarded: {pointsAwarded}");
+            ScoreManager.ModifyScore(pointsAwarded);
+            uiMan.SpawnPopup(pointsAwarded, t.position);
+
             if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
             {
                 collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             }
-            Transform t = collision.gameObject.GetComponent<Transform>();
             t.position = new Vector3(flagX, t.position.y, 0);
             Animator marioA = new Animator();
             if (collision.GetComponent<Animator>() != null)
             {
                 marioA = collision.GetComponent<Animator>();
             }
-            marioA.SetLayerWeight(0, 1);
+            // marioA.SetLayerWeight(0, 1);
             marioA.SetBool("isJumping", false);
             marioA.SetBool("isMoving", false);
-            marioA.SetLayerWeight(0, 1);
+            // marioA.SetLayerWeight(0, 1);
+            marioA.speed = 1f;
             marioA.SetBool("isPoleSliding", true);
             StartCoroutine(MoveToCastle(t, marioA));
         }
@@ -121,7 +176,22 @@ public class FlagpoleInteraction : MonoBehaviour
             t.position = new Vector3(newX, t.position.y, 0);
             yield return null;
         }
+        //Calculate Time Score
+        StartCoroutine(TabulateTimeScore());
+        yield return new WaitUntil(() => timeScoreTotaled);
         MoveFlagOutOfCastle();
+    }
+
+    IEnumerator TabulateTimeScore()
+    {
+        while (GameManager.Timer >= 0)
+        {
+            GameManager.Timer--;
+            ScoreManager.ModifyScore(50);
+            am.Play("timeblip");
+            yield return null;
+        }
+        timeScoreTotaled = true;
     }
 
     private void MoveFlagToBase()
@@ -156,16 +226,19 @@ public class FlagpoleInteraction : MonoBehaviour
             castleFlag.position = new Vector3(castleFlag.position.x, newY, 0);
             yield return null;
         }
-        StartCoroutine(PlayFireworks());
+        StartCoroutine(PlayFireworks(fireworksCount));
     }
 
-    IEnumerator PlayFireworks()
+    IEnumerator PlayFireworks(int worksToPlay)
     {
-        foreach (var anim in fireworks)
+        for (int i = 0; i < worksToPlay; i++)
         {
-            anim.SetTrigger("Explode");
+            fireworks[i].SetTrigger("Explode");
+            yield return new WaitForSeconds(fireworks[i].GetCurrentAnimatorStateInfo(0).length / 2);
+            ScoreManager.ModifyScore(500);
             am.Play("firework");
-            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+            yield return new WaitForSeconds(fireworks[i].GetCurrentAnimatorStateInfo(0).length / 2);
+            fireworks[i].ResetControllerState();
         }
     }
 }
