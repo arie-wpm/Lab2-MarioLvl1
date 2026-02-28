@@ -413,14 +413,14 @@ public class PlayerController : MonoBehaviour
         }
 
         StateManager.SetDeadState();
-        --pStats.lives;
+        pStats.lives--;
         animator.SetBool("isDead", true);
         mainCol.enabled = false;
         rb.bodyType = RigidbodyType2D.Static;
         StartCoroutine(MoveMarioDead());
     }
 
-    private IEnumerator MoveMarioDead()
+    public IEnumerator MoveMarioDead()
     {
         yield return new WaitForSeconds(0.5f);
         float newY = 0;
@@ -445,7 +445,8 @@ public class PlayerController : MonoBehaviour
         
         if (pStats.lives > 0)
         {
-            StartCoroutine(GameManager.Instance.RestartLevel());
+            if (GameManager.Instance.hasTimeRunOut) StartCoroutine(GameManager.Instance.TimeRanOut());
+            else StartCoroutine(GameManager.Instance.RestartLevel());
         }
         if (pStats.lives <= 0)
         {
