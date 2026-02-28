@@ -15,8 +15,15 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject livesPanel;
 
-    [SerializeField] private GameObject ScorePopupPrefab;
-    [SerializeField] private GameObject oneUpPopupPrefab;
+    [SerializeField]
+    private GameObject timer;
+
+    [SerializeField]
+    private GameObject ScorePopupPrefab;
+
+    [SerializeField]
+    private GameObject oneUpPopupPrefab;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Start() { }
@@ -28,12 +35,24 @@ public class UIManager : MonoBehaviour
     {
         blackPanel.SetActive(false);
         livesPanel.SetActive(false);
+        EnableTimer();
     }
 
     public void EnableLivesScreen()
     {
         blackPanel.SetActive(true);
         livesPanel.SetActive(true);
+        DisableTimer();
+    }
+
+    public void DisableTimer()
+    {
+        timer.SetActive(false);
+    }
+
+    public void EnableTimer()
+    {
+        timer.SetActive(true);
     }
 
     public void SpawnPopup(int score, Vector3 spawnPos)
@@ -55,19 +74,22 @@ public class UIManager : MonoBehaviour
 
         scorePopup.GetComponent<ScorePopupHandler>().ShowPopup(score);
     }
-    
+
     public void Spawn1UPPopup(int score, Vector3 spawnPos)
     {
         GameObject oneUpPopup = Instantiate(oneUpPopupPrefab, mainCanvas.transform);
-        
+
         RectTransform canvasRect = mainCanvas.GetComponent<RectTransform>();
         Vector3 screenPos = Camera.main.WorldToScreenPoint(spawnPos);
-        
+
         Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, mainCanvas.worldCamera, out localPoint);
-        
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            screenPos,
+            mainCanvas.worldCamera,
+            out localPoint
+        );
+
         oneUpPopup.GetComponent<RectTransform>().localPosition = localPoint;
     }
-        
-        
 }

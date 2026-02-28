@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     public GameObject blackPanel;
     public GameObject gameOverPanel;
     public GameObject timeUpPanel;
+    public GameObject timer;
 
     // using Attack as Start for now since default is Enter
     private InputAction _moveAction => InputSystem.actions.FindAction("Move");
@@ -116,6 +117,7 @@ public class GameManager : MonoBehaviour
             case StateManager.GameState.NULL:
                 UIManager ui = GetComponent<UIManager>();
                 ui.DisableLivesScreen();
+                ui.DisableTimer();
                 UpdateInStartScreen();
                 break;
             case StateManager.GameState.StartScreen:
@@ -182,21 +184,23 @@ public class GameManager : MonoBehaviour
         if (_startAction.WasPressedThisFrame())
         {
             // no logic here yet but we can add luigi colors if time permits
-            if (selectorObj.transform.position.y == player1GameObj.transform.position.y) {
+            if (selectorObj.transform.position.y == player1GameObj.transform.position.y)
+            {
                 _character = "mario";
                 marioObj.SetActive(true);
                 luigiObj.SetActive(false);
                 marioScreen.SetActive(true);
                 luigiScreen.SetActive(false);
             }
-            else {
+            else
+            {
                 _character = "luigi";
                 marioObj.SetActive(false);
                 luigiObj.SetActive(true);
                 marioScreen.SetActive(false);
                 luigiScreen.SetActive(true);
             }
-            
+
             StartCoroutine(RestartLevel());
         }
     }
@@ -242,12 +246,14 @@ public class GameManager : MonoBehaviour
         if (StateManager.CurrentGameState() != StateManager.GameState.Won)
             return;
 
-        if (hasWon) {
+        if (hasWon)
+        {
             hasWon = false;
 
             int currentScore = ScoreManager.GetScore();
             int highScore = PlayerPrefs.GetInt("HighScore", 0);
-            if (currentScore > highScore) {
+            if (currentScore > highScore)
+            {
                 PlayerPrefs.SetInt("HighScore", currentScore);
             }
 
@@ -377,12 +383,14 @@ public class GameManager : MonoBehaviour
             blackPanel.SetActive(true);
             gameOverPanel.SetActive(true);
             timeUpPanel.SetActive(false);
+            timer.SetActive(false);
         }
         else if (hasTimeRunOut)
         {
             blackPanel.SetActive(true);
             timeUpPanel.SetActive(true);
             gameOverPanel.SetActive(false);
+            timer.SetActive(false);
         }
         yield return new WaitForSeconds(duration);
         blackPanel.SetActive(false);
