@@ -7,7 +7,8 @@ public enum PickupType
     SuperMushroom,
     FireFlower,
     Star,
-    OneUp
+    OneUp,
+    NormalCoin
 }
 
 public class Pickup : MonoBehaviour
@@ -87,6 +88,12 @@ public class Pickup : MonoBehaviour
         {
             case PickupType.Coin:
                 GiveScore();
+                stats.AddCoins(amount);
+                break;
+
+            case PickupType.NormalCoin:
+                ScoreManager.AddScore(score);
+                AudioManager.Instance.Play("coin");
                 stats.AddCoins(amount);
                 break;
 
