@@ -52,6 +52,12 @@ public class GameManager : MonoBehaviour
 
     private bool isGameOver = false;
     private bool isFirstStart = true;
+    public bool hasTimeRunOut = false;
+
+    public GameObject blackPanel;
+    public GameObject gameOverPanel;
+    public GameObject timeUpPanel;
+
 
     // using Attack as Start for now since default is Enter
     private InputAction _moveAction => InputSystem.actions.FindAction("Move");
@@ -163,6 +169,9 @@ public class GameManager : MonoBehaviour
 
     void UpdateInPlayMode()
     {
+        // hacking in time out for now
+        // if (Time <= 0f) hasTimeRunOut = true; RunTimeOut();
+
         StartScreenObj.SetActive(false);
         Time.timeScale = GameManager.Instance.colorChanger.currentTimeScale;
         if (StateManager.CurrentGameState() != StateManager.GameState.Play)
@@ -176,6 +185,21 @@ public class GameManager : MonoBehaviour
             StateManager.SetPauseState();
             player.GetComponent<Animator>().speed = 0f;
         }
+    }
+
+    void RunTimeOut() {
+        StateManager.SetDeadState();
+        PlayerStats pStats = player.GetComponent<PlayerStats>();
+        PlayerController pController = player.GetComponent<PlayerController>();
+        Animator animator = player.GetComponent<Animator>();
+        BoxCollider2D mainCol = player.GetComponent<BoxCollider2D>();
+        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+
+        pStats.lives--;
+        animator.SetBool("isDead", true);
+        mainCol.enabled = false;
+        rb.bodyType = RigidbodyType2D.Static;
+        StartCoroutine(pController.MoveMarioDead());
     }
 
     void UpdateInPauseScreen()
@@ -211,11 +235,16 @@ public class GameManager : MonoBehaviour
         StateManager.SetPlayState();
     }
 
+    public IEnumerator TimeRanOut() {
+        yield return new WaitForSeconds(_blackScreenDuration);
+        yield return StartCoroutine(OtherBlackScreen(_blackScreenDuration));
+        ResetSceneObjects();
+    }
+
     public IEnumerator RestartGame()
     {
         isGameOver = true;
-        yield return new WaitForSeconds(_blackScreenDuration); // can attach a gameover coroutine
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        yield return StartCoroutine(OtherBlackScreen(_blackScreenDuration));
         ResetSceneObjects();
     }
 
@@ -249,5 +278,22 @@ public class GameManager : MonoBehaviour
         }
 
         isFirstStart = true;
+        hasTimeRunOut = false;
+    }
+
+    IEnumerator OtherBlackScreen(float duration) {
+        if (isGameOver) {
+            blackPanel.SetActive(true);
+            gameOverPanel.SetActive(true);
+            timeUpPanel.SetActive(false);
+        } else if (hasTimeRunOut) {
+            blackPanel.SetActive(true);
+            timeUpPanel.SetActive(true);
+            gameOverPanel.SetActive(false);
+        }
+        yield return new WaitForSeconds(duration);
+        blackPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        timeUpPanel.SetActive(false);
     }
 }
