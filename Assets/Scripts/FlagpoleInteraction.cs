@@ -2,10 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class FlagpoleInteraction : MonoBehaviour
 {
@@ -185,14 +183,17 @@ public class FlagpoleInteraction : MonoBehaviour
 
     IEnumerator TabulateTimeScore()
     {
+        am.StopBGM();
+        am.PlayBGMCoinRing();
         while (GameManager.Timer >= 0)
         {
             GameManager.Timer--;
+            yield return new WaitForSeconds(0.01f);
             ScoreManager.ModifyScore(50);
-            am.Play("timeblip");
             yield return null;
         }
         timeScoreTotaled = true;
+        am.StopBGM();
     }
 
     private void MoveFlagToBase()
@@ -204,7 +205,7 @@ public class FlagpoleInteraction : MonoBehaviour
     {
         Debug.Log("MovingFlag");
         float newY = 0;
-        while (Mathf.Abs(flag.position.y - flagBasePos.y) > 0.01f)
+        while (Mathf.Abs(flag.position.y - flagBasePos.y) > 0.005f)
         {
             newY = Mathf.MoveTowards(flag.position.y, flagBasePos.y, 6f * Time.deltaTime);
             flag.position = new Vector3(flag.position.x, newY, 0);

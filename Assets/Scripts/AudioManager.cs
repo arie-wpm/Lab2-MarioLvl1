@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour {
     public AudioClip loopClip;
     public AudioClip underGroundClip;
     public AudioClip invincibilityClip;
+    public AudioClip coinRingClip;
 
 
     private Dictionary<string, Sound> _soundLookup;
@@ -52,6 +53,7 @@ public class AudioManager : MonoBehaviour {
         loopClip.LoadAudioData();
         underGroundClip.LoadAudioData();
         invincibilityClip.LoadAudioData();
+        coinRingClip.LoadAudioData();
     }
 
     void Start() {
@@ -106,6 +108,12 @@ public class AudioManager : MonoBehaviour {
 
     public void PlayBGMInvincibility() {
         _bgmSource.clip = invincibilityClip;
+        _bgmSource.loop = true;
+        _bgmSource.Play();
+    }
+
+    public void PlayBGMCoinRing() {
+        _bgmSource.clip = coinRingClip;
         _bgmSource.loop = true;
         _bgmSource.Play();
     }
