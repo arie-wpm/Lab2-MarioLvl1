@@ -32,7 +32,8 @@ public class BlockItem : MonoBehaviour
         if (pickup.type == PickupType.SuperMushroom || pickup.type == PickupType.FireFlower ||
             pickup.type == PickupType.OneUp || pickup.type == PickupType.Star) {
             AudioManager.Instance.Play("item");
-        } else if (pickup.type == PickupType.Coin) AudioManager.Instance.Play("coin");
+        } 
+        else if (pickup.type == PickupType.Coin) AudioManager.Instance.Play("coin");
         
         Transform block = transform.parent;
         Collider2D blockCol = block != null ? block.GetComponent<Collider2D>() : null;
@@ -63,63 +64,103 @@ public class BlockItem : MonoBehaviour
         if (blockCol == null)
             yield break;
 
-        Bounds bb = blockCol.bounds;
-
-        Vector2 startCenter = bb.center;
-        Vector2 endCenter = new Vector2(bb.center.x, bb.max.y + physicsCollider.bounds.extents.y + 0.02f);
-
-        Vector2 deltaToStart = startCenter - (Vector2)physicsCollider.bounds.center;
-        transform.position += (Vector3)deltaToStart;
-
-        Vector2 startPos = transform.position;
-
-        Vector2 deltaToEnd = endCenter - (Vector2)physicsCollider.bounds.center;
-        Vector2 endPos = (Vector2)transform.position + deltaToEnd;
-
-        float elapsed = 0f;
-        float duration = 0.5f;
-
-        while (elapsed < duration)
-        {
-            float t = elapsed / duration;
-            transform.position = Vector2.Lerp(startPos, endPos, t);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = endPos;
-
-        rb.simulated = true;
-        rb.position = endPos;
-        rb.linearVelocity = Vector2.zero;
-        rb.angularVelocity = 0f;
-
-        physicsCollider.enabled = true;
-        triggerCollider.enabled = true;
-
-        Physics2D.IgnoreCollision(physicsCollider, blockCol, true);
-
-        yield return new WaitForFixedUpdate();
-
-        rb.position = endPos;
-        rb.linearVelocity = Vector2.zero;
-
-        yield return new WaitForSeconds(0.1f);
-
-        Physics2D.IgnoreCollision(physicsCollider, blockCol, false);
-
-        if (movement != null)
-        {
-            movement.direction = Vector2.right;
-            movement.enabled = true;
-        }
-
         if (pickup.type == PickupType.Coin)
         {
-            yield return new WaitForSeconds(0.5f);
+            // Disable physics and movement for coin pop animation
+            if (movement != null) movement.enabled = false;
+
+            rb.simulated = false;
+            physicsCollider.enabled = false;
+            triggerCollider.enabled = false;
+
+            // Pop higher and faster
+            Vector3 coinStartPos = transform.position;
+            float coinElapsed = 0f;
+            Vector3 peakPos = coinStartPos + Vector3.up * 2f;   // higher than mushroom
+            float upDuration = 0.15f;                       // faster up
+            float downDuration = 0.15f;                     // fast down
+
+            // Move up
+            while (coinElapsed < upDuration)
+            {
+                float t = coinElapsed / upDuration;
+                transform.position = Vector3.Lerp(coinStartPos, peakPos, t);
+                coinElapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = peakPos;
+
+            coinElapsed = 0f;
+
+            // Move down
+            while (coinElapsed < downDuration)
+            {
+                float t = coinElapsed / downDuration;
+                transform.position = Vector3.Lerp(peakPos, coinStartPos, t);
+                coinElapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = coinStartPos;
 
             pickup.ApplyPickup();
             Destroy(gameObject);
+        }
+        else
+        {
+            
+            Bounds bb = blockCol.bounds;
+
+            Vector2 startCenter = bb.center;
+            Vector2 endCenter = new Vector2(bb.center.x, bb.max.y + physicsCollider.bounds.extents.y + 0.02f);
+
+            Vector2 deltaToStart = startCenter - (Vector2)physicsCollider.bounds.center;
+            transform.position += (Vector3)deltaToStart;
+
+            Vector2 startPos = transform.position;
+
+            Vector2 deltaToEnd = endCenter - (Vector2)physicsCollider.bounds.center;
+            Vector2 endPos = (Vector2)transform.position + deltaToEnd;
+
+            float elapsed = 0f;
+            float duration = 0.5f;
+
+            while (elapsed < duration)
+            {
+                float t = elapsed / duration;
+                transform.position = Vector2.Lerp(startPos, endPos, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = endPos;
+
+            rb.simulated = true;
+            rb.position = endPos;
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+
+            physicsCollider.enabled = true;
+            triggerCollider.enabled = true;
+
+            Physics2D.IgnoreCollision(physicsCollider, blockCol, true);
+
+            yield return new WaitForFixedUpdate();
+
+            rb.position = endPos;
+            rb.linearVelocity = Vector2.zero;
+
+            yield return new WaitForSeconds(0.1f);
+
+            Physics2D.IgnoreCollision(physicsCollider, blockCol, false);
+
+            if (movement != null)
+            {
+                movement.direction = Vector2.right;
+                movement.enabled = true;
+            }
+
         }
     }
 }

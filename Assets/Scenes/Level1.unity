@@ -11782,10 +11782,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 3.1875
+    y: 0.12916668
+    width: 3
+    height: 3.0000002
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -20830,6 +20830,10 @@ PrefabInstance:
       propertyPath: heldPickup
       value: 
       objectReference: {fileID: 5084980527480931667, guid: 5bb43bfae3e8a473b888104fbec2bf0c, type: 3}
+    - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
+      propertyPath: upgradedPickup
+      value: 
+      objectReference: {fileID: 1235620764702118516, guid: 6d9e4a929af8b4f4482e4d76876d3979, type: 3}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Hidden1UP
@@ -25881,11 +25885,11 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 1235620764702118516, guid: c1bdb6799b5df40cd82499a6def37a55, type: 3}
+      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: upgradedPickup
       value: 
-      objectReference: {fileID: 1235620764702118516, guid: 6d9e4a929af8b4f4482e4d76876d3979, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: brickDebrisPrefab
       value: 
@@ -57875,11 +57879,11 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 1235620764702118516, guid: c1bdb6799b5df40cd82499a6def37a55, type: 3}
+      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: upgradedPickup
       value: 
-      objectReference: {fileID: 1235620764702118516, guid: 6d9e4a929af8b4f4482e4d76876d3979, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Block_Q
