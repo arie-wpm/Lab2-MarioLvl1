@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5500610564629068590}
   m_Layer: 0
   m_Name: Fireball
-  m_TagString: Untagged
+  m_TagString: Fireball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4070724853956073996, guid: db8d4134fc4668c4ca2b14fe0c654999, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -129,13 +129,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e56ba504346f9740a7bd6fa0af300e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fireball
-  speed: 9.5
+  speed: 11
+  currentSpeed: 9.5
   velocityConversation: 0.95
-  gravity: 4.75
+  gravity: 6
   angle: 30
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
 --- !u!50 &4012314649200830109
 Rigidbody2D:
   serializedVersion: 5
@@ -161,8 +162,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!58 &5500610564629068590
 CircleCollider2D:
   m_ObjectHideFlags: 0
