@@ -11972,10 +11972,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 3.1875
-    y: 0.12916668
-    width: 3
-    height: 3.0000002
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -17473,7 +17473,7 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Block_Q (5)
@@ -17981,7 +17981,7 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Block_Q (8)
@@ -20706,7 +20706,7 @@ PrefabInstance:
     - target: {fileID: 2913557966034603388, guid: 3e79bfc5c591f0c44b47a3eb56857365, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: 3617977025220761552, guid: 3e79bfc5c591f0c44b47a3eb56857365, type: 3}
       propertyPath: m_Name
       value: ExtraCoins
@@ -25574,7 +25574,7 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Block_Q (7)
@@ -25985,7 +25985,7 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Block_Q (11)
@@ -26120,7 +26120,7 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: upgradedPickup
       value: 
@@ -26474,7 +26474,7 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Block_Q (6)
@@ -29802,7 +29802,7 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Block_Q (3)
@@ -58412,7 +58412,7 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: upgradedPickup
       value: 
@@ -58766,7 +58766,7 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Block_Q (10)
@@ -59177,7 +59177,7 @@ PrefabInstance:
     - target: {fileID: -4619474197206590237, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: heldPickup
       value: 
-      objectReference: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
+      objectReference: {fileID: 1480761142258135130, guid: 4ea64bd1d720348f7bf03fd3d984f31f, type: 3}
     - target: {fileID: 2452644610569566302, guid: 78218317f02b7e1479ca2121ae32f379, type: 3}
       propertyPath: m_Name
       value: Block_Q (9)
