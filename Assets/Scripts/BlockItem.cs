@@ -66,7 +66,7 @@ public class BlockItem : MonoBehaviour
 
         if (pickup.type == PickupType.Coin)
         {
-            transform.localScale *= 0.8f;
+            // transform.localScale *= 1.1f;
             if (movement != null) movement.enabled = false;
 
             rb.simulated = false;
@@ -75,9 +75,9 @@ public class BlockItem : MonoBehaviour
 
             Vector3 coinStartPos = transform.position;
             float coinElapsed = 0f;
-            Vector3 peakPos = coinStartPos + Vector3.up * 2f;
-            float upDuration = 0.15f;
-            float downDuration = 0.15f;
+            Vector3 peakPos = coinStartPos + Vector3.up * 3f;
+            float upDuration = 0.25f;
+            float downDuration = 0.25f;
 
             // Move up
             while (coinElapsed < upDuration)
