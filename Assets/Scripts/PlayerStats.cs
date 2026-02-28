@@ -28,6 +28,11 @@ public class PlayerStats : MonoBehaviour
     {
         coins += amount;
         Debug.Log("Coins: " + coins);
+        if (coins == 100)
+        {
+            AddLife(1);
+            coins = 0;
+        }
     }
 
     public void AddLife(int amount)
