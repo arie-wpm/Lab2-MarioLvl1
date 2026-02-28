@@ -67,6 +67,7 @@ public class FlagpoleInteraction : MonoBehaviour
         AudioManager.Instance.ResetBGMSpeed();
         if (collision == player)
         {
+            GameManager.Instance.hasHitFlag = true;
             Debug.Log("Hit Pole");
             am.StopBGM();
             am.Play("flagslide");
