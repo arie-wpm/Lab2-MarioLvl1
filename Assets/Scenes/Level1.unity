@@ -12021,10 +12021,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 3.5859375
+    y: 0.43333337
+    width: 2
+    height: 2
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -30652,7 +30652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2913557966034603388, guid: 3e79bfc5c591f0c44b47a3eb56857365, type: 3}
       propertyPath: blockState
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2913557966034603388, guid: 3e79bfc5c591f0c44b47a3eb56857365, type: 3}
       propertyPath: heldPickup
@@ -55271,6 +55271,10 @@ PrefabInstance:
     - target: {fileID: 7479588835678342748, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
       propertyPath: lives
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479588835678342748, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
+      propertyPath: isInvincible
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8340292264336507941, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
       propertyPath: m_Name

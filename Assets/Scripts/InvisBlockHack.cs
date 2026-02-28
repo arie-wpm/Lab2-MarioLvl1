@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InvisBlockHack : MonoBehaviour
 {
-    [SerializeField] private PlatformEffector2D platformEffector2D;
+    private PlatformEffector2D platformEffector2D;
     private BoxCollider2D boxCollider2D;
     private SpriteRenderer spriteRenderer;
 
@@ -15,7 +15,6 @@ public class InvisBlockHack : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(spriteRenderer.enabled);
         if (!spriteRenderer.enabled)
         {
             platformEffector2D.enabled = true;

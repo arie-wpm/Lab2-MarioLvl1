@@ -70,7 +70,7 @@ public class PlayerStats : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         AudioManager.Instance.StopBGM();
-        AudioManager.Instance.PlayBGM();
+        if (!GameManager.Instance.hasHitFlag)AudioManager.Instance.PlayBGM();
 
         isInvincible = false;
         Debug.Log("Star: invincible OFF");

@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -62,6 +60,7 @@ public class GameManager : MonoBehaviour
     private bool isFirstStart = true;
     public bool hasTimeRunOut = false;
     public bool hasWon = false;
+    public bool hasHitFlag = false;
     private Coroutine _speedUpBGMCoroutine;
 
     public GameObject blackPanel;
@@ -364,6 +363,7 @@ public class GameManager : MonoBehaviour
             ScoreManager.ResetScore();
             isGameOver = false;
             hasWon = false;
+            hasHitFlag = false;
         }
 
         //reset blocks

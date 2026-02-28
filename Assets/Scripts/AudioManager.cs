@@ -121,11 +121,12 @@ public class AudioManager : MonoBehaviour {
     IEnumerator StartPlayingBGM() {
         _introSource.volume = 1f;
         _introSource.Play();
-        yield return new WaitForSeconds(_introSource.clip.length);
+        yield return new WaitWhile(() => _introSource.isPlaying);
         _introSource.Stop();
         _introSource.volume = 0f;
         _bgmSource.volume = 1f;
         _bgmSource.Play();
+        _bgmCoroutine = null;
     }
 
     public void PauseBGM() {
@@ -139,11 +140,15 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void StopBGM() {
+        if (_bgmCoroutine != null) {
+            StopCoroutine(_bgmCoroutine);
+            _bgmCoroutine = null;
+        }
+        if (_introSource.isPlaying) _introSource.Stop();
         _bgmSource.Stop();
         _introSource.Stop();
-        _bgmCoroutine = null;
-
     }
+
     public void SpeedUpBGM() {
         _bgmSource.pitch = 1.25f;
         _introSource.pitch = 1.25f;
