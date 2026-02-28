@@ -12610,7 +12610,7 @@ GameObject:
   - component: {fileID: 526562727}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12711,6 +12711,7 @@ MonoBehaviour:
   topPanel: {fileID: 573926472}
   blackPanel: {fileID: 1641135857}
   livesPanel: {fileID: 1534859617}
+  ScorePopupPrefab: {fileID: 6369725320741821894, guid: b7c808ee987f8ff4abfdcdfbdd4aaba2, type: 3}
 --- !u!114 &526562726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21068,7 +21069,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 6

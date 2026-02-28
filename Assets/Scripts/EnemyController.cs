@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour, IBumpable
     private Collider2D col;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
+    private UIManager _uiManager;
     
     [SerializeField] private EnemyType enemy;
     [SerializeField] private int score;
@@ -22,6 +23,7 @@ public class EnemyController : MonoBehaviour, IBumpable
     [SerializeField] private float shellMovespeed = 6f;
     [SerializeField] private float shellReformDelay = 5f;
     [SerializeField] private float shellReformTime = 2f;
+    
     
     private enum EnemyType
     {
@@ -46,6 +48,7 @@ public class EnemyController : MonoBehaviour, IBumpable
         col = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        _uiManager = GameObject.FindWithTag("GameManager").GetComponent<UIManager>();
         idle = true;
         isDead = false;
         moveDir = Vector2.left;
@@ -164,6 +167,7 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private void GoombaStomp()
     {
+        GiveScore();
         AudioManager.Instance.Play("stomp");
         isDead = true;
         col.enabled = false;
@@ -171,7 +175,6 @@ public class EnemyController : MonoBehaviour, IBumpable
         rb.bodyType = RigidbodyType2D.Kinematic;
         anim.SetBool("isMoving", false);
         anim.SetBool("isDead", true);
-        GiveScore();
         Despawn(deathDelay);
     }
 
@@ -248,6 +251,7 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private void DieKnockback(Vector2 dir)
     {
+        GiveScore();
         AudioManager.Instance.Play("kick");
         isDead = true;
         rb.linearVelocity = Vector2.zero;
@@ -255,7 +259,6 @@ public class EnemyController : MonoBehaviour, IBumpable
         rb.AddForce(dir * knockbackForceX + Vector2.up * knockbackForceY, ForceMode2D.Impulse);
         anim.SetBool("isMoving", false);
         anim.SetBool("isDead", true);
-        GiveScore();
         Despawn(deathDelay);
     }
 
@@ -266,9 +269,10 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private void GiveScore()
     {
-        //score popup
+        _uiManager.SpawnPopup(score, transform.position + new Vector3(0, col.bounds.extents.y, 0));
         ScoreManager.ModifyScore(score);
     }
+
 
     public void OnBump()
     {

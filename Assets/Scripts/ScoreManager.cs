@@ -7,6 +7,9 @@ public class ScoreManager : MonoBehaviour
 {
     //Static Variable that can be edited easily from any script.
     public static int Score;
+    
+    [SerializeField] private GameObject ScorePopupPrefab; 
+    private GameObject canvas;
 
     public static UnityEvent ScoreChanged;
 
@@ -25,6 +28,8 @@ public class ScoreManager : MonoBehaviour
     public static void ModifyScore(int mod)
     {
         Score += mod;
+        
+        
     }
 
     public static int GetScore()
