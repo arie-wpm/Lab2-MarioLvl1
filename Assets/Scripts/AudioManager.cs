@@ -18,6 +18,7 @@ public class AudioManager : MonoBehaviour {
     public AudioClip introClip;
     public AudioClip loopClip;
     public AudioClip underGroundClip;
+    public AudioClip invincibilityClip;
 
 
     private Dictionary<string, Sound> _soundLookup;
@@ -50,6 +51,7 @@ public class AudioManager : MonoBehaviour {
         introClip.LoadAudioData();
         loopClip.LoadAudioData();
         underGroundClip.LoadAudioData();
+        invincibilityClip.LoadAudioData();
     }
 
     void Start() {
@@ -74,7 +76,7 @@ public class AudioManager : MonoBehaviour {
             case StateManager.GameState.Play: _isInPlayMode = true; break;
             case StateManager.GameState.StartScreen: _isInPlayMode = false; break;
             case StateManager.GameState.PauseScreen: _isInPlayMode = false; break;
-            case StateManager.GameState.Dead: _isInPlayMode = false; break;
+            case StateManager.GameState.Dead: _isInPlayMode = true; break;
             case StateManager.GameState.Won: _isInPlayMode = true; break;
         }
     }
@@ -98,6 +100,12 @@ public class AudioManager : MonoBehaviour {
 
     public void PlayBGMUnderground() {
         _bgmSource.clip = underGroundClip;
+        _bgmSource.loop = true;
+        _bgmSource.Play();
+    }
+
+    public void PlayBGMInvincibility() {
+        _bgmSource.clip = invincibilityClip;
         _bgmSource.loop = true;
         _bgmSource.Play();
     }

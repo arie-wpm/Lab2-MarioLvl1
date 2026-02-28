@@ -35907,6 +35907,7 @@ MonoBehaviour:
   introClip: {fileID: 8300000, guid: 87cc7dbf0b2339841af7a16de325c351, type: 3}
   loopClip: {fileID: 8300000, guid: a10d63d0631b5434b98900da6035e7e8, type: 3}
   underGroundClip: {fileID: 8300000, guid: 18f800d347cc55d49bf7d9a0fe2e06d0, type: 3}
+  invincibilityClip: {fileID: 8300000, guid: e49d2bdb24d775043a2c35a9f5612a33, type: 3}
 --- !u!1 &1472153925
 GameObject:
   m_ObjectHideFlags: 0
@@ -53663,7 +53664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7479588835678342748, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
       propertyPath: lives
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7785003992496370886, guid: 585a628a32827c542b1742f83cfa1e19, type: 3}
       propertyPath: m_AngularDamping

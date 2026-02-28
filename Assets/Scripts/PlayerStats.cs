@@ -57,10 +57,15 @@ public class PlayerStats : MonoBehaviour
 
     private IEnumerator StarRoutine(float duration)
     {
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.PlayBGMInvincibility();
         isInvincible = true;
         Debug.Log("Star: invincible ON");
 
         yield return new WaitForSeconds(duration);
+
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.PlayBGM();
 
         isInvincible = false;
         Debug.Log("Star: invincible OFF");

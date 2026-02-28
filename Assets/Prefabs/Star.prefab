@@ -98,7 +98,7 @@ BoxCollider2D:
   m_Offset: {x: 0.50774115, y: 0.49023286}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pickup
   type: 3
   amount: 1
-  starDuration: 6
+  starDuration: 12
 --- !u!212 &4092384327371851992
 SpriteRenderer:
   serializedVersion: 2
@@ -270,8 +270,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityMovement
   speed: 3
   direction: {x: 1, y: 0}
-  groundCheckDistance: 0.1
-  wallCheckDistance: 0.1
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
+  turnSmoothTime: 0.06

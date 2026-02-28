@@ -223,28 +223,26 @@ public class GameManager : MonoBehaviour
         StartScreenObj.SetActive(false);
         if (StateManager.CurrentGameState() != StateManager.GameState.Dead)
             return;
-        AudioManager.Instance.Play("death");
         AudioManager.Instance.StopBGM();
     }
 
     public IEnumerator RestartLevel()
     {
         StateManager.SetStartState();
-        ResetSceneObjects();
         yield return new WaitForSeconds(_blackScreenDuration);
+        ResetSceneObjects();
         StateManager.SetPlayState();
     }
 
     public IEnumerator TimeRanOut() {
-        yield return new WaitForSeconds(_blackScreenDuration);
-        yield return StartCoroutine(OtherBlackScreen(_blackScreenDuration));
+        yield return StartCoroutine(OtherBlackScreen(5f));
         ResetSceneObjects();
     }
 
     public IEnumerator RestartGame()
     {
         isGameOver = true;
-        yield return StartCoroutine(OtherBlackScreen(_blackScreenDuration));
+        yield return StartCoroutine(OtherBlackScreen(5f));
         ResetSceneObjects();
     }
 
@@ -283,6 +281,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator OtherBlackScreen(float duration) {
         if (isGameOver) {
+            AudioManager.Instance.Play("gameover");
             blackPanel.SetActive(true);
             gameOverPanel.SetActive(true);
             timeUpPanel.SetActive(false);
