@@ -337,6 +337,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("DeathBox"))
         {
+            pStats.SetPowerState(MarioPowerState.Small);
             Die();
         }
         if (other.gameObject.CompareTag("Enemy"))
