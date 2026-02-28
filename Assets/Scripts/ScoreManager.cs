@@ -50,6 +50,11 @@ public class ScoreManager : MonoBehaviour
         Instance.uiManager.SpawnPopup(points, spawnPos);
     }
     
+    public static void ModifyScore(int mod)
+    {
+        Score += mod;
+    }
+    
     public static void AddScore(int points) //no modifiers - for pickups etc
     {
         Score += points;
