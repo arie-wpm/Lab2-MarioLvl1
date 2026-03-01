@@ -93,11 +93,7 @@ public class UISpriteSwitcher : MonoBehaviour
 
     void Update()
     {
-        if (StateManager.CurrentGameState() == StateManager.GameState.NULL)
-        {
-            UpdateCoins();
-            return;
-        }
+        if (StateManager.CurrentGameState() == StateManager.GameState.NULL) return;
         UpdateCoins();
         UpdateTime();
         UpdateScore();
