@@ -109,6 +109,7 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     void Activate()
     {
+        if (GameManager.Instance.isUnderground) return;
         isActive = true;
         movespeed = 2f;
         anim.SetBool("isMoving", true);
@@ -116,6 +117,7 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     void Deactivate()
     {
+        if (GameManager.Instance.isUnderground) return;
         isActive = false;
         movespeed = 0f;
         anim.SetBool("isMoving", false);

@@ -86,6 +86,8 @@ public class GameManager : MonoBehaviour
     private List<Vector2> _coinsTransform = new();
     private List<GameObject> _coins = new();
 
+    public bool isUnderground = false;
+
     // private InputAction _pauseAction => InputSystem.actions.FindAction("Pause");
     private bool _selectTrack = true;
 

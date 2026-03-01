@@ -100,6 +100,7 @@ public class PipeTeleport : MonoBehaviour
     }
 
     IEnumerator UEntry() {
+        GameManager.Instance.isUnderground = true;
         AudioManager.Instance.Play("pipe");
         TogglePlayerComponents(false);
         SetAllAnimParamsFalse();
@@ -145,6 +146,8 @@ public class PipeTeleport : MonoBehaviour
         _player.transform.position = endPos;
 
         yield return StartCoroutine(BriefBlackScreen(_oExitPoint, false));
+
+        GameManager.Instance.isUnderground = false;
         yield return StartCoroutine(OutOfPipeAnim());
 
         TogglePlayerComponents(true);
