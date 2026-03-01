@@ -120,7 +120,7 @@ public class EnemyController : MonoBehaviour, IBumpable
         else
         {
             if (snappedPosX < leftBound && isActive)
-                Deactivate();
+                Despawn(0f);
         }
     }
 
