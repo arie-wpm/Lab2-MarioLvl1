@@ -82,6 +82,9 @@ public class GameManager : MonoBehaviour
     // private InputAction _pauseAction => InputSystem.actions.FindAction("Pause");
     private bool _selectTrack = true;
 
+    [SerializeField]
+    private bool instaStartGame = false;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -183,7 +186,7 @@ public class GameManager : MonoBehaviour
             selectorObj.transform.position = selectorPos;
         }
 
-        if (_startAction.WasPressedThisFrame())
+        if (_startAction.WasPressedThisFrame() || instaStartGame)
         {
             // no logic here yet but we can add luigi colors if time permits
             if (selectorObj.transform.position.y == player1GameObj.transform.position.y)
@@ -217,10 +220,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (Timer == 100) {
-            if (_speedUpBGMCoroutine == null) _speedUpBGMCoroutine = StartCoroutine(SpeedUpBGM());
+        if (Timer == 100)
+        {
+            if (_speedUpBGMCoroutine == null)
+                _speedUpBGMCoroutine = StartCoroutine(SpeedUpBGM());
         }
-
 
         StartScreenObj.SetActive(false);
         Time.timeScale = GameManager.Instance.colorChanger.currentTimeScale;
@@ -331,7 +335,7 @@ public class GameManager : MonoBehaviour
         SetMarioPosition();
         player.GetComponent<PlayerStats>().powerState = MarioPowerState.Small;
         player.GetComponent<Animator>().SetLayerWeight(1, 0f);
-        StateManager.SetPlayState();     
+        StateManager.SetPlayState();
     }
 
     public IEnumerator RestartGame()
@@ -415,7 +419,8 @@ public class GameManager : MonoBehaviour
         timeUpPanel.SetActive(false);
     }
 
-    IEnumerator SpeedUpBGM() {
+    IEnumerator SpeedUpBGM()
+    {
         AudioManager.Instance.PauseBGM();
         AudioManager.Instance.Play("hurryup");
         yield return new WaitForSeconds(2.9f);

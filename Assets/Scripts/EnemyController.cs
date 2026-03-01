@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour, IBumpable
@@ -10,43 +11,66 @@ public class EnemyController : MonoBehaviour, IBumpable
     private Animator anim;
     private SpriteRenderer spriteRenderer;
     private UIManager _uiManager;
-    
+
     [Header("Enemy Type Vars")]
-    [SerializeField] private EnemyType enemy;
-    [SerializeField] private int score;
-    [SerializeField] private float movespeed = 2f;
-    [SerializeField] private float wallCheckDist = 0.1f;
-    [SerializeField] private LayerMask groundLayers;
-    
+    [SerializeField]
+    private EnemyType enemy;
+
+    [SerializeField]
+    private int score;
+
+    [SerializeField]
+    private float movespeed = 2f;
+
+    [SerializeField]
+    private float wallCheckDist = 0.1f;
+
+    [SerializeField]
+    private LayerMask groundLayers;
+
     [Header("Death Vars")]
-    [SerializeField] private float deathDelay = 1f;
+    [SerializeField]
+    private float deathDelay = 1f;
     private float instantDespawn = 0f;
-    [SerializeField] private float knockbackForceX;
-    [SerializeField] private float knockbackForceY;
-    
+
+    [SerializeField]
+    private float knockbackForceX;
+
+    [SerializeField]
+    private float knockbackForceY;
+
     [Header("Koopa Shell Vars")]
-    [SerializeField] private float shellMovespeed = 6f;
-    [SerializeField] private float shellReformDelay = 5f;
-    [SerializeField] private float shellReformTime = 2f;
-    
-    
+    [SerializeField]
+    private float shellMovespeed = 6f;
+
+    [SerializeField]
+    private float shellReformDelay = 5f;
+
+    [SerializeField]
+    private float shellReformTime = 2f;
+
     private enum EnemyType
     {
         Goomba,
-        KoopaTroopa
+        KoopaTroopa,
     }
+
     private bool idle;
     private bool isDead;
+
     private enum KoopaState
     {
         Walking,
         ShellMoving,
-        ShellIdle
+        ShellIdle,
     }
 
     private KoopaState koopaState;
     private Coroutine koopaReformCoroutine;
-    
+
+    [SerializeField]
+    private float movingShellGracePeriod;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -68,14 +92,17 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private void OnBecameInvisible()
     {
-        if (idle) return;
+        if (idle)
+            return;
         Despawn(instantDespawn);
     }
 
     private void FixedUpdate()
     {
-        if (isDead) return; 
-        if (idle) return;
+        if (isDead)
+            return;
+        if (idle)
+            return;
         if (enemy == EnemyType.KoopaTroopa)
         {
             switch (koopaState)
@@ -103,7 +130,8 @@ public class EnemyController : MonoBehaviour, IBumpable
         origin.x += moveDir.x * (col.bounds.extents.x + 0.01f);
         RaycastHit2D hit = Physics2D.Raycast(origin, moveDir, wallCheckDist, groundLayers);
 
-        if (hit.collider && hit.collider.CompareTag("Respawn")) return;
+        if (hit.collider && hit.collider.CompareTag("Respawn"))
+            return;
 
         if (koopaState == KoopaState.ShellMoving)
         {
@@ -130,12 +158,15 @@ public class EnemyController : MonoBehaviour, IBumpable
             PlayerStats playerStats = other.gameObject.GetComponent<PlayerStats>();
             float enemyTopY = col.bounds.max.y;
             float playerBotY = other.collider.bounds.min.y;
-            
+
             if (playerStats.isInvincible)
             {
-                Vector2 knockbackDir = other.transform.position.x < transform.position.x ? Vector2.right : Vector2.left;
+                Vector2 knockbackDir =
+                    other.transform.position.x < transform.position.x
+                        ? Vector2.right
+                        : Vector2.left;
                 DieKnockback(knockbackDir);
-            } 
+            }
             else if (playerBotY > enemyTopY) //above -> stomp
             {
                 switch (enemy)
@@ -147,22 +178,27 @@ public class EnemyController : MonoBehaviour, IBumpable
                         KoopaStomp(other.transform);
                         break;
                 }
-
-            } else
+            }
+            else
             {
                 if (koopaState == KoopaState.ShellIdle)
                 {
-                    StartMoveShell(other.transform);
+                    StartCoroutine(StartMoveShell(other.transform));
                 }
                 //damage player -> player gets i-frames
+                if (koopaState == KoopaState.ShellMoving)
+                {
+                    other.gameObject.GetComponent<PlayerController>().Die();
+                }
             }
-        } else if (other.gameObject.CompareTag("Fireball") || other.gameObject.CompareTag("Shell"))
+        }
+        else if (other.gameObject.CompareTag("Fireball") || other.gameObject.CompareTag("Shell"))
         {
-            Vector2 knockbackDir = other.transform.position.x < transform.position.x ? Vector2.right : Vector2.left;
+            Vector2 knockbackDir =
+                other.transform.position.x < transform.position.x ? Vector2.right : Vector2.left;
             DieKnockback(knockbackDir);
         }
     }
-    
 
     private void GoombaStomp()
     {
@@ -189,19 +225,20 @@ public class EnemyController : MonoBehaviour, IBumpable
                 StopShell();
                 break;
             case KoopaState.ShellIdle:
-                StartMoveShell(player);
+                StartCoroutine(StartMoveShell(player));
                 break;
         }
     }
+
     private void ShellTransform()
     {
         rb.linearVelocityX = 0f;
         koopaState = KoopaState.ShellIdle;
         anim.SetBool("isMoving", false);
         anim.SetBool("isShell", true);
-        
+
         groundLayers &= ~(1 << LayerMask.NameToLayer("Enemy"));
-        
+
         koopaReformCoroutine = StartCoroutine(ShellReform());
     }
 
@@ -214,15 +251,15 @@ public class EnemyController : MonoBehaviour, IBumpable
         koopaReformCoroutine = StartCoroutine(ShellReform());
     }
 
-    private void StartMoveShell(Transform player)
+    IEnumerator StartMoveShell(Transform player)
     {
         AudioManager.Instance.Play("kick");
-        koopaState = KoopaState.ShellMoving;
         gameObject.tag = "Shell";
-        if (koopaReformCoroutine != null) StopCoroutine(koopaReformCoroutine);
+        if (koopaReformCoroutine != null)
+            StopCoroutine(koopaReformCoroutine);
         anim.SetBool("isShell", true);
         anim.SetBool("isReforming", false);
-        
+
         if (player.position.x < transform.position.x)
         {
             moveDir = Vector2.right;
@@ -231,9 +268,12 @@ public class EnemyController : MonoBehaviour, IBumpable
         {
             moveDir = Vector2.left;
         }
+        yield return new WaitForSeconds(movingShellGracePeriod);
+        koopaState = KoopaState.ShellMoving;
     }
-    
-    private IEnumerator ShellReform(){
+
+    private IEnumerator ShellReform()
+    {
         yield return new WaitForSeconds(shellReformDelay);
         if (koopaState == KoopaState.ShellIdle)
         {
@@ -271,14 +311,22 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private void GiveScore()
     {
-        ScoreManager.AddScoreWithModifier(score, transform.position + new Vector3(0, col.bounds.extents.y, 0));
+        ScoreManager.AddScoreWithModifier(
+            score,
+            transform.position + new Vector3(0, col.bounds.extents.y, 0)
+        );
     }
-
 
     public void OnBump()
     {
-        if (isDead) return;
-        
+        if (isDead)
+            return;
+
         DieKnockback(new Vector2(-0.3f, 0f));
+    }
+
+    public bool isKoopaMoving()
+    {
+        return koopaState != KoopaState.ShellIdle;
     }
 }
