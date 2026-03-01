@@ -51,12 +51,13 @@ public class ScorePopupHandler : MonoBehaviour
         hundreds = (score % 1000) / 100;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        timer += Time.fixedDeltaTime;
+        if (StateManager.CurrentGameState() == StateManager.GameState.PauseScreen) return;
+        timer += Time.unscaledDeltaTime;
         if (timer < despawnDelay)
         {
-            gameObject.transform.Translate(Vector2.up * (movespeed * Time.fixedDeltaTime));
+            gameObject.transform.Translate(Vector2.up * (movespeed * Time.unscaledDeltaTime));
         }
         else
         {
