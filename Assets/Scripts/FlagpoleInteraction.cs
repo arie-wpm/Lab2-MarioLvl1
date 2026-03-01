@@ -19,6 +19,9 @@ public class FlagpoleInteraction : MonoBehaviour
     private Transform GroundPoint;
 
     [SerializeField]
+    private Transform PopUpSpawnPoint;
+
+    [SerializeField]
     Collider2D player;
 
     public float flagX;
@@ -51,6 +54,12 @@ public class FlagpoleInteraction : MonoBehaviour
     private UIManager uiMan;
 
     private int fireworksCount = 0;
+
+    [SerializeField]
+    private float scoreLifeTime = 1f;
+
+    [SerializeField]
+    private float scoreSpeed = 9f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -109,8 +118,12 @@ public class FlagpoleInteraction : MonoBehaviour
             }
 
             Debug.Log($"Points Awarded: {pointsAwarded}");
-            ScoreManager.ModifyScore(pointsAwarded);
-            uiMan.SpawnPopup(pointsAwarded, t.position);
+            ScoreManager.AddScoreWithModifier(
+                pointsAwarded,
+                PopUpSpawnPoint.position,
+                scoreLifeTime,
+                scoreSpeed
+            );
 
             if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
             {
@@ -144,9 +157,9 @@ public class FlagpoleInteraction : MonoBehaviour
             t.position = new Vector3(t.position.x, newY, 0);
             yield return null;
         }
-        a.SetBool("isPoleSliding", false);
         a.speed = 0;
         yield return new WaitUntil(() => flagDropped);
+        a.SetBool("isPoleSliding", false);
         a.gameObject.transform.Rotate(new Vector3(0, 180, 0));
         a.gameObject.transform.position += new Vector3(0.38f, 0, 0);
         yield return new WaitForSeconds(0.5f);

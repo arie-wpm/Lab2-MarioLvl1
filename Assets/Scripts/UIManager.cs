@@ -55,7 +55,29 @@ public class UIManager : MonoBehaviour
 
         scorePopup.GetComponent<ScorePopupHandler>().ShowPopup(score);
     }
-    
+
+    public void SpawnPopup(int score, Vector3 spawnPos, float despawnTime, float movespeed)
+    {
+        GameObject scorePopup = Instantiate(ScorePopupPrefab, mainCanvas.transform);
+
+        RectTransform canvasRect = mainCanvas.GetComponent<RectTransform>();
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(spawnPos);
+        scorePopup.GetComponent<ScorePopupHandler>().despawnDelay = despawnTime;
+        scorePopup.GetComponent<ScorePopupHandler>().movespeed = movespeed;
+
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            screenPos,
+            mainCanvas.worldCamera,
+            out localPoint
+        );
+
+        scorePopup.GetComponent<RectTransform>().localPosition = localPoint;
+
+        scorePopup.GetComponent<ScorePopupHandler>().ShowPopup(score);
+    }
+
     public void Spawn1UPPopup(int score, Vector3 spawnPos)
     {
         GameObject oneUpPopup = Instantiate(oneUpPopupPrefab, mainCanvas.transform);

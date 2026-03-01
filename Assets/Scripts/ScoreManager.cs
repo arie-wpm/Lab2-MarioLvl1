@@ -1,20 +1,29 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class ScoreManager : MonoBehaviour
 {
+    public static ScoreManager Instance;
+
     //Static Variable that can be edited easily from any script.
     public static int Score;
-    
-    [SerializeField] private GameObject ScorePopupPrefab; 
-    private GameObject canvas;
+    public static int Combo = 0;
+    public static float ScoreMultiplier;
+
+    [SerializeField]
+    private static float comboResetTime = 0.8f; // time in seconds before combo resets
+    private static float lastScoreTime;
+
+    [SerializeField]
+    private UIManager uiManager;
 
     public static UnityEvent ScoreChanged;
 
     void Awake()
     {
+        Instance = this;
         ScoreChanged ??= new UnityEvent();
     }
 
@@ -25,15 +34,70 @@ public class ScoreManager : MonoBehaviour
         set { score += value; }
     }
 
+    public static void AddScoreWithModifier(int points, Vector3 spawnPos) //for enemies - spawnPos for popup position
+    {
+        float timeSinceLastScore = Time.time - lastScoreTime;
+        if (timeSinceLastScore <= comboResetTime)
+        {
+            Debug.Log(timeSinceLastScore);
+            Combo++;
+        }
+        else
+        {
+            Combo = 0;
+        }
+        lastScoreTime = Time.time;
+
+        ScoreMultiplier = Mathf.Pow(2, Combo);
+        points *= (int)ScoreMultiplier;
+        Score += points;
+
+        Instance.uiManager.SpawnPopup(points, spawnPos);
+    }
+
+    public static void AddScoreWithModifier(
+        int points,
+        Vector3 spawnPos,
+        float despawnDelay,
+        float movespeed
+    ) //for enemies - spawnPos for popup position
+    {
+        float timeSinceLastScore = Time.time - lastScoreTime;
+        if (timeSinceLastScore <= comboResetTime)
+        {
+            Debug.Log(timeSinceLastScore);
+            Combo++;
+        }
+        else
+        {
+            Combo = 0;
+        }
+        lastScoreTime = Time.time;
+
+        ScoreMultiplier = Mathf.Pow(2, Combo);
+        points *= (int)ScoreMultiplier;
+        Score += points;
+
+        Instance.uiManager.SpawnPopup(points, spawnPos, despawnDelay, movespeed);
+    }
+
     public static void ModifyScore(int mod)
     {
         Score += mod;
-        
-        
+    }
+
+    public static void AddScore(int points) //no modifiers - for pickups etc
+    {
+        Score += points;
     }
 
     public static int GetScore()
     {
         return Score;
+    }
+
+    public static void ResetScore()
+    {
+        Score = 0;
     }
 }
