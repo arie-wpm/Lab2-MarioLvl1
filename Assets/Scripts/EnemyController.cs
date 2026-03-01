@@ -344,6 +344,7 @@ public class EnemyController : MonoBehaviour, IBumpable
         GiveScore();
         AudioManager.Instance.Play("kick");
         isDead = true;
+        spriteRenderer.transform.localPosition += Vector3.up * 1.25f;
         rb.linearVelocity = Vector2.zero;
         col.enabled = false;
         rb.AddForce(dir * knockbackForceX + Vector2.up * knockbackForceY, ForceMode2D.Impulse);
