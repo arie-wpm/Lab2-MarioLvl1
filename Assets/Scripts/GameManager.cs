@@ -399,6 +399,11 @@ public class GameManager : MonoBehaviour
         foreach (GameObject enemy in enemies)
             Destroy(enemy);
 
+        // shell
+        GameObject[] shells = GameObject.FindGameObjectsWithTag("Shell");
+        foreach (GameObject shell in shells)
+            Destroy(shell);
+
 
         for (int i = 0; i < _enemyTransform.Count; i++)
         {
