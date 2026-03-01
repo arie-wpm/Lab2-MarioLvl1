@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
     public GameObject allEnemies;
     public GameObject goombaPrefab;
     public GameObject koopaPrefab;
+    public GameObject coinPrefab;
 
     private List<Vector2> _enemyTransform = new();
     private List<int> _enemyType = new();
@@ -79,6 +80,11 @@ public class GameManager : MonoBehaviour
     public GameObject luigiObj;
     public GameObject marioScreen;
     public GameObject luigiScreen;
+
+    // coins
+    public GameObject coinsObj;
+    private List<Vector2> _coinsTransform = new();
+    private List<GameObject> _coins = new();
 
     // private InputAction _pauseAction => InputSystem.actions.FindAction("Pause");
     private bool _selectTrack = true;
@@ -112,6 +118,15 @@ public class GameManager : MonoBehaviour
                 _enemyType.Add(0);
             else
                 _enemyType.Add(1);
+        }
+
+        // store coin
+        foreach (Transform child in coinsObj.GetComponentInChildren<Transform>())
+        {
+            if (child.name.ToLower().Contains("coin")) {
+                _coins.Add(child.gameObject);
+                _coinsTransform.Add(child.transform.position);
+            }
         }
     }
 
@@ -382,12 +397,21 @@ public class GameManager : MonoBehaviour
         foreach (GameObject enemy in enemies)
             Destroy(enemy);
 
+
         for (int i = 0; i < _enemyTransform.Count; i++)
         {
             if (_enemyType[i] == 0)
                 Instantiate(goombaPrefab, _enemyTransform[i], Quaternion.identity);
             else
                 Instantiate(koopaPrefab, _enemyTransform[i], Quaternion.identity);
+        }
+
+        // reset coin
+        foreach (GameObject obj in _coins) Destroy(obj);
+        _coins.Clear();
+        foreach (Vector3 coinPos in _coinsTransform) {
+            GameObject newCoin = Instantiate(coinPrefab, coinPos, Quaternion.identity);
+            _coins.Add(newCoin);
         }
 
         isFirstStart = true;

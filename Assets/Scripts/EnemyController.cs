@@ -49,13 +49,15 @@ public class EnemyController : MonoBehaviour, IBumpable
     [SerializeField]
     private float shellReformTime = 2f;
 
+    private float camPadding = 4f;
+    private Camera mainCam;
+
     private enum EnemyType
     {
         Goomba,
         KoopaTroopa,
     }
 
-    private bool idle;
     private bool isDead;
 
     private enum KoopaState
@@ -67,6 +69,7 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     private KoopaState koopaState;
     private Coroutine koopaReformCoroutine;
+    private bool isActive = false;
 
     [SerializeField]
     private float movingShellGracePeriod;
@@ -78,30 +81,51 @@ public class EnemyController : MonoBehaviour, IBumpable
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         _uiManager = GameObject.FindWithTag("GameManager").GetComponent<UIManager>();
-        idle = true;
         isDead = false;
         moveDir = Vector2.left;
         koopaState = KoopaState.Walking;
+        mainCam = Camera.main;
     }
 
-    private void OnBecameVisible()
+    void Update()
     {
-        idle = false;
+        CheckCameraBounds();
+    }
+
+    void CheckCameraBounds()
+    {
+        Vector3 camMin = mainCam.ViewportToWorldPoint(new Vector3(0, 0, mainCam.nearClipPlane));
+        Vector3 camMax = mainCam.ViewportToWorldPoint(new Vector3(1, 0, mainCam.nearClipPlane));
+        Vector3 pos = transform.position;
+        
+        float leftBound = camMin.x - camPadding;
+        float rightBound = camMax.x + camPadding;
+        
+        bool inside = transform.position.x >= leftBound && transform.position.x <= rightBound;
+
+        if (inside && !isActive) Activate();
+        else if (!inside && isActive) Deactivate();
+    }
+
+    void Activate()
+    {
+        isActive = true;
+        movespeed = 2f;
         anim.SetBool("isMoving", true);
     }
 
-    private void OnBecameInvisible()
+    void Deactivate()
     {
-        if (idle)
-            return;
-        Despawn(instantDespawn);
+        isActive = false;
+        movespeed = 0f;
+        anim.SetBool("isMoving", false);
     }
 
     private void FixedUpdate()
     {
         if (isDead)
             return;
-        if (idle)
+        if (!isActive)
             return;
         if (enemy == EnemyType.KoopaTroopa)
         {

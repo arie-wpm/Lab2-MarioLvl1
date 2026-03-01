@@ -12917,6 +12917,7 @@ MonoBehaviour:
   allEnemies: {fileID: 1859300068}
   goombaPrefab: {fileID: 6563347764075190145, guid: ff16f6364486c1e46bb7b5e020745175, type: 3}
   koopaPrefab: {fileID: 281880764745605994, guid: 70545fca6eebec44d8c0550025024b39, type: 3}
+  coinPrefab: {fileID: 5311525800943770055, guid: 56566070f30805b4a86a7dc86bfe7b80, type: 3}
   hasTimeRunOut: 0
   hasWon: 0
   hasHitFlag: 0
@@ -12929,6 +12930,7 @@ MonoBehaviour:
   luigiObj: {fileID: 287517756}
   marioScreen: {fileID: 359831649}
   luigiScreen: {fileID: 1864006189}
+  coinsObj: {fileID: 1431683725}
   instaStartGame: 0
 --- !u!114 &526562724
 MonoBehaviour:
