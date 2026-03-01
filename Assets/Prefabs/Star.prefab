@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4092384327371851992}
   - component: {fileID: 6753600740193798656}
   - component: {fileID: -517049667512490789}
+  - component: {fileID: -2698158258576166477}
   - component: {fileID: 6042500742977337650}
   m_Layer: 7
   m_Name: Star
@@ -257,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bbeab0b74a845b197778606277b1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlockItem
---- !u!114 &6042500742977337650
+--- !u!114 &-2698158258576166477
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -265,6 +266,22 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9068852077722777026}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a56fd03a2aa2472aae64d9a1f447965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StarBounceMovement
+  speed: 5
+  direction: {x: 1, y: 0}
+  hopVelocity: 5
+  groundNormalMin: 0.6
+--- !u!114 &6042500742977337650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9068852077722777026}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3534931d354114090b94922f35cb2826, type: 3}
   m_Name: 
