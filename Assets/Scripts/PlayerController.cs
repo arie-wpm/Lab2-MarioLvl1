@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
     private float postStompTimer;
     private float postStompTime = 0.1f;
     private Vector2 velocityBeforeCollision;
-    private bool dead;
+    public bool dead;
 
     [HideInInspector]
     public bool canDie;

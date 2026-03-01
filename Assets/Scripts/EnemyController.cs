@@ -52,6 +52,8 @@ public class EnemyController : MonoBehaviour, IBumpable
     private float camPadding = 4f;
     private Camera mainCam;
 
+    private bool isPlayerDead;
+
     private enum EnemyType
     {
         Goomba,
@@ -89,6 +91,11 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     void Update()
     {
+        isPlayerDead = GameManager.Instance.player.GetComponent<PlayerController>().dead;
+        if (isPlayerDead) {
+            Deactivate();
+            return;
+        }
         CheckCameraBounds();
     }
 
@@ -124,11 +131,16 @@ public class EnemyController : MonoBehaviour, IBumpable
             return;
         isActive = false;
         movespeed = 0f;
+        rb.linearVelocity = Vector2.zero;
         anim.SetBool("isMoving", false);
     }
 
     private void FixedUpdate()
     {
+        if (isPlayerDead) {
+            Deactivate();
+            return;
+        }
         if (isDead)
             return;
         if (!isActive)
