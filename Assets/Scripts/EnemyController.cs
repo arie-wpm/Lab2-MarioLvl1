@@ -132,6 +132,7 @@ public class EnemyController : MonoBehaviour, IBumpable
         isActive = false;
         movespeed = 0f;
         rb.linearVelocity = Vector2.zero;
+        rb.simulated = false;
         anim.SetBool("isMoving", false);
     }
 
