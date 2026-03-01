@@ -12,47 +12,103 @@ public class PlayerController : MonoBehaviour
     private Vector3 startPos;
 
     [Header("Ground Velocities")]
-    [SerializeField] private float minWalkVelocity;
-    [SerializeField] private float maxWalkVelocity;
-    [SerializeField] private float maxRunningVelocity;
-    
+    [SerializeField]
+    private float minWalkVelocity;
+
+    [SerializeField]
+    private float maxWalkVelocity;
+
+    [SerializeField]
+    private float maxRunningVelocity;
+
     [Header("Ground Accelerations")]
-    [SerializeField] private float walkAcceleration;
-    [SerializeField] private float runAcceleration;
-    [SerializeField] private float deceleration;
-    [SerializeField] private float skidDeceleration;
-    
+    [SerializeField]
+    private float walkAcceleration;
+
+    [SerializeField]
+    private float runAcceleration;
+
+    [SerializeField]
+    private float deceleration;
+
+    [SerializeField]
+    private float skidDeceleration;
+
     [Header("Jump Values")]
-    [SerializeField] private float slowJumpVelocity;
-    [SerializeField] private float slowJumpHoldGravity;
-    [SerializeField] private float slowJumpFallGravity;
-    [SerializeField] private float walkJumpVelocity;
-    [SerializeField] private float walkJumpHoldGravity;
-    [SerializeField] private float walkJumpFallGravity;
-    [SerializeField] private float runJumpVelocity;
-    [SerializeField] private float runJumpHoldGravity;
-    [SerializeField] private float runJumpFallGravity;
-    [SerializeField] private Transform groundCheckPos;
-    [SerializeField] private float groundCheckDistance = 0.2f;
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField]
+    private float slowJumpVelocity;
+
+    [SerializeField]
+    private float slowJumpHoldGravity;
+
+    [SerializeField]
+    private float slowJumpFallGravity;
+
+    [SerializeField]
+    private float walkJumpVelocity;
+
+    [SerializeField]
+    private float walkJumpHoldGravity;
+
+    [SerializeField]
+    private float walkJumpFallGravity;
+
+    [SerializeField]
+    private float runJumpVelocity;
+
+    [SerializeField]
+    private float runJumpHoldGravity;
+
+    [SerializeField]
+    private float runJumpFallGravity;
+
+    [SerializeField]
+    private Transform groundCheckPos;
+
+    [SerializeField]
+    private float groundCheckDistance = 0.2f;
+
+    [SerializeField]
+    private LayerMask groundLayer;
 
     [Header("Mid air accelerations")]
-    [SerializeField] private float midAirForwardSlowAcceleration;
-    [SerializeField] private float midAirForwardFastAcceleration;
-    [SerializeField] private float midAirBackwardsFastDeceleration;
-    [SerializeField] private float midAirBackwardsSlowFastJumpDeceleration;
-    [SerializeField] private float midAirBackwardsSlowSlowJumpDeceleration;
-    
+    [SerializeField]
+    private float midAirForwardSlowAcceleration;
+
+    [SerializeField]
+    private float midAirForwardFastAcceleration;
+
+    [SerializeField]
+    private float midAirBackwardsFastDeceleration;
+
+    [SerializeField]
+    private float midAirBackwardsSlowFastJumpDeceleration;
+
+    [SerializeField]
+    private float midAirBackwardsSlowSlowJumpDeceleration;
+
     [Header("Extras")]
-    [SerializeField] private PlayerStats pStats;
-    [SerializeField] private Collider2D mainCol;
-    [SerializeField] private float deathMoveHeight = 0;
-    [SerializeField] private GameObject fireballPrefab;
-    [SerializeField] private Transform fireBallThrowPoint;
-    
-    [HideInInspector] public bool grounded;
-    [HideInInspector] public Rigidbody2D rb;
-    
+    [SerializeField]
+    private PlayerStats pStats;
+
+    [SerializeField]
+    private Collider2D mainCol;
+
+    [SerializeField]
+    private float deathMoveHeight = 0;
+
+    [SerializeField]
+    private GameObject fireballPrefab;
+
+    [SerializeField]
+    private Transform fireBallThrowPoint;
+
+    [HideInInspector]
+    public bool grounded;
+
+    [HideInInspector]
+    public Rigidbody2D rb;
+
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction jumpAction;
@@ -70,7 +126,9 @@ public class PlayerController : MonoBehaviour
     private float postStompTime = 0.1f;
     private Vector2 velocityBeforeCollision;
     private bool dead;
-    [HideInInspector] public bool canDie;
+
+    [HideInInspector]
+    public bool canDie;
 
     private void Start()
     {
@@ -98,9 +156,24 @@ public class PlayerController : MonoBehaviour
         Vector2 leftRay = center + Vector2.left * halfWidth;
         Vector2 rightRay = center + Vector2.right * halfWidth;
 
-        RaycastHit2D leftHit = Physics2D.Raycast(leftRay, Vector2.down, groundCheckDistance, groundLayer);
-        RaycastHit2D rightHit = Physics2D.Raycast(rightRay, Vector2.down, groundCheckDistance, groundLayer);
-        RaycastHit2D centerHit = Physics2D.Raycast(center, Vector2.down, groundCheckDistance, groundLayer);
+        RaycastHit2D leftHit = Physics2D.Raycast(
+            leftRay,
+            Vector2.down,
+            groundCheckDistance,
+            groundLayer
+        );
+        RaycastHit2D rightHit = Physics2D.Raycast(
+            rightRay,
+            Vector2.down,
+            groundCheckDistance,
+            groundLayer
+        );
+        RaycastHit2D centerHit = Physics2D.Raycast(
+            center,
+            Vector2.down,
+            groundCheckDistance,
+            groundLayer
+        );
 
         Debug.DrawRay(leftRay, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(rightRay, Vector2.down * groundCheckDistance, Color.red);
@@ -112,10 +185,14 @@ public class PlayerController : MonoBehaviour
 
         grounded = leftGrounded || rightGrounded || centerGrounded;
 
-        if (crouchAction.IsPressed() && pStats.powerState != MarioPowerState.Small) {
+        if (crouchAction.IsPressed() && pStats.powerState != MarioPowerState.Small)
+        {
             animator.SetBool("isCrouching", true);
-            if (grounded) moveValue = Vector2.zero;
-        } else animator.SetBool("isCrouching", false);
+            if (grounded)
+                moveValue = Vector2.zero;
+        }
+        else
+            animator.SetBool("isCrouching", false);
 
         if (jumpAction.WasPressedThisFrame() && grounded)
         {
@@ -146,7 +223,11 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetTrigger("Fire");
                 AudioManager.Instance.Play("fireball");
-                GameObject fireBall = Instantiate(fireballPrefab, fireBallThrowPoint.position, quaternion.identity);
+                GameObject fireBall = Instantiate(
+                    fireballPrefab,
+                    fireBallThrowPoint.position,
+                    quaternion.identity
+                );
                 fireBall.GetComponent<Fireball>().Launch(transform.localScale);
             }
         }
@@ -175,7 +256,6 @@ public class PlayerController : MonoBehaviour
             else if (moveValue.x != 0 && runAction.IsPressed())
             {
                 a = moveValue.x * runAcceleration;
-
             }
             else
             {
@@ -250,7 +330,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocityX = maxRunningVelocity * currentDirection.x;
         }
-        
+
         velocityBeforeCollision = rb.linearVelocity;
 
         if (rb.linearVelocityX > 0)
@@ -270,8 +350,10 @@ public class PlayerController : MonoBehaviour
         isJumping = true;
         grounded = false;
 
-        if (pStats.powerState == MarioPowerState.Small) AudioManager.Instance.Play("jumpsmall");
-        else AudioManager.Instance.Play("jumplarge");
+        if (pStats.powerState == MarioPowerState.Small)
+            AudioManager.Instance.Play("jumpsmall");
+        else
+            AudioManager.Instance.Play("jumplarge");
 
         if (Mathf.Abs(rb.linearVelocityX) < 3.75)
         {
@@ -324,7 +406,7 @@ public class PlayerController : MonoBehaviour
                 Die();
             }
         }
-        
+
         if (other.gameObject.layer == 6)
         {
             bool hitFromBelow = false;
@@ -337,18 +419,26 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (!hitFromBelow) return;
-            
-            if ((other.gameObject.CompareTag("Block") && pStats.powerState == MarioPowerState.Small) || 
-                (other.gameObject.CompareTag("QBlock") && other.gameObject.GetComponent<InteractableBlock>() != null))
+            if (!hitFromBelow)
+                return;
+
+            if (
+                (other.gameObject.CompareTag("Block") && pStats.powerState == MarioPowerState.Small)
+                || (
+                    other.gameObject.CompareTag("QBlock")
+                    && other.gameObject.GetComponent<InteractableBlock>() != null
+                )
+            )
             {
-                HeadButt("00"); 
+                HeadButt("00");
             }
-            else if (other.gameObject.CompareTag("QBlock") && other.gameObject.GetComponent<InteractableBlock>() == null)
+            else if (
+                other.gameObject.CompareTag("QBlock")
+                && other.gameObject.GetComponent<InteractableBlock>() == null
+            )
             {
-                HeadButt("01"); 
+                HeadButt("01");
             }
-            
         }
     }
 
@@ -363,10 +453,10 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocityY = -UnitsToHex(Mathf.Abs(velocityBeforeCollision.y), hex);
     }
 
-    private void Die()
+    public void Die()
     {
-        
-        SpriteRenderer[] sprites = GameManager.Instance.player.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] sprites =
+            GameManager.Instance.player.GetComponentsInChildren<SpriteRenderer>();
 
         if (pStats.powerState != MarioPowerState.Small)
         {
@@ -377,7 +467,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (dead) return;
+        if (dead)
+            return;
         dead = true;
         StateManager.SetDeadState();
         pStats.lives--;
@@ -412,11 +503,13 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isMoving", false);
         animator.SetBool("isJumping", false);
         animator.ResetControllerState();
-        
+
         if (pStats.lives > 0)
         {
-            if (GameManager.Instance.hasTimeRunOut) StartCoroutine(GameManager.Instance.TimeRanOut());
-            else StartCoroutine(GameManager.Instance.RestartLevel());
+            if (GameManager.Instance.hasTimeRunOut)
+                StartCoroutine(GameManager.Instance.TimeRanOut());
+            else
+                StartCoroutine(GameManager.Instance.RestartLevel());
         }
         if (pStats.lives <= 0)
         {
@@ -440,7 +533,8 @@ public class PlayerController : MonoBehaviour
 
     void AnimCheckVelocity()
     {
-        if (GameManager.Instance.colorChanger.currentTimeScale == 0f) return; 
+        if (GameManager.Instance.colorChanger.currentTimeScale == 0f)
+            return;
         animator.SetFloat("MoveSpeed", Mathf.Abs(rb.linearVelocityX));
         hasVerticalVelocity = Mathf.Abs(rb.linearVelocity.y) > 0.1f;
 

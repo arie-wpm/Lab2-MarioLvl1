@@ -12021,10 +12021,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 3.5859375
-    y: 0.43333337
-    width: 2
-    height: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -12919,6 +12919,7 @@ MonoBehaviour:
   koopaPrefab: {fileID: 281880764745605994, guid: 70545fca6eebec44d8c0550025024b39, type: 3}
   hasTimeRunOut: 0
   hasWon: 0
+  hasHitFlag: 0
   blackPanel: {fileID: 1641135857}
   gameOverPanel: {fileID: 1631815515}
   timeUpPanel: {fileID: 1761851049}
@@ -12928,6 +12929,7 @@ MonoBehaviour:
   luigiObj: {fileID: 287517756}
   marioScreen: {fileID: 359831649}
   luigiScreen: {fileID: 1864006189}
+  instaStartGame: 1
 --- !u!114 &526562724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21198,7 +21200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785e1aa206e1d904db9c4c06d2349ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InvisBlockHack
-  platformEffector2D: {fileID: 0}
 --- !u!1 &867727540
 GameObject:
   m_ObjectHideFlags: 0
