@@ -12941,7 +12941,7 @@ MonoBehaviour:
   _blackScreenDuration: 2.5
   mainCamera: {fileID: 485716632}
   underGroundCamera: {fileID: 1429623436}
-  respawnPoint1: {fileID: 142850784}
+  respawnPoint1: {fileID: 1281575487}
   respawnPoint2: {fileID: 138917904}
   CamRespawnPoint1: {fileID: 1941664409}
   CamRespawnPoint2: {fileID: 1274305266}
