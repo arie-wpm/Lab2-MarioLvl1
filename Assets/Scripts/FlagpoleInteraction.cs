@@ -50,12 +50,16 @@ public class FlagpoleInteraction : MonoBehaviour
 
     private int fireworksCount = 0;
     private Rigidbody2D playerRb;
+    private Vector3 flagInitialPos;
+    private Vector3 castleFlagInitialPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         StateManager.EnteredWon ??= new UnityEvent();
         StateManager.EnteredWon.AddListener(MoveFlagToBase);
+        flagInitialPos = flag.position;
+        castleFlagInitialPos = castleFlag.position;
     }
 
     // Update is called once per frame
@@ -192,7 +196,7 @@ public class FlagpoleInteraction : MonoBehaviour
         while (GameManager.Timer >= 0)
         {
             GameManager.Timer--;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.005f);
             ScoreManager.ModifyScore(50);
             yield return null;
         }
@@ -262,6 +266,9 @@ public class FlagpoleInteraction : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         playerRb.bodyType = RigidbodyType2D.Dynamic;
+        timeScoreTotaled = false;
+        flag.position = flagInitialPos;
+        castleFlag.position = castleFlagInitialPos;
         StartCoroutine(GameManager.Instance.RestartGame());
     }
 }
