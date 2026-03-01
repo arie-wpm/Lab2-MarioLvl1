@@ -177,6 +177,11 @@ public class EnemyController : MonoBehaviour, IBumpable
         rb.linearVelocity = new Vector2(moveDir.x * ms, rb.linearVelocityY);
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.name == "BottomDeathBox") Despawn(0f);
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
