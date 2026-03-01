@@ -101,19 +101,27 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     void CheckCameraBounds()
     {
+        float increment = 2f;
         Vector3 camMin = mainCam.ViewportToWorldPoint(new Vector3(0, 0, mainCam.nearClipPlane));
         Vector3 camMax = mainCam.ViewportToWorldPoint(new Vector3(1, 0, mainCam.nearClipPlane));
-        Vector3 pos = transform.position;
 
         float leftBound = camMin.x - camPadding;
         float rightBound = camMax.x + camPadding;
 
-        bool inside = transform.position.x >= leftBound && transform.position.x <= rightBound;
+        float posX = transform.position.x;
 
-        if (inside && !isActive)
-            Activate();
-        else if (!inside && isActive)
-            Deactivate();
+        float snappedPosX = Mathf.Floor(posX / increment) * increment;
+
+        if (snappedPosX >= leftBound && snappedPosX <= rightBound)
+        {
+            if (!isActive)
+                Activate();
+        }
+        else
+        {
+            if (snappedPosX < leftBound && isActive)
+                Deactivate();
+        }
     }
 
     void Activate()
@@ -123,6 +131,7 @@ public class EnemyController : MonoBehaviour, IBumpable
         isActive = true;
         movespeed = 2f;
         anim.SetBool("isMoving", true);
+        rb.simulated = true;
     }
 
     void Deactivate()
