@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 8713440128191964819}
   - component: {fileID: 4168869372858189197}
   - component: {fileID: 2530381973383450393}
-  - component: {fileID: 7116589168486157916}
+  - component: {fileID: 1476296340666373902}
   - component: {fileID: 8545021620490973295}
+  - component: {fileID: 7116589168486157916}
   - component: {fileID: 1993362740524484258}
   - component: {fileID: 351240008305940144}
-  - component: {fileID: 1476296340666373902}
   m_Layer: 7
   m_Name: 1upMushroom
   m_TagString: Untagged
@@ -111,22 +111,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &7116589168486157916
-MonoBehaviour:
+--- !u!58 &1476296340666373902
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5084980527480931667}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eca105c5266114123aee690db9048a28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pickup
-  type: 4
-  amount: 1
-  starDuration: 6
-  score: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 2b19c097612557a44b4d384e40a41c7b, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.5, y: 0.4}
+  m_Radius: 0.38
 --- !u!212 &8545021620490973295
 SpriteRenderer:
   serializedVersion: 2
@@ -186,6 +206,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &7116589168486157916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5084980527480931667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca105c5266114123aee690db9048a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickup
+  type: 4
+  amount: 1
+  starDuration: 6
+  score: 0
 --- !u!114 &1993362740524484258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,39 +252,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bbeab0b74a845b197778606277b1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlockItem
---- !u!58 &1476296340666373902
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5084980527480931667}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 2b19c097612557a44b4d384e40a41c7b, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.5, y: 0.4}
-  m_Radius: 0.38
