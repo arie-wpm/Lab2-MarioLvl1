@@ -48,12 +48,23 @@ public class UISpriteSwitcher : MonoBehaviour
     private Image _lives1;
 
     [Header("Top Score Sprite Ref ")]
-    [SerializeField] private SpriteRenderer _topScore1;
-    [SerializeField] private SpriteRenderer _topScore2;
-    [SerializeField] private SpriteRenderer _topScore3;
-    [SerializeField] private SpriteRenderer _topScore4;
-    [SerializeField] private SpriteRenderer _topScore5;
-    [SerializeField] private SpriteRenderer _topScore6;
+    [SerializeField]
+    private SpriteRenderer _topScore1;
+
+    [SerializeField]
+    private SpriteRenderer _topScore2;
+
+    [SerializeField]
+    private SpriteRenderer _topScore3;
+
+    [SerializeField]
+    private SpriteRenderer _topScore4;
+
+    [SerializeField]
+    private SpriteRenderer _topScore5;
+
+    [SerializeField]
+    private SpriteRenderer _topScore6;
 
     private int _time;
     private int _coins;
@@ -83,9 +94,12 @@ public class UISpriteSwitcher : MonoBehaviour
     void Update()
     {
         if (StateManager.CurrentGameState() == StateManager.GameState.NULL)
+        {
+            UpdateCoins();
             return;
-        UpdateTime();
+        }
         UpdateCoins();
+        UpdateTime();
         UpdateScore();
         UpdateLives();
         UpdateTopScore();

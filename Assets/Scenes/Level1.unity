@@ -12929,7 +12929,7 @@ MonoBehaviour:
   luigiObj: {fileID: 287517756}
   marioScreen: {fileID: 359831649}
   luigiScreen: {fileID: 1864006189}
-  instaStartGame: 1
+  instaStartGame: 0
 --- !u!114 &526562724
 MonoBehaviour:
   m_ObjectHideFlags: 0

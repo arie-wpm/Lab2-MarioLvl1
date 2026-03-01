@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public ColorChanger colorChanger;
 
     public GameObject player;
+    private PlayerStats pStats;
     public StateManager.GameState currentGameState;
 
     [SerializeField]
@@ -96,6 +97,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         colorChanger.ChangeToDefault(player.GetComponentsInChildren<SpriteRenderer>());
+        pStats = player.GetComponent<PlayerStats>();
         StartScreenObj.SetActive(true);
         _currentRespawnPoint = respawnPoint1;
         _currentCamRespawnPoint = CamRespawnPoint1;
@@ -281,7 +283,6 @@ public class GameManager : MonoBehaviour
     void RunTimeOut()
     {
         StateManager.SetDeadState();
-        PlayerStats pStats = player.GetComponent<PlayerStats>();
         PlayerController pController = player.GetComponent<PlayerController>();
         Animator animator = player.GetComponent<Animator>();
         BoxCollider2D mainCol = player.GetComponent<BoxCollider2D>();
@@ -333,7 +334,7 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(OtherBlackScreen(5f));
         ResetSceneObjects();
         SetMarioPosition();
-        player.GetComponent<PlayerStats>().powerState = MarioPowerState.Small;
+        pStats.powerState = MarioPowerState.Small;
         player.GetComponent<Animator>().SetLayerWeight(1, 0f);
         StateManager.SetPlayState();
     }
@@ -361,7 +362,7 @@ public class GameManager : MonoBehaviour
             marioScreen.SetActive(true);
             luigiScreen.SetActive(false);
             colorChanger.ChangeToDefault(player.GetComponentsInChildren<SpriteRenderer>());
-            player.GetComponent<PlayerStats>().Reset();
+            pStats.Reset();
             player.GetComponent<Animator>().SetLayerWeight(1, 0f);
             StateManager.CurrentState = StateManager.GameState.NULL;
             // ScoreManager score reset
