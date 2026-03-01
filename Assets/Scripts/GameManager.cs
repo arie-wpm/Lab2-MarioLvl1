@@ -358,6 +358,7 @@ public class GameManager : MonoBehaviour
             luigiScreen.SetActive(false);
             colorChanger.ChangeToDefault(player.GetComponentsInChildren<SpriteRenderer>());
             player.GetComponent<PlayerStats>().Reset();
+            player.GetComponent<Animator>().SetLayerWeight(1, 0f);
             StateManager.CurrentState = StateManager.GameState.NULL;
             // ScoreManager score reset
             ScoreManager.ResetScore();
@@ -392,6 +393,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator OtherBlackScreen(float duration)
     {
+        // can do a IsGameOver && hasWon and IsGameOver !hasWon if we want an extra screen for when mario wins
         if (isGameOver)
         {
             AudioManager.Instance.Play("gameover");
