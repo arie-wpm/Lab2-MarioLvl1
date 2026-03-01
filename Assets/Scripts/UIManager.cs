@@ -70,6 +70,10 @@ public class UIManager : MonoBehaviour
             out localPoint
         );
 
+        // snap to integer pixels
+        localPoint.x = Mathf.Round(localPoint.x);
+        localPoint.y = Mathf.Round(localPoint.y);
+
         scorePopup.GetComponent<RectTransform>().localPosition = localPoint;
 
         scorePopup.GetComponent<ScorePopupHandler>().ShowPopup(score);
