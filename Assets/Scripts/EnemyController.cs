@@ -97,19 +97,22 @@ public class EnemyController : MonoBehaviour, IBumpable
         Vector3 camMin = mainCam.ViewportToWorldPoint(new Vector3(0, 0, mainCam.nearClipPlane));
         Vector3 camMax = mainCam.ViewportToWorldPoint(new Vector3(1, 0, mainCam.nearClipPlane));
         Vector3 pos = transform.position;
-        
+
         float leftBound = camMin.x - camPadding;
         float rightBound = camMax.x + camPadding;
-        
+
         bool inside = transform.position.x >= leftBound && transform.position.x <= rightBound;
 
-        if (inside && !isActive) Activate();
-        else if (!inside && isActive) Deactivate();
+        if (inside && !isActive)
+            Activate();
+        else if (!inside && isActive)
+            Deactivate();
     }
 
     void Activate()
     {
-        if (GameManager.Instance.isUnderground) return;
+        if (GameManager.Instance.isUnderground)
+            return;
         isActive = true;
         movespeed = 2f;
         anim.SetBool("isMoving", true);
@@ -117,7 +120,8 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     void Deactivate()
     {
-        if (GameManager.Instance.isUnderground) return;
+        if (GameManager.Instance.isUnderground)
+            return;
         isActive = false;
         movespeed = 0f;
         anim.SetBool("isMoving", false);
@@ -179,7 +183,8 @@ public class EnemyController : MonoBehaviour, IBumpable
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.name == "BottomDeathBox") Despawn(0f);
+        if (other.gameObject.name == "BottomDeathBox")
+            Despawn(0f);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -240,7 +245,7 @@ public class EnemyController : MonoBehaviour, IBumpable
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;
         anim.SetBool("isMoving", false);
-        anim.SetBool("isDead", true);
+        anim.SetBool("isStomped", true);
         Despawn(deathDelay);
     }
 
