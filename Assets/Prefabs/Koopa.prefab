@@ -212,7 +212,7 @@ MonoBehaviour:
   deathDelay: 1
   knockbackForceX: 6
   knockbackForceY: 3
-  shellMovespeed: 6
+  shellMovespeed: 10
   shellReformDelay: 5
   shellReformTime: 2
   movingShellGracePeriod: 0.05
