@@ -34,57 +34,70 @@ public class ColorChanger : MonoBehaviour
 
     public float currentTimeScale = 1f;
 
-    public void ChangeToDefault(SpriteRenderer[] sprites) {
+    public void ChangeToDefault(SpriteRenderer[] sprites)
+    {
         Color[] colors;
 
-        if (GameManager.Instance._character == "mario") colors = new Color[] { _default1, _default2, _default3 };
-        else colors = new Color[] { _luigi1, _luigi2, _luigi3 };
+        if (GameManager.Instance._character == "mario")
+            colors = new Color[] { _default1, _default2, _default3 };
+        else
+            colors = new Color[] { _luigi1, _luigi2, _luigi3 };
 
-        for (int i = 0; i < sprites.Length; i++) sprites[i].color = colors[i];
+        for (int i = 0; i < sprites.Length; i++)
+            sprites[i].color = colors[i];
 
         _currentColors = colors;
     }
 
-    public void ChangeToFlower(SpriteRenderer[] sprites) {
+    public void ChangeToFlower(SpriteRenderer[] sprites)
+    {
         Color[] colors = { _flower1, _flower2, _flower3 };
-        for (int i = 0; i < sprites.Length; i++) {
+        for (int i = 0; i < sprites.Length; i++)
+        {
             sprites[i].color = colors[i];
         }
         _currentColors = colors;
     }
 
-    public void ChangeToStar(SpriteRenderer[] sprites, float duration) {
+    public void ChangeToStar(SpriteRenderer[] sprites, float duration)
+    {
         StartCoroutine(StarAnim(sprites, duration));
     }
 
-    public void ChangeToIFrame(SpriteRenderer[] sprites, float duration) {
+    public void ChangeToIFrame(SpriteRenderer[] sprites, float duration)
+    {
         StartCoroutine(IFrameAnim(sprites, duration));
     }
 
-    public void StartTransformFreeze() {
+    public void StartTransformFreeze()
+    {
         StartCoroutine(TransformFreeze());
     }
 
-    public void StartTransformOnHit() {
+    public void StartTransformOnHit()
+    {
         StartCoroutine(TransformOnHit());
     }
 
-    public IEnumerator StarAnim(SpriteRenderer[] sprites, float totalDuration) {
-
-        Color[][] flashSets = new Color[][] {
+    public IEnumerator StarAnim(SpriteRenderer[] sprites, float totalDuration)
+    {
+        Color[][] flashSets = new Color[][]
+        {
             new Color[] { _star1_1, _star2_1, _star3_1 },
             new Color[] { _star1_2, _star2_2, _star3_2 },
-            new Color[] { _star1_3, _star2_3, _star3_3 }
+            new Color[] { _star1_3, _star2_3, _star3_3 },
         };
 
         float elapsed = 0f;
         int setIndex = 0;
         int setCount = flashSets.Length;
 
-        while (elapsed < totalDuration) {
+        while (elapsed < totalDuration)
+        {
             Color[] currentSet = flashSets[setIndex];
 
-            for (int i = 0; i < sprites.Length && i < currentSet.Length; i++) {
+            for (int i = 0; i < sprites.Length && i < currentSet.Length; i++)
+            {
                 sprites[i].color = currentSet[i];
             }
             setIndex = (setIndex + 1) % setCount;
@@ -92,26 +105,35 @@ public class ColorChanger : MonoBehaviour
             elapsed += _flashInterval;
         }
 
-        for (int i = 0; i < sprites.Length; i++) {
+        for (int i = 0; i < sprites.Length; i++)
+        {
             sprites[i].color = _currentColors[i];
         }
     }
 
-    public IEnumerator IFrameAnim(SpriteRenderer[] sprites, float totalDuration) {
-        
-        Color[][] flashSets = new Color[][] {
+    public IEnumerator IFrameAnim(SpriteRenderer[] sprites, float totalDuration)
+    {
+        Color[][] flashSets = new Color[][]
+        {
             new Color[] { _transparent, _transparent, _transparent },
             _currentColors,
         };
-
+        Collider2D playerCollider = GameManager.Instance.player.GetComponent<Collider2D>();
+        //Get layer Masks for enemy and Nothing.
+        LayerMask enemy = LayerMask.GetMask("Enemy");
+        LayerMask nothing = LayerMask.GetMask("Nothing");
+        //Set exclude enemies.
+        playerCollider.excludeLayers = enemy;
         float elapsed = 0f;
         int setIndex = 0;
         int setCount = flashSets.Length;
 
-        while (elapsed < totalDuration) {
+        while (elapsed < totalDuration)
+        {
             Color[] currentSet = flashSets[setIndex];
 
-            for (int i = 0; i < sprites.Length && i < currentSet.Length; i++) {
+            for (int i = 0; i < sprites.Length && i < currentSet.Length; i++)
+            {
                 sprites[i].color = currentSet[i];
             }
             setIndex = (setIndex + 1) % setCount;
@@ -119,24 +141,31 @@ public class ColorChanger : MonoBehaviour
             elapsed += _flashInterval;
         }
 
-        for (int i = 0; i < sprites.Length; i++) {
+        for (int i = 0; i < sprites.Length; i++)
+        {
             sprites[i].color = _currentColors[i];
         }
 
         PlayerController player = GameManager.Instance.player.GetComponent<PlayerController>();
+        //Set exclude nothing.
+        playerCollider.excludeLayers = nothing;
         player.canDie = true;
     }
 
-    public IEnumerator TransformFreeze() {
+    public IEnumerator TransformFreeze()
+    {
         Time.timeScale = 0f;
         currentTimeScale = Time.timeScale;
 
         Animator marioAnimator = GameManager.Instance.player.GetComponent<Animator>();
         PlayerStats marioStats = GameManager.Instance.player.GetComponent<PlayerStats>();
-        SpriteRenderer[] sprites = GameManager.Instance.player.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] sprites =
+            GameManager.Instance.player.GetComponentsInChildren<SpriteRenderer>();
 
-        if (marioStats.powerState == MarioPowerState.Small) marioAnimator.SetBool("isTransforming", true);
-        else {
+        if (marioStats.powerState == MarioPowerState.Small)
+            marioAnimator.SetBool("isTransforming", true);
+        else
+        {
             marioAnimator.speed = 0f;
             ChangeToStar(sprites, 1f);
         }
@@ -150,15 +179,18 @@ public class ColorChanger : MonoBehaviour
         currentTimeScale = 1f;
     }
 
-    public IEnumerator TransformOnHit() {
+    public IEnumerator TransformOnHit()
+    {
         Time.timeScale = 0f;
         currentTimeScale = Time.timeScale;
 
         Animator marioAnimator = GameManager.Instance.player.GetComponent<Animator>();
         PlayerStats marioStats = GameManager.Instance.player.GetComponent<PlayerStats>();
-        SpriteRenderer[] sprites = GameManager.Instance.player.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] sprites =
+            GameManager.Instance.player.GetComponentsInChildren<SpriteRenderer>();
 
-        if (marioStats.powerState != MarioPowerState.Small) marioAnimator.SetBool("isTransforming", true);
+        if (marioStats.powerState != MarioPowerState.Small)
+            marioAnimator.SetBool("isTransforming", true);
 
         yield return new WaitForSecondsRealtime(1f);
 
