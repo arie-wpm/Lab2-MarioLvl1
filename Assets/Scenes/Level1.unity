@@ -11818,10 +11818,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 3.1875
-    y: 0.12916668
-    width: 3
-    height: 3.0000002
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -12702,7 +12702,7 @@ MonoBehaviour:
   _blackScreenDuration: 2.5
   mainCamera: {fileID: 485716632}
   underGroundCamera: {fileID: 1429623436}
-  respawnPoint1: {fileID: 142850784}
+  respawnPoint1: {fileID: 1281575487}
   respawnPoint2: {fileID: 138917904}
   CamRespawnPoint1: {fileID: 1941664409}
   CamRespawnPoint2: {fileID: 1274305266}
@@ -12796,7 +12796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa10318adb81ec24280c44f8ce7adf41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
-  ScorePopupPrefab: {fileID: 0}
+  uiManager: {fileID: 0}
 --- !u!1 &526941037
 GameObject:
   m_ObjectHideFlags: 0
