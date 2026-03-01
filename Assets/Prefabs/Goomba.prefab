@@ -215,3 +215,4 @@ MonoBehaviour:
   shellMovespeed: 6
   shellReformDelay: 5
   shellReformTime: 2
+  movingShellGracePeriod: 0
