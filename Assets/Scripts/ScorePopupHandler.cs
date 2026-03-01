@@ -6,7 +6,7 @@ using UnityEngine;
 public class ScorePopupHandler : MonoBehaviour
 {
     [SerializeField]
-    private float movespeed;
+    public float movespeed;
 
     [SerializeField]
     public float despawnDelay;
